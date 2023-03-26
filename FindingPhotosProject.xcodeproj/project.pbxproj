@@ -10,7 +10,6 @@
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
-		638C1AF329D069260028F2FA /* MapNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1AF229D069260028F2FA /* MapNavigationController.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -20,17 +19,18 @@
 		AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580E929CC7F2E00B8D8A6 /* LoginViewController.swift */; };
 		AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */; };
 		AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580ED29CC7F6000B8D8A6 /* PhotoViewController.swift */; };
-		AD4580F029CC800C00B8D8A6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */; };
+		AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */; };
 		AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810A29CC878000B8D8A6 /* Extensions.swift */; };
 		AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810C29CC88E400B8D8A6 /* APIKeys.swift */; };
-		C83BED8129D054CB00D2734E /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C83BED8029D054CB00D2734E /* PhotoDetailViewController.swift */; };
+		AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811A29D051ED00B8D8A6 /* SettingCell.swift */; };
+		AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812029D0749300B8D8A6 /* ProfileView.swift */; };
+		AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812129D0749300B8D8A6 /* LogoutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		638C1AF229D069260028F2FA /* MapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNavigationController.swift; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -42,10 +42,12 @@
 		AD4580E929CC7F2E00B8D8A6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AD4580ED29CC7F6000B8D8A6 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		AD45810A29CC878000B8D8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AD45810C29CC88E400B8D8A6 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		C83BED8029D054CB00D2734E /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		AD45811A29D051ED00B8D8A6 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		AD45812029D0749300B8D8A6 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AD45812129D0749300B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -137,7 +139,7 @@
 				AD4580FA29CC85F400B8D8A6 /* Login */,
 				AD45810129CC86CB00B8D8A6 /* Map */,
 				AD45810029CC86C700B8D8A6 /* Photo */,
-				AD4580FF29CC86C600B8D8A6 /* User */,
+				AD4580FF29CC86C600B8D8A6 /* Setting */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -148,7 +150,7 @@
 				AD45810929CC872E00B8D8A6 /* Login */,
 				AD45810829CC872B00B8D8A6 /* Map */,
 				AD45810729CC872A00B8D8A6 /* Photo */,
-				AD45810629CC872900B8D8A6 /* User */,
+				AD45810629CC872900B8D8A6 /* Setting */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -187,6 +189,7 @@
 		AD4580F829CC85C300B8D8A6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				AD45811A29D051ED00B8D8A6 /* SettingCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -197,7 +200,7 @@
 				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810329CC86FE00B8D8A6 /* Map */,
 				AD45810429CC870400B8D8A6 /* Photo */,
-				AD45810529CC870F00B8D8A6 /* User */,
+				AD45810529CC870F00B8D8A6 /* Setting */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -231,19 +234,18 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		AD4580FF29CC86C600B8D8A6 /* User */ = {
+		AD4580FF29CC86C600B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */,
+				AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */,
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		AD45810029CC86C700B8D8A6 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
 				AD4580ED29CC7F6000B8D8A6 /* PhotoViewController.swift */,
-				C83BED8029D054CB00D2734E /* PhotoDetailViewController.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -251,7 +253,6 @@
 		AD45810129CC86CB00B8D8A6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				638C1AF229D069260028F2FA /* MapNavigationController.swift */,
 				AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */,
 			);
 			path = Map;
@@ -278,18 +279,20 @@
 			path = Photo;
 			sourceTree = "<group>";
 		};
-		AD45810529CC870F00B8D8A6 /* User */ = {
+		AD45810529CC870F00B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				AD45812129D0749300B8D8A6 /* LogoutView.swift */,
+				AD45812029D0749300B8D8A6 /* ProfileView.swift */,
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
-		AD45810629CC872900B8D8A6 /* User */ = {
+		AD45810629CC872900B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		AD45810729CC872A00B8D8A6 /* Photo */ = {
@@ -430,16 +433,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */,
-				AD4580F029CC800C00B8D8A6 /* UserViewController.swift in Sources */,
+				AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */,
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
+				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
+				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
-				C83BED8129D054CB00D2734E /* PhotoDetailViewController.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
-				638C1AF329D069260028F2FA /* MapNavigationController.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
+				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -580,7 +584,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BGU99JP2HN;
+				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -611,7 +615,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BGU99JP2HN;
+				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

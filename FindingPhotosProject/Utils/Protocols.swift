@@ -27,6 +27,6 @@ protocol ViewModelBindable: AnyObject {
 
 @objc protocol LayoutProtocol: AnyObject {
     @objc optional func setValue()
-    func addSubViews()
-    func layout()
+    func setSubViews()
+    func setLayout()
 }
