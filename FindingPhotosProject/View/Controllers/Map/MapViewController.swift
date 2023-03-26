@@ -22,21 +22,22 @@ final class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
-        addSubViews()
-        layout()
+        setSubViews()
+        setLayout()
     }
     // MARK: - helpers
 }
 
 extension MapViewController: LayoutProtocol {
+    
     func setValue() {
         view.backgroundColor = .white
         navigationItem.title = "근처 사진관 찾기"
     }
-    func addSubViews() {
+    func setSubViews() {
         view.addSubview(mapView)
     }
-    func layout() {
+    func setLayout() {
         mapView.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(100)
             make.bottom.leading.trailing.equalToSuperview()
