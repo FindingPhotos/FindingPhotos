@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		632977B929D022FB004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977B829D022FB004FDD85 /* APIKeyList.plist */; };
+		632977BB29D03EB6004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BA29D03EB6004FDD85 /* Protocols.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		632977B829D022FB004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
+		632977BA29D03EB6004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Protocols.swift; path = "../../../../../.Trash/FindingPhotos 오후 3.50.18/FindingPhotosProject/Utils/Protocols.swift"; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				AD45810A29CC878000B8D8A6 /* Extensions.swift */,
+				632977BA29D03EB6004FDD85 /* Protocols.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
+				632977BB29D03EB6004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
