@@ -1,0 +1,6 @@
+framework module Pods_FindingPhotosProject {
+  umbrella header "Pods-FindingPhotosProject-umbrella.h"
+
+  export *
+  module * { export * }
+}
