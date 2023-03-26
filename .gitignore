@@ -1,2 +1,5 @@
 *.xcuserstate
 FindingPhotosProject/APIs/APIKeyList.plist
+Pods/Pods.xcodeproj/xcuserdata/ihyeongju.xcuserdatad/xcschemes/xcschememanagement.plist
+FindingPhotosProject.xcodeproj/xcuserdata/ihyeongju.xcuserdatad/xcschemes/xcschememanagement.plist
+.DS_Store
