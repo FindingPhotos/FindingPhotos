@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let vc1 = UINavigationController(rootViewController: MapViewController())
         let vc2 = UINavigationController(rootViewController: PhotoViewController())
-        let vc3 = UINavigationController(rootViewController: UserViewController())
+        let vc3 = UINavigationController(rootViewController: SettingViewController())
 
         tabBarVC.setViewControllers([vc1, vc2, vc3], animated: false)
         tabBarVC.modalPresentationStyle = .fullScreen

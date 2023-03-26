@@ -19,9 +19,12 @@
 		AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580E929CC7F2E00B8D8A6 /* LoginViewController.swift */; };
 		AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */; };
 		AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580ED29CC7F6000B8D8A6 /* PhotoViewController.swift */; };
-		AD4580F029CC800C00B8D8A6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */; };
+		AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */; };
 		AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810A29CC878000B8D8A6 /* Extensions.swift */; };
 		AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810C29CC88E400B8D8A6 /* APIKeys.swift */; };
+		AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811A29D051ED00B8D8A6 /* SettingCell.swift */; };
+		AD45811D29D0535000B8D8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811C29D0535000B8D8A6 /* ProfileView.swift */; };
+		AD45811F29D058ED00B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811E29D058ED00B8D8A6 /* LogoutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,9 +42,12 @@
 		AD4580E929CC7F2E00B8D8A6 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		AD4580ED29CC7F6000B8D8A6 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
-		AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		AD45810A29CC878000B8D8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AD45810C29CC88E400B8D8A6 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
+		AD45811A29D051ED00B8D8A6 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
+		AD45811C29D0535000B8D8A6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = FindingPhotosProject/View/Cells/ProfileView.swift; sourceTree = SOURCE_ROOT; };
+		AD45811E29D058ED00B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogoutView.swift; path = FindingPhotosProject/View/Cells/LogoutView.swift; sourceTree = SOURCE_ROOT; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -133,7 +139,7 @@
 				AD4580FA29CC85F400B8D8A6 /* Login */,
 				AD45810129CC86CB00B8D8A6 /* Map */,
 				AD45810029CC86C700B8D8A6 /* Photo */,
-				AD4580FF29CC86C600B8D8A6 /* User */,
+				AD4580FF29CC86C600B8D8A6 /* Setting */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -144,7 +150,7 @@
 				AD45810929CC872E00B8D8A6 /* Login */,
 				AD45810829CC872B00B8D8A6 /* Map */,
 				AD45810729CC872A00B8D8A6 /* Photo */,
-				AD45810629CC872900B8D8A6 /* User */,
+				AD45810629CC872900B8D8A6 /* Setting */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -183,6 +189,7 @@
 		AD4580F829CC85C300B8D8A6 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				AD45811A29D051ED00B8D8A6 /* SettingCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -193,7 +200,7 @@
 				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810329CC86FE00B8D8A6 /* Map */,
 				AD45810429CC870400B8D8A6 /* Photo */,
-				AD45810529CC870F00B8D8A6 /* User */,
+				AD45810529CC870F00B8D8A6 /* Setting */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -227,12 +234,12 @@
 			path = User;
 			sourceTree = "<group>";
 		};
-		AD4580FF29CC86C600B8D8A6 /* User */ = {
+		AD4580FF29CC86C600B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */,
+				AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */,
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		AD45810029CC86C700B8D8A6 /* Photo */ = {
@@ -272,18 +279,20 @@
 			path = Photo;
 			sourceTree = "<group>";
 		};
-		AD45810529CC870F00B8D8A6 /* User */ = {
+		AD45810529CC870F00B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				AD45811C29D0535000B8D8A6 /* ProfileView.swift */,
+				AD45811E29D058ED00B8D8A6 /* LogoutView.swift */,
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
-		AD45810629CC872900B8D8A6 /* User */ = {
+		AD45810629CC872900B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			path = User;
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		AD45810729CC872A00B8D8A6 /* Photo */ = {
@@ -424,9 +433,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */,
-				AD4580F029CC800C00B8D8A6 /* UserViewController.swift in Sources */,
+				AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */,
+				AD45811F29D058ED00B8D8A6 /* LogoutView.swift in Sources */,
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
+				AD45811D29D0535000B8D8A6 /* ProfileView.swift in Sources */,
+				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
