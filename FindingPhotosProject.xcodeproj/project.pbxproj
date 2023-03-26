@@ -23,8 +23,8 @@
 		AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810A29CC878000B8D8A6 /* Extensions.swift */; };
 		AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810C29CC88E400B8D8A6 /* APIKeys.swift */; };
 		AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811A29D051ED00B8D8A6 /* SettingCell.swift */; };
-		AD45811D29D0535000B8D8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811C29D0535000B8D8A6 /* ProfileView.swift */; };
-		AD45811F29D058ED00B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45811E29D058ED00B8D8A6 /* LogoutView.swift */; };
+		AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812029D0749300B8D8A6 /* ProfileView.swift */; };
+		AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812129D0749300B8D8A6 /* LogoutView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,8 +46,8 @@
 		AD45810A29CC878000B8D8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AD45810C29CC88E400B8D8A6 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		AD45811A29D051ED00B8D8A6 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
-		AD45811C29D0535000B8D8A6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileView.swift; path = FindingPhotosProject/View/Cells/ProfileView.swift; sourceTree = SOURCE_ROOT; };
-		AD45811E29D058ED00B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogoutView.swift; path = FindingPhotosProject/View/Cells/LogoutView.swift; sourceTree = SOURCE_ROOT; };
+		AD45812029D0749300B8D8A6 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		AD45812129D0749300B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -282,8 +282,8 @@
 		AD45810529CC870F00B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
-				AD45811C29D0535000B8D8A6 /* ProfileView.swift */,
-				AD45811E29D058ED00B8D8A6 /* LogoutView.swift */,
+				AD45812129D0749300B8D8A6 /* LogoutView.swift */,
+				AD45812029D0749300B8D8A6 /* ProfileView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -434,16 +434,16 @@
 			files = (
 				AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */,
 				AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */,
-				AD45811F29D058ED00B8D8A6 /* LogoutView.swift in Sources */,
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
-				AD45811D29D0535000B8D8A6 /* ProfileView.swift in Sources */,
 				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
+				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
+				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
