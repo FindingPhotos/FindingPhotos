@@ -10,6 +10,7 @@
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
+		638C1AF329D069260028F2FA /* MapNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1AF229D069260028F2FA /* MapNavigationController.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -29,6 +30,7 @@
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		638C1AF229D069260028F2FA /* MapNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapNavigationController.swift; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 		AD45810129CC86CB00B8D8A6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				638C1AF229D069260028F2FA /* MapNavigationController.swift */,
 				AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */,
 			);
 			path = Map;
@@ -434,6 +437,7 @@
 				C83BED8129D054CB00D2734E /* PhotoDetailViewController.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
+				638C1AF329D069260028F2FA /* MapNavigationController.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
@@ -576,7 +580,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -607,7 +611,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
