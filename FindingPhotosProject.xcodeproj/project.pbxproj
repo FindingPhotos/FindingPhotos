@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
+		632977B929D022FB004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977B829D022FB004FDD85 /* APIKeyList.plist */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -20,11 +21,11 @@
 		AD4580F029CC800C00B8D8A6 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */; };
 		AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810A29CC878000B8D8A6 /* Extensions.swift */; };
 		AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45810C29CC88E400B8D8A6 /* APIKeys.swift */; };
-		AD45810F29CC894B00B8D8A6 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = AD45810E29CC894B00B8D8A6 /* APIKeyList.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
+		632977B829D022FB004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		AD4580EF29CC800C00B8D8A6 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		AD45810A29CC878000B8D8A6 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		AD45810C29CC88E400B8D8A6 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
-		AD45810E29CC894B00B8D8A6 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -119,7 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				AD45810C29CC88E400B8D8A6 /* APIKeys.swift */,
-				AD45810E29CC894B00B8D8A6 /* APIKeyList.plist */,
+				632977B829D022FB004FDD85 /* APIKeyList.plist */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -315,7 +315,7 @@
 				AD4580C729CC71C600B8D8A6 /* Sources */,
 				AD4580C829CC71C600B8D8A6 /* Frameworks */,
 				AD4580C929CC71C600B8D8A6 /* Resources */,
-				514519E07D778F1DF8DD454F /* [CP] Embed Pods Frameworks */,
+				99D97FCF95D8328D7516D44A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -365,7 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD4580DE29CC71C700B8D8A6 /* LaunchScreen.storyboard in Resources */,
-				AD45810F29CC894B00B8D8A6 /* APIKeyList.plist in Resources */,
+				632977B929D022FB004FDD85 /* APIKeyList.plist in Resources */,
 				AD4580E829CC784000B8D8A6 /* GoogleService-Info.plist in Resources */,
 				AD4580DB29CC71C700B8D8A6 /* Assets.xcassets in Resources */,
 			);
@@ -374,7 +374,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		514519E07D778F1DF8DD454F /* [CP] Embed Pods Frameworks */ = {
+		99D97FCF95D8328D7516D44A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
