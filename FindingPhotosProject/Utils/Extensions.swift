@@ -18,3 +18,11 @@ extension UIColor {
     static let darked = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     static let buttonYellow = UIColor(red: 0.962, green: 0.837, blue: 0.393, alpha: 1)
 }
+
+extension ViewModelBindable where Self: UIViewController {
+    func bind(viewModel: ViewModel) {
+        self.viewModel = viewModel
+        loadViewIfNeeded()
+        bindViewModel()
+    }
+}
