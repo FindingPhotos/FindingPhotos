@@ -752,6 +752,11 @@ PODS:
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
+  - RxCoreLocation (1.5.1):
+    - RxCoreLocation/Core (= 1.5.1)
+  - RxCoreLocation/Core (1.5.1):
+    - RxCocoa (~> 6.0)
+    - RxSwift (~> 6.0)
   - RxDataSources (5.0.0):
     - Differentiator (~> 5.0)
     - RxCocoa (~> 6.0)
@@ -778,6 +783,7 @@ DEPENDENCIES:
   - NMapsMap
   - RealmSwift (~> 10)
   - RxCocoa (= 6.5.0)
+  - RxCoreLocation (~> 1.5.1)
   - RxDataSources (~> 5.0)
   - RxGesture
   - RxSwift (= 6.5.0)
@@ -815,6 +821,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - RxCocoa
+    - RxCoreLocation
     - RxDataSources
     - RxGesture
     - RxRelay
@@ -852,6 +859,7 @@ SPEC CHECKSUMS:
   Realm: 9c5fc6f8f5cb70b299f2e3064d2b9f6cb0f1523d
   RealmSwift: 7be7bb45911c16400dd1bfce3a01764ecb4cae7a
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
+  RxCoreLocation: a78f4cbf32a4c6c47ecccbe22d41ff93b7e8c099
   RxDataSources: aa47cc1ed6c500fa0dfecac5c979b723542d79cf
   RxGesture: f3efb47ed2d26a8082f7b660d4a59970e275a7f8
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
@@ -859,6 +867,6 @@ SPEC CHECKSUMS:
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 5ce80255ccc6a2979096a228f57c4f455d0a85ba
+PODFILE CHECKSUM: 8027d76e9c25d0474c8e3be08338e7246f7885cf
 
 COCOAPODS: 1.11.3

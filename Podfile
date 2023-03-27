@@ -20,5 +20,6 @@ target 'FindingPhotosProject' do
     pod "RxGesture"
     pod 'RxViewController'
     pod 'RxDataSources', '~> 5.0'
+    pod 'RxCoreLocation', '~> 1.5.1'
     pod 'RealmSwift', '~>10'
 end
