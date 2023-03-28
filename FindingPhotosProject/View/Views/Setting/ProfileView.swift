@@ -13,8 +13,8 @@ final class ProfileView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "프로필"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = "익명으로 로그인되었습니다."
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     

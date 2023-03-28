@@ -26,6 +26,8 @@
 		AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812029D0749300B8D8A6 /* ProfileView.swift */; };
 		AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812129D0749300B8D8A6 /* LogoutView.swift */; };
 		AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */; };
+		AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */; };
+		AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812929D1745600B8D8A6 /* SettingModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		AD45812029D0749300B8D8A6 /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		AD45812129D0749300B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
+		AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		AD45812929D1745600B8D8A6 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -173,6 +177,7 @@
 				AD4580FE29CC868600B8D8A6 /* User */,
 				AD4580FD29CC868500B8D8A6 /* Location */,
 				AD4580FC29CC868400B8D8A6 /* Photo */,
+				AD45812829D1743800B8D8A6 /* Setting */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 		AD45810629CC872900B8D8A6 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -317,6 +323,14 @@
 			children = (
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		AD45812829D1743800B8D8A6 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				AD45812929D1745600B8D8A6 /* SettingModel.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -445,7 +459,9 @@
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
+				AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */,
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
+				AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
@@ -590,7 +606,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
+				INFOPLIST_FILE = FindingPhotosProject/info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -621,7 +637,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
+				INFOPLIST_FILE = FindingPhotosProject/info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

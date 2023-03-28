@@ -25,6 +25,24 @@ protocol ViewModelBindable: AnyObject {
     func bindViewModel()
 }
 
+protocol CellModelType {
+    associatedtype Input
+    associatedtype Output
+    
+    var disposeBag: DisposeBag { get set }
+    
+    func transform(input: Input) -> Output
+}
+
+protocol CellModelBindable {
+    associatedtype CellModelType
+    var disposeBag: DisposeBag { get set }
+    var cellModel: CellModelType! { get set }
+    
+    func bindCellModel()
+}
+
+
 @objc protocol LayoutProtocol: AnyObject {
     @objc optional func setValue()
     func setSubViews()
