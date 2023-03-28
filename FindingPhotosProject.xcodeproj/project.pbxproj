@@ -10,6 +10,10 @@
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
+		638C1AF729D18B160028F2FA /* RxDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */; };
+		63AA9B3E29D2B12600CF7F4B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B3D29D2B12600CF7F4B /* MapViewModel.swift */; };
+		63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */; };
+		63AA9B4629D2C2E300CF7F4B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4529D2C2E300CF7F4B /* LocationService.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -32,6 +36,10 @@
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDelegateProxy.swift; sourceTree = "<group>"; };
+		63AA9B3D29D2B12600CF7F4B /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapViewModel.swift; path = ../../../../../MapViewModel.swift; sourceTree = "<group>"; };
+		63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapViewModel.swift; path = ../../../../../MapViewModel.swift; sourceTree = "<group>"; };
+		63AA9B4529D2C2E300CF7F4B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +82,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		63AA9B4029D2B42D00CF7F4B /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		63AA9B4429D2C19700CF7F4B /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				63AA9B4529D2C2E300CF7F4B /* LocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		A92778B633A385BE7DBA7F6B /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +134,7 @@
 				AD4580F629CC824200B8D8A6 /* Models */,
 				AD4580F529CC823F00B8D8A6 /* View */,
 				AD4580F429CC823C00B8D8A6 /* ViewModels */,
+				63AA9B4429D2C19700CF7F4B /* Services */,
 				AD4580F229CC823400B8D8A6 /* APIs */,
 				AD4580F129CC821B00B8D8A6 /* Utils */,
 				AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */,
@@ -122,6 +147,7 @@
 			children = (
 				AD45810A29CC878000B8D8A6 /* Extensions.swift */,
 				632977BE29D047F1004FDD85 /* Protocols.swift */,
+				638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -149,6 +175,7 @@
 		AD4580F429CC823C00B8D8A6 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				63AA9B4029D2B42D00CF7F4B /* Map */,
 				AD45810929CC872E00B8D8A6 /* Login */,
 				AD45810829CC872B00B8D8A6 /* Map */,
 				AD45810729CC872A00B8D8A6 /* Photo */,
@@ -308,6 +335,7 @@
 		AD45810829CC872B00B8D8A6 /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				63AA9B3D29D2B12600CF7F4B /* MapViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -440,14 +468,18 @@
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
 				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
+				638C1AF729D18B160028F2FA /* RxDelegateProxy.swift in Sources */,
 				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
+				63AA9B3E29D2B12600CF7F4B /* MapViewModel.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
+				63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
+				63AA9B4629D2C2E300CF7F4B /* LocationService.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

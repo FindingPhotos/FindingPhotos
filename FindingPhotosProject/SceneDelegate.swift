@@ -18,8 +18,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
 
         let tabBarVC = UITabBarController()
-        
-        let vc1 = UINavigationController(rootViewController: MapViewController())
+        let mapViewModel = MapViewModel()
+        let mapViewController = MapViewController()
+        mapViewController.bind(viewModel: mapViewModel)
+        let vc1 = UINavigationController(rootViewController: mapViewController)
         let vc2 = UINavigationController(rootViewController: PhotoViewController())
         let vc3 = UINavigationController(rootViewController: SettingViewController())
 
