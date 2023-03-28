@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import CoreLocation
+
+import RxSwift
+import RxCocoa
 
 extension UIColor {
     // 나누기 255 할 필요 없음, alpha값 1로 고정
@@ -25,4 +29,37 @@ extension ViewModelBindable where Self: UIViewController {
         loadViewIfNeeded()
         bindViewModel()
     }
+}
+
+typealias CLLocationsEvent = (manager: CLLocationManager, locations: [CLLocation])
+
+extension Reactive where Base: CLLocationManager {
+    var delegate: RxCLLocationManagerDelegateProxy {
+            return RxCLLocationManagerDelegateProxy.proxy(for: self.base)
+        }
+    
+    var locationManagerDidChangeAuthorization: Observable<CLLocationManager> {
+        if #available(iOS 14.0, *) {
+            return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManagerDidChangeAuthorization(_:)))
+                .map { parameters in
+                    return parameters[0] as! CLLocationManager
+                }
+        } else {
+            return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didChangeAuthorization:)))
+                .map { parameters in
+                    return parameters[0] as! CLLocationManager
+                }
+        }
+    }
+    var didUpdateLocations: ControlEvent<CLLocationsEvent> {
+            let source: Observable<CLLocationsEvent> = delegate
+                .methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didUpdateLocations:)))
+                .map { parameters in
+                    let manager = parameters[0] as! CLLocationManager
+                    let locations = parameters[1] as! [CLLocation]
+                    let event: CLLocationsEvent = (manager, locations)
+                    return event
+                }
+            return ControlEvent(events: source)
+        }
 }
