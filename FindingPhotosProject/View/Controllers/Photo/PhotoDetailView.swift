@@ -6,37 +6,49 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 
 class PhotoDetailView: UIView {
     
     // MARK: - Properties
     
-    let disposeBag = DisposeBag()
-    
-    let datePicker = UIDatePicker()
     let imagePicker = UIImagePickerController()
+
+    lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.locale = Locale(identifier: "ko_KR")
+        
+        // ⚠️ 이거 안됨
+        datePicker.backgroundColor = .clear
+
+        return datePicker
+    }()
     
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleToFill
-        imageView.image = UIImage(systemName: "addphoto")
-        imageView.frame = CGRect(x: 0, y: 0, width: 350, height: 500)
-        imageView.layer.cornerRadius = 30
+        imageView.contentMode = .scaleAspectFill
+        imageView.image = UIImage(named: "addphoto")
+        imageView.layer.cornerRadius = 20
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     lazy var addPhotoButton: UIButton = {
-       let button = UIButton()
-        button.backgroundColor = .darkGray
-        button.setTitle("왜안나와", for: .normal)
+        let button = UIButton()
+        button.backgroundColor = .clear
         return button
     }()
     
+    lazy var memoImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "memo")
+        return imageView
+    }()
+    
     lazy var memoTextView: UITextView = {
-       let textView = UITextView()
-        textView.backgroundColor = .gray
+        let textView = UITextView()
+        textView.backgroundColor = .superLightGrey
+        textView.layer.cornerRadius = 20
         return textView
     }()
     
@@ -49,70 +61,66 @@ class PhotoDetailView: UIView {
         configureUI()
         setSubViews()
         setLayouts()
-        bindButton()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Selectors
-    
-    @objc func saveButtonTapped(_ sender: Any) {
-        print("사진 저장")
-    }
-    
-    
+
     // MARK: - Helpers
     
     private func configureUI() {
         self.backgroundColor = .white
-        datePicker.datePickerMode = .date
-
     }
     
     private func setSubViews() {
         self.addSubview(datePicker)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
+        self.addSubview(memoImage)
         self.addSubview(memoTextView)
     }
+    
+    
     
     private func setLayouts() {
         datePicker.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(130)
+            make.top.equalToSuperview().offset(110)
         }
         
         photoImageView.snp.makeConstraints { make in
             make.centerX.equalTo(datePicker)
-            make.top.equalTo(datePicker.snp.bottom).offset(20)
+            make.top.equalTo(datePicker.snp.bottom).offset(10)
+            make.width.equalTo(350)
+            make.height.equalTo(470)
         }
         
         addPhotoButton.snp.makeConstraints { make in
-            make.centerX.equalTo(photoImageView)
-            make.size.equalTo(photoImageView)
-            make.top.equalTo(datePicker.snp.bottom).offset(20)
+            make.centerX.equalTo(photoImageView.snp.centerX)
+            make.centerY.equalTo(photoImageView.snp.centerY)
+            make.width.equalTo(photoImageView.snp.width)
+            make.height.equalTo(photoImageView.snp.height)
+        }
+        
+        memoImage.snp.makeConstraints { make in
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(28)
+            make.width.equalTo(75)
+            make.height.equalTo(30)
         }
         
         memoTextView.snp.makeConstraints { make in
             make.width.equalTo(350)
             make.height.equalTo(85)
-            make.top.equalTo(datePicker.snp.bottom).offset(300)
+            make.top.equalTo(memoImage.snp.bottom).offset(-10)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
+        
+        memoTextView.layer.zPosition = CGFloat(-1)
     }
     
-    func bindButton() {
-        addPhotoButton.rx.tap
-            .subscribe(onNext: {
-                print("이미지피커열기")
-            })
-            .disposed(by: disposeBag)
-    }
     
- 
 }
-
-
