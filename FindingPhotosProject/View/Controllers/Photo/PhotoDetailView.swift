@@ -52,12 +52,10 @@ class PhotoDetailView: UIView {
         return textView
     }()
     
-    
     // MARK: - LifeCycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         configureUI()
         setSubViews()
         setLayouts()
@@ -81,8 +79,6 @@ class PhotoDetailView: UIView {
         self.addSubview(memoImage)
         self.addSubview(memoTextView)
     }
-    
-    
     
     private func setLayouts() {
         datePicker.snp.makeConstraints { make in

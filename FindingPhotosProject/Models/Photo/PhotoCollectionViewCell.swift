@@ -14,19 +14,26 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier = "PhotoCollectionViewCell"
-    private let imageView = UIImageView()
+    private var imageView = UIImageView()
     
     
     // MARK: - LifeCycle
-
-    
+    override func layoutSubviews() {
+        setSubViews()
+        setLayout()
+    }
     // MARK: - Helpers
 
     func setup(with image: UIImage) {
-        addSubview(imageView)
-        imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
-        imageView.backgroundColor = .darkGray
+        imageView.image = image
     }
-    
-    
+}
+
+extension PhotoCollectionViewCell: LayoutProtocol {
+    func setSubViews() {
+        addSubview(imageView)
+    }
+    func setLayout() {
+        imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
+    }
 }

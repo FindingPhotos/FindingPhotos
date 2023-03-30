@@ -14,10 +14,11 @@ final class PhotoViewController: UIViewController {
     
     // MARK: - Properties
     
-    var imagePicker = UIImagePickerController()
-    let detailViewController = PhotoDetailViewController()
-
-    
+    var images = [UIImage?]() {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0.5
@@ -55,6 +56,7 @@ final class PhotoViewController: UIViewController {
     
     @objc func nextButtonTapped(_ sender: Any) {
         print("DetailVC로 화면 전환")
+        let detailViewController = PhotoDetailViewController()
         detailViewController.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
@@ -75,10 +77,6 @@ final class PhotoViewController: UIViewController {
     }
     
     private func collectionViewSetup() {
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
         view.addSubview(collectionView)
         
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
@@ -101,18 +99,17 @@ final class PhotoViewController: UIViewController {
 extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return images.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell
-        
-        cell?.setup(with: UIImage())
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
         
+        cell.setup(with: images[indexPath.row]!)
         
-        return cell ?? UICollectionViewCell()
+        return cell
     }
     
 }

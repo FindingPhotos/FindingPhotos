@@ -17,25 +17,19 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    private var photoDetailView: PhotoDetailView!
+    private lazy var photoDetailView = PhotoDetailView(frame: self.view.frame)
     private var imagePicker = UIImagePickerController()
-    private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
-    
+    private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus(
+    )
     // iPhone 내부에 저장된 realm 파일의 주소를 찾아서 알려주는 코드
     let localRealm = try! Realm()
     
     // MARK: - LifeCycle
     
-    override func loadView() {
-        super.loadView()
-        
-        photoDetailView = PhotoDetailView(frame: self.view.frame)
-        self.view = photoDetailView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        imagePicker.delegate = self
+        self.view = photoDetailView
         configureUI()
         configureNavigation()
         bindButton()
@@ -46,6 +40,9 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     @objc func saveButtonTapped() {
         print("사진 저장")
+        navigationController?.popViewController(animated: true)
+        let photoViewController = navigationController?.viewControllers[0] as! PhotoViewController
+        photoViewController.images.append(photoDetailView.photoImageView.image)
 //        let task = PhotoData(date: photoDetailView.datePicker.date, imageData: photoDetailView.photoImageView.image!, memo: photoDetailView.memoTextView.text!)
         
 //        try! localRealm.write {
@@ -69,24 +66,29 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     }
     
     
-    // ⚠️ 여기 수정
+//    // ⚠️ 여기 수정
     func bindButton() {
         photoDetailView.addPhotoButton.rx.tap
-            .subscribe(onNext: {
-                self.openImagePicker()
+            .withUnretained(self)
+            .subscribe(onNext: { photoDetailViewController, _ in
+                photoDetailViewController.openImagePicker()
             })
             .disposed(by: disposeBag)
-        
-        imagePicker.rx.didFinishPickingMediaWithInfo
-        // ⚠️ 여기 정리
-            .withUnretained(self)
-            .bind { photoDetailViewController ,info in
-                photoDetailViewController.dismiss(animated: true, completion: nil)
-                if let img = info[.originalImage] as? UIImage {
-                    photoDetailViewController.photoDetailView.photoImageView.image = img
-                }
-            }
-            .disposed(by: disposeBag)
+//            .subscribe(onNext: { photoDetailViewController
+//                photode.openImagePicker()
+//            })
+//            .disposed(by: disposeBag)
+//
+//        imagePicker.rx.didFinishPickingMediaWithInfo
+//        // ⚠️ 여기 정리
+//            .withUnretained(self)
+//            .bind { photoDetailViewController ,info in
+//                photoDetailViewController.dismiss(animated: true, completion: nil)
+//                if let img = info[.originalImage] as? UIImage {
+//                    photoDetailViewController.photoDetailView.photoImageView.image = img
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
     
     
@@ -96,10 +98,26 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         print("Realm is located at", localRealm.configuration.fileURL!)
     }
     
+    deinit {
+        print("deinit!!!")
+    }
 }
 
 // MARK: - 이미지 할당
-extension PhotoDetailViewController {
+//
+//extension PhotoDetailViewController {
+//    func openImagePicker() {
+//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+//            imagePicker.sourceType = .photoLibrary
+//            imagePicker.allowsEditing = false
+//            present(imagePicker, animated: true, completion: nil)
+//        }
+//    }
+//}
+
+
+
+extension PhotoDetailViewController: UIImagePickerControllerDelegate {
     func openImagePicker() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePicker.sourceType = .photoLibrary
@@ -107,5 +125,12 @@ extension PhotoDetailViewController {
             present(imagePicker, animated: true, completion: nil)
         }
     }
-}
 
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
+            dismiss(animated: true, completion: nil)
+            if let img = info[.originalImage] as? UIImage {
+                self.photoDetailView.photoImageView.image = img
+            }
+        }
+}
