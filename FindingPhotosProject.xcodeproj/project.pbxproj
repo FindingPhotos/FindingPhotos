@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
-		6303B89929D56B6800A79F45 /* StudioInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6303B89829D56B6800A79F45 /* StudioInformationView.swift */; };
+		6303B89D29D5906800A79F45 /* StudioInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6303B89C29D5906800A79F45 /* StudioInformationView.swift */; };
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
 		634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A720D29D2FB670066F767 /* PhotoStudios.swift */; };
@@ -35,7 +35,7 @@
 
 /* Begin PBXFileReference section */
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
-		6303B89829D56B6800A79F45 /* StudioInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StudioInformationView.swift; path = ../../../../../StudioInformationView.swift; sourceTree = "<group>"; };
+		6303B89C29D5906800A79F45 /* StudioInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudioInformationView.swift; sourceTree = "<group>"; };
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		634A720D29D2FB670066F767 /* PhotoStudios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStudios.swift; sourceTree = "<group>"; };
@@ -82,6 +82,15 @@
 				DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6303B89A29D58F4E00A79F45 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				6303B89C29D5906800A79F45 /* StudioInformationView.swift */,
+			);
+			name = Map;
+			path = Views/Map;
 			sourceTree = "<group>";
 		};
 		63AA9B4029D2B42D00CF7F4B /* Map */ = {
@@ -187,6 +196,7 @@
 		AD4580F529CC823F00B8D8A6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				6303B89A29D58F4E00A79F45 /* Map */,
 				AD4580F929CC85DA00B8D8A6 /* Views */,
 				AD4580F829CC85C300B8D8A6 /* Cells */,
 				AD4580F329CC823900B8D8A6 /* Controllers */,
@@ -228,7 +238,6 @@
 			isa = PBXGroup;
 			children = (
 				AD45810229CC86F200B8D8A6 /* Login */,
-				AD45810329CC86FE00B8D8A6 /* Map */,
 				AD45810429CC870400B8D8A6 /* Photo */,
 				AD45810529CC870F00B8D8A6 /* Setting */,
 			);
@@ -295,14 +304,6 @@
 			children = (
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		AD45810329CC86FE00B8D8A6 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				6303B89829D56B6800A79F45 /* StudioInformationView.swift */,
-			);
-			path = Map;
 			sourceTree = "<group>";
 		};
 		AD45810429CC870400B8D8A6 /* Photo */ = {
@@ -471,7 +472,7 @@
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
 				634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */,
-				6303B89929D56B6800A79F45 /* StudioInformationView.swift in Sources */,
+				6303B89D29D5906800A79F45 /* StudioInformationView.swift in Sources */,
 				63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
