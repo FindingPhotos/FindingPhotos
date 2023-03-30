@@ -10,7 +10,7 @@ import CoreLocation
 
 import RxSwift
 import RxCocoa
-
+// MARK: - UIColor Extension
 extension UIColor {
     // 나누기 255 할 필요 없음, alpha값 1로 고정
     convenience init(red: Int, green: Int, blue: Int) {
@@ -22,7 +22,7 @@ extension UIColor {
     static let darked = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     static let buttonYellow = UIColor(red: 0.962, green: 0.837, blue: 0.393, alpha: 1)
 }
-
+// MARK: - ViewModelBindable Extension
 extension ViewModelBindable where Self: UIViewController {
     func bind(viewModel: ViewModel) {
         self.viewModel = viewModel
@@ -30,26 +30,21 @@ extension ViewModelBindable where Self: UIViewController {
         bindViewModel()
     }
 }
-
+// MARK: - Reactive Extension
 typealias CLLocationsEvent = (manager: CLLocationManager, locations: [CLLocation])
+typealias CLErrorEvent = (manager: CLLocationManager, error: Error)
 
 extension Reactive where Base: CLLocationManager {
+    
     var delegate: RxCLLocationManagerDelegateProxy {
             return RxCLLocationManagerDelegateProxy.proxy(for: self.base)
         }
     
     var locationManagerDidChangeAuthorization: Observable<CLLocationManager> {
-        if #available(iOS 14.0, *) {
             return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManagerDidChangeAuthorization(_:)))
                 .map { parameters in
                     return parameters[0] as! CLLocationManager
                 }
-        } else {
-            return delegate.methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didChangeAuthorization:)))
-                .map { parameters in
-                    return parameters[0] as! CLLocationManager
-                }
-        }
     }
     var didUpdateLocations: ControlEvent<CLLocationsEvent> {
             let source: Observable<CLLocationsEvent> = delegate
@@ -60,6 +55,20 @@ extension Reactive where Base: CLLocationManager {
                     let event: CLLocationsEvent = (manager, locations)
                     return event
                 }
+            return ControlEvent(events: source)
+        }
+    var didError: ControlEvent<CLErrorEvent> {
+            let generalError: Observable<CLErrorEvent> = delegate
+            .methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didFailWithError:)))
+            .map { parameters in
+                return ( parameters[0] as! CLLocationManager, parameters[1] as! Error)
+            }
+            let updatesError: Observable<CLErrorEvent> = delegate
+            .methodInvoked(#selector(CLLocationManagerDelegate.locationManager(_:didFinishDeferredUpdatesWithError:)))
+            .map { parameters in
+                return ( parameters[0] as! CLLocationManager, parameters[1] as! Error)
+            }
+            let source = Observable.of(generalError, updatesError).merge()
             return ControlEvent(events: source)
         }
 }

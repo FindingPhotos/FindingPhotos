@@ -10,6 +10,7 @@
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
+		634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A720D29D2FB670066F767 /* PhotoStudios.swift */; };
 		638C1AF729D18B160028F2FA /* RxDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */; };
 		63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */; };
 		63AA9B4629D2C2E300CF7F4B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4529D2C2E300CF7F4B /* LocationService.swift */; };
@@ -35,6 +36,7 @@
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		634A720D29D2FB670066F767 /* PhotoStudios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStudios.swift; sourceTree = "<group>"; };
 		638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDelegateProxy.swift; sourceTree = "<group>"; };
 		63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		63AA9B4529D2C2E300CF7F4B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -129,7 +131,6 @@
 				AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */,
 				AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */,
 				AD4580F729CC828900B8D8A6 /* Resources */,
-				AD4580F629CC824200B8D8A6 /* Models */,
 				AD4580F529CC823F00B8D8A6 /* View */,
 				AD4580F429CC823C00B8D8A6 /* ViewModels */,
 				63AA9B4429D2C19700CF7F4B /* Services */,
@@ -208,6 +209,7 @@
 				AD4580DA29CC71C700B8D8A6 /* Assets.xcassets */,
 				AD4580DC29CC71C700B8D8A6 /* LaunchScreen.storyboard */,
 				AD4580DF29CC71C700B8D8A6 /* Info.plist */,
+				AD4580F629CC824200B8D8A6 /* Models */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -249,6 +251,7 @@
 		AD4580FD29CC868500B8D8A6 /* Location */ = {
 			isa = PBXGroup;
 			children = (
+				634A720D29D2FB670066F767 /* PhotoStudios.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
+				634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */,
 				63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
@@ -536,7 +540,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -590,7 +594,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -616,7 +620,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -649,7 +653,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -12,6 +12,7 @@ import NMapsMap
 import SnapKit
 
 import RxSwift
+import RxViewController
 
 final class MapViewController: UIViewController, ViewModelBindable {
     // MARK: - Properties
@@ -24,7 +25,6 @@ final class MapViewController: UIViewController, ViewModelBindable {
         mapView.positionMode = .direction
         return mapView
     }()
-    private var locationManager: CLLocationManager!
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -35,28 +35,34 @@ final class MapViewController: UIViewController, ViewModelBindable {
     }
     // MARK: - helpers
     func bindViewModel() {
-        if #available(iOS 14.0, *) {
-            locationManager.rx.locationManagerDidChangeAuthorization
-                .withUnretained(self)
-                .bind { mapViewController, locationManager in
-                    locationManager.startUpdatingLocation()
-                }
-                .disposed(by: disposeBag)
-        }
         // MARK: - ViewModel Input
-        locationManager.rx.didUpdateLocations
-            .bind(to: viewModel.input.locationEvent)
+        rx.viewWillAppear
+            .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         // MARK: - ViewModel Output
-        viewModel.output.currentLocation
+        viewModel.output.photoStudios
+            .flatMap { photoStudios in
+                Observable.from(photoStudios.items, scheduler: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
+            }
+            .map { item in
+                NMFMarker(position: NMGTm128(x: Double(item.mapx)!, y: Double(item.mapy)!).toLatLng())
+            }
+            .observe(on: MainScheduler.instance)
             .withUnretained(self)
-            .bind { mapViewController ,location in
-                let cameraUpdate = NMFCameraUpdate(scrollTo: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
-                cameraUpdate.animation = .easeIn
-                
-                mapViewController.mapView.moveCamera(cameraUpdate)
-                let marker = NMFMarker(position: NMGLatLng(lat: location.coordinate.latitude, lng: location.coordinate.longitude))
+            .subscribe(onNext: { mapViewController, marker in
                 marker.mapView = mapViewController.mapView
+            })
+            .disposed(by: disposeBag)
+        viewModel.output.deinied
+            .withUnretained(self)
+            .bind(onNext: { mapViewController, _ in
+                let alertController = mapViewController.viewModel.presentLocationPermissionAlertController()
+                mapViewController.present(alertController, animated: true)
+            })
+            .disposed(by: disposeBag)
+        viewModel.output.didError
+            .bind { event in
+                print(event.error.localizedDescription)
             }
             .disposed(by: disposeBag)
     }
@@ -66,7 +72,6 @@ extension MapViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
         navigationItem.title = "근처 사진관 찾기"
-        locationManager = CLLocationManager()
     }
     func setSubViews() {
         view.addSubview(mapView)

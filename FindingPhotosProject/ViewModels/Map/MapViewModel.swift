@@ -15,11 +15,12 @@ import RxCocoa
 class MapViewModel: ViewModelType {
     
     struct Input {
-        let locationEvent = PublishRelay<CLLocationsEvent>()
+        let viewWillAppear = BehaviorRelay<Bool>(value: false)
     }
     struct Output {
-        let currentLocation: Observable<CLLocation>
-//        let placeAddress: Observable<String?>
+        let photoStudios: Observable<PhotoStudios>
+        let deinied: Observable<CLLocationManager>
+        let didError: ControlEvent<CLErrorEvent>
     }
     
     var disposeBag = DisposeBag()
@@ -27,19 +28,56 @@ class MapViewModel: ViewModelType {
     lazy var output = transform(input: input)
     
     func transform(input: Input) -> Output {
-        let currentLocation = input.locationEvent
+        
+        let manager = input.viewWillAppear
+            .flatMap { _ in
+                LocationService.shared.locationManager.rx.locationManagerDidChangeAuthorization
+            }
+        manager.filter { return $0.authorizationStatus == .notDetermined}
+            .subscribe(onNext: { manager in
+                manager.requestWhenInUseAuthorization()
+            })
+            .disposed(by: disposeBag)
+        manager.filter { return $0.authorizationStatus == .authorizedWhenInUse }
+            .subscribe(onNext: { manager in
+                manager.requestLocation()
+            })
+            .disposed(by: disposeBag)
+        let denied = manager.filter { return $0.authorizationStatus == .denied }
+        
+        let didError = LocationService.shared.locationManager.rx.didError
+        
+        let photoStudios = LocationService.shared.locationManager.rx.didUpdateLocations
             .map { (manager: CLLocationManager, locations: [CLLocation]) in
                 guard let currentIatitude = manager.location?.coordinate.latitude else {
                     return CLLocation() }
                 guard let currentLongitude = manager.location?.coordinate.longitude else {
                     return CLLocation() }
+                print(currentIatitude, currentLongitude)
                 return CLLocation(latitude: currentIatitude, longitude: currentLongitude)
             }
-        
-        currentLocation
             .flatMap { location in
                 LocationService.shared.getPlaceMark(location: location)
             }
-        return Output(currentLocation: currentLocation)
+            .flatMap { currentAddress in
+                LocationService.shared.getPhthoStudios(currentAddress: currentAddress)
+            }
+        
+        return Output(photoStudios: photoStudios,
+                      deinied: denied,
+                      didError: didError)
+    }
+    func presentLocationPermissionAlertController() -> UIAlertController {
+        let alert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        let settingAction = UIAlertAction(title: "설정으로 이동", style: .default) { _ in
+            guard let appSetting = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(appSetting)
+        }
+        alert.addAction(cancel)
+        alert.addAction(settingAction)
+        
+        return alert
     }
 }
