@@ -28,6 +28,14 @@
 		AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */; };
 		AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */; };
 		AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812929D1745600B8D8A6 /* SettingModel.swift */; };
+		AD45812C29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812B29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift */; };
+		AD45812E29D2F75B00B8D8A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812D29D2F75B00B8D8A6 /* Constants.swift */; };
+		AD45813029D2FA5B00B8D8A6 /* ModifyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812F29D2FA5B00B8D8A6 /* ModifyProfileView.swift */; };
+		AD45813229D3101600B8D8A6 /* RxDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */; };
+		AD45813429D4682500B8D8A6 /* ModifyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813329D4682500B8D8A6 /* ModifyProfileViewModel.swift */; };
+		AD45813629D468F400B8D8A6 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813529D468F400B8D8A6 /* UserModel.swift */; };
+		AD45813A29D5592F00B8D8A6 /* IQKeyboardManagerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */; };
+		AD45813C29D5628A00B8D8A6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813B29D5628A00B8D8A6 /* SettingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +62,14 @@
 		AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
 		AD45812929D1745600B8D8A6 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
+		AD45812B29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewController.swift; sourceTree = "<group>"; };
+		AD45812D29D2F75B00B8D8A6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		AD45812F29D2FA5B00B8D8A6 /* ModifyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileView.swift; sourceTree = "<group>"; };
+		AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDelegateProxy.swift; sourceTree = "<group>"; };
+		AD45813329D4682500B8D8A6 /* ModifyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewModel.swift; sourceTree = "<group>"; };
+		AD45813529D468F400B8D8A6 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IQKeyboardManagerObject.swift; sourceTree = "<group>"; };
+		AD45813B29D5628A00B8D8A6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -126,6 +142,9 @@
 			children = (
 				AD45810A29CC878000B8D8A6 /* Extensions.swift */,
 				632977BE29D047F1004FDD85 /* Protocols.swift */,
+				AD45812D29D2F75B00B8D8A6 /* Constants.swift */,
+				AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */,
+				AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -237,6 +256,7 @@
 		AD4580FE29CC868600B8D8A6 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				AD45813529D468F400B8D8A6 /* UserModel.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -245,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				AD4580EF29CC800C00B8D8A6 /* SettingViewController.swift */,
+				AD45812B29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -292,6 +313,8 @@
 			children = (
 				AD45812129D0749300B8D8A6 /* LogoutView.swift */,
 				AD45812029D0749300B8D8A6 /* ProfileView.swift */,
+				AD45812F29D2FA5B00B8D8A6 /* ModifyProfileView.swift */,
+				AD45813B29D5628A00B8D8A6 /* SettingView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -300,6 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */,
+				AD45813329D4682500B8D8A6 /* ModifyProfileViewModel.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -455,16 +479,24 @@
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
 				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
 				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
+				AD45813A29D5592F00B8D8A6 /* IQKeyboardManagerObject.swift in Sources */,
+				AD45813429D4682500B8D8A6 /* ModifyProfileViewModel.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
+				AD45813629D468F400B8D8A6 /* UserModel.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */,
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
 				AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */,
+				AD45812C29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
+				AD45813229D3101600B8D8A6 /* RxDelegateProxy.swift in Sources */,
+				AD45813029D2FA5B00B8D8A6 /* ModifyProfileView.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
+				AD45813C29D5628A00B8D8A6 /* SettingView.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
+				AD45812E29D2F75B00B8D8A6 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +564,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -586,7 +618,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -610,7 +642,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -641,7 +673,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
