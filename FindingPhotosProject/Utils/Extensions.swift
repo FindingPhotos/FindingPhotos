@@ -22,6 +22,30 @@ extension UIColor {
     static let darked = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     static let buttonYellow = UIColor(red: 0.962, green: 0.837, blue: 0.393, alpha: 1)
 }
+// MARK: - String Extension
+extension String {
+    // html 태그 제거 + html entity들 디코딩.
+    var htmlEscaped: String {
+        guard let encodedData = self.data(using: .utf8) else {
+            return self
+        }
+        
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        
+        do {
+            let attributed = try NSAttributedString(data: encodedData,
+                                                    options: options,
+                                                    documentAttributes: nil)
+            return attributed.string
+        } catch {
+            return self
+        }
+    }
+}
+
 // MARK: - ViewModelBindable Extension
 extension ViewModelBindable where Self: UIViewController {
     func bind(viewModel: ViewModel) {
