@@ -16,31 +16,14 @@ import MessageUI
 final class SettingViewController: UIViewController {
     
     // MARK: - Properties
+
+    var settingView = SettingView()
+    lazy var tableView = settingView.tableView
     
     var viewModel = SettingViewModel()
     var disposeBag = DisposeBag()
-    
     private lazy var dataSource = viewModel.dataSource(tableView: tableView)
-
-    private let profileView = ProfileView()
-    private let logoutView = LogoutView()
     
-    private lazy var underBarView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .tabButtonlightGrey
-        return view
-    }()
-    
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.register(SettingCell.self, forCellReuseIdentifier: SettingCell.identifier)
-        tableView.separatorStyle = .none
-        tableView.isScrollEnabled = false
-        print("DEBUG: inset:\(tableView.separatorInset.right)")
-
-        return tableView
-    }()
-
     
     // MARK: - Lifecycle
     
@@ -49,20 +32,41 @@ final class SettingViewController: UIViewController {
         setSubViews()
         setLayout()
         setValue()
+        bindTableView()
+        bindViewModel()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        setupBinding()
-    }
-    
     // MARK: - helpers
+    func bindViewModel() {
+        //input
+       
+        
+        // Output
+        viewModel.output.userName
+            .bind(to: settingView.nameLabel.rx.text)
+            .disposed(by: disposeBag)
+        viewModel.output.userImage
+            .bind(to: settingView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
+    }
     
-    func setupBinding() {
+    func bindTableView() {
         viewModel.settingDatas
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource(tableView: tableView)))
             .disposed(by: disposeBag)
 
-        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+        tableView.rx.itemSelected
+            .subscribe { indexpath in
+                indexpath.row
+            }
+        
+        settingView.profileSetButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { settingViewController, event in
+                settingViewController.navigationController?.pushViewController(ModifyProfileViewController(), animated: true)
+            })
+            .disposed(by: disposeBag)
     }
 
 }
@@ -75,33 +79,12 @@ extension SettingViewController: LayoutProtocol {
     }
     
     func setSubViews() {
-        [profileView, underBarView, tableView, logoutView].forEach { self.view.addSubview($0) }
+        view.addSubview(settingView)
     }
     
     func setLayout() {
-        profileView.snp.makeConstraints { make in
-            make.top.equalTo(self.view.safeAreaLayoutGuide).inset(30)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
-        }
-        underBarView.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.height.equalTo(1)
-        }
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(underBarView.snp.bottom).offset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.height.lessThanOrEqualTo(300)
-        }
-        logoutView.snp.makeConstraints { make in
-            make.top.equalTo(tableView.snp.bottom).offset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
-            make.height.equalTo(50)
+        settingView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
     }
 }
@@ -129,7 +112,6 @@ extension SettingViewController: UITableViewDelegate {
         }
     }
 }
-
 
 extension SettingViewController: MFMailComposeViewControllerDelegate {
     

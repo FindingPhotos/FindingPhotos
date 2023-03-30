@@ -16,8 +16,33 @@ enum SettingSection: String {
     case developerInformation = "개발자 정보"
 }
 
-class SettingViewModel{
+final class SettingViewModel: ViewModelType {
     
+    struct Input {
+        let user = BehaviorRelay<UserModel>(value: UserModel(name: "John"))
+        let logoutButtonTapped = PublishRelay<Void>()
+        let signoutButtonTapped = PublishRelay<Void>()
+    }
+    struct Output {
+        let userName: Observable<String>
+        let userImage: Observable<UIImage?>
+    }
+    var disposeBag = DisposeBag()
+    
+    let input = Input()
+    lazy var output = transform(input: input)
+
+    
+    func transform(input: Input) -> Output {
+
+        
+        
+        let userName = input.user.map { return $0.name }
+        let userImage = input.user.map { return $0.profileImage }
+            
+        return Output(userName: userName,
+                      userImage: userImage)
+    }
     
     let settingDatas = BehaviorRelay<[SectionOfDocument]>(value: [
         SectionOfDocument(header: SettingSection.policies.rawValue,

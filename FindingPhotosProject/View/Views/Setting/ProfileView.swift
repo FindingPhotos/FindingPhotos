@@ -18,7 +18,7 @@ final class ProfileView: UIView {
         return label
     }()
     
-    private lazy var profileSetButton: UIButton = {
+    lazy var profileSetButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)
