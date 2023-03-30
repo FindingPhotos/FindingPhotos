@@ -10,7 +10,7 @@ import CoreLocation
 
 import RxSwift
 
-class LocationService {
+final class LocationService {
     
     static let shared = LocationService()
     let locationManager: CLLocationManager!
@@ -42,10 +42,10 @@ class LocationService {
             // task
             let session = URLSession(configuration: .default)
             let dataTask = session.dataTask(with: urlRequest) { data, response, error in
-                guard error == nil else {
-                    print(error?.localizedDescription)
-                    return
+                if let error = error {
+                    print(error.localizedDescription)
                 }
+                    
                 guard let data else { return }
                 guard let photoStudios = self.parseJSON(data) else { return }
                 observer.onNext(photoStudios)

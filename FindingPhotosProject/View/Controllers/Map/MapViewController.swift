@@ -25,8 +25,8 @@ final class MapViewController: UIViewController, ViewModelBindable {
         mapView.positionMode = .direction
         return mapView
     }()
+    private let studioInformationView = StudioInformationView()
     // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
@@ -40,17 +40,16 @@ final class MapViewController: UIViewController, ViewModelBindable {
             .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         // MARK: - ViewModel Output
-        viewModel.output.photoStudios
-            .flatMap { photoStudios in
-                Observable.from(photoStudios.items, scheduler: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
-            }
-            .map { item in
-                NMFMarker(position: NMGTm128(x: Double(item.mapx)!, y: Double(item.mapy)!).toLatLng())
-            }
+        viewModel.output.marker
             .observe(on: MainScheduler.instance)
             .withUnretained(self)
             .subscribe(onNext: { mapViewController, marker in
                 marker.mapView = mapViewController.mapView
+                marker.touchHandler = { [weak self] overlay -> Bool in
+                    guard let studioInformation = marker.userInfo["studioInformation"] as? Item else { return false }
+                    self?.studioInformationView.bind(item: studioInformation)
+                    return true
+                }
             })
             .disposed(by: disposeBag)
         viewModel.output.deinied
@@ -75,11 +74,16 @@ extension MapViewController: LayoutProtocol {
     }
     func setSubViews() {
         view.addSubview(mapView)
+        view.addSubview(studioInformationView)
     }
     func setLayout() {
         mapView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.leading.trailing.equalToSuperview()
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+        }
+        studioInformationView.snp.makeConstraints { make in
+            make.bottom.equalTo(mapView.snp.bottom)
+            make.size.equalTo(CGSize(width: view.frame.width, height: 70))
         }
     }
 }
