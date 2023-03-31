@@ -44,7 +44,12 @@ final class SettingViewController: UIViewController {
     }
     func bindViewModel() {
         //input
-       
+        settingView.logoutButton.rx.tap
+            .bind(to: viewModel.input.logoutButtonTapped)
+            .disposed(by: disposeBag)
+        settingView.signoutButton.rx.tap
+            .bind(to: viewModel.input.signoutButtonTapped)
+            .disposed(by: disposeBag)
         
         // Output
         viewModel.output.userName
@@ -61,11 +66,7 @@ final class SettingViewController: UIViewController {
             .bind(to: tableView.rx.items(dataSource: viewModel.dataSource(tableView: tableView)))
             .disposed(by: disposeBag)
 
-//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-        tableView.rx.itemSelected
-            .subscribe { indexpath in
-                indexpath.row
-            }
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         
         settingView.profileSetButton.rx.tap
             .withUnretained(self)

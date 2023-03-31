@@ -40,8 +40,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
  */
-        window?.rootViewController = LoginViewController()
-        window?.makeKeyAndVisible()
+        guard let window else { return }
+        MainViewManager.shared.show(in: window)
+        window.makeKeyAndVisible()
     }
 }
 

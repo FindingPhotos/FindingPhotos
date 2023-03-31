@@ -7,11 +7,11 @@
 
 import SnapKit
 
-class SignInViewController: UIViewController {
+final class SignInViewController: UIViewController {
     
     // MARK: - Properties
     
-    let signInView = SignInView()
+    private let signInView = SignInView()
     
     // MARK: - Lifecycle
     

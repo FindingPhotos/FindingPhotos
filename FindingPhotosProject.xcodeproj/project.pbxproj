@@ -11,6 +11,9 @@
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
 		AD17E4B129D679DA009E1E22 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B029D679DA009E1E22 /* LoginViewModel.swift */; };
+		AD17E4B329D69E52009E1E22 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B229D69E52009E1E22 /* AuthManager.swift */; };
+		AD17E4B529D6A57A009E1E22 /* UserDefaultsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B429D6A57A009E1E22 /* UserDefaultsUtil.swift */; };
+		AD17E4B729D6A745009E1E22 /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B629D6A745009E1E22 /* MainViewManager.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -47,6 +50,9 @@
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		AD17E4B029D679DA009E1E22 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		AD17E4B229D69E52009E1E22 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
+		AD17E4B429D6A57A009E1E22 /* UserDefaultsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtil.swift; sourceTree = "<group>"; };
+		AD17E4B629D6A745009E1E22 /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +140,7 @@
 			children = (
 				AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */,
 				AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */,
+				AD4580E729CC784000B8D8A6 /* GoogleService-Info.plist */,
 				AD4580F729CC828900B8D8A6 /* Resources */,
 				AD4580F629CC824200B8D8A6 /* Models */,
 				AD4580F529CC823F00B8D8A6 /* View */,
@@ -153,6 +160,7 @@
 				AD45812D29D2F75B00B8D8A6 /* Constants.swift */,
 				AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */,
 				AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */,
+				AD17E4B429D6A57A009E1E22 /* UserDefaultsUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -162,6 +170,8 @@
 			children = (
 				AD45810C29CC88E400B8D8A6 /* APIKeys.swift */,
 				632977BC29D04759004FDD85 /* APIKeyList.plist */,
+				AD17E4B229D69E52009E1E22 /* AuthManager.swift */,
+				AD17E4B629D6A745009E1E22 /* MainViewManager.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -212,7 +222,6 @@
 		AD4580F729CC828900B8D8A6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AD4580E729CC784000B8D8A6 /* GoogleService-Info.plist */,
 				AD4580DA29CC71C700B8D8A6 /* Assets.xcassets */,
 				AD4580DC29CC71C700B8D8A6 /* LaunchScreen.storyboard */,
 				AD4580DF29CC71C700B8D8A6 /* Info.plist */,
@@ -505,8 +514,11 @@
 				AD45812C29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift in Sources */,
 				AD45814229D5B0E900B8D8A6 /* SignInView.swift in Sources */,
 				AD45814029D5B07600B8D8A6 /* SignInViewController.swift in Sources */,
+				AD17E4B729D6A745009E1E22 /* MainViewManager.swift in Sources */,
 				AD17E4B129D679DA009E1E22 /* LoginViewModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
+				AD17E4B529D6A57A009E1E22 /* UserDefaultsUtil.swift in Sources */,
+				AD17E4B329D69E52009E1E22 /* AuthManager.swift in Sources */,
 				AD45813229D3101600B8D8A6 /* RxDelegateProxy.swift in Sources */,
 				AD45813029D2FA5B00B8D8A6 /* ModifyProfileView.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,

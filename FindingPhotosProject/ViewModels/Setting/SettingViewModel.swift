@@ -19,7 +19,7 @@ enum SettingSection: String {
 final class SettingViewModel: ViewModelType {
     
     struct Input {
-        let user = BehaviorRelay<UserModel>(value: UserModel(name: "John"))
+        let user = BehaviorRelay<UserModel>(value: UserModel(name: "John", email: "FF@b.", uid: "aaa"))
         let logoutButtonTapped = PublishRelay<Void>()
         let signoutButtonTapped = PublishRelay<Void>()
     }
@@ -34,7 +34,19 @@ final class SettingViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
 
-        
+        input.logoutButtonTapped
+            .map { _ in
+                AuthManager.shared.logOut()
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+            
+        input.signoutButtonTapped
+            .map { _ in
+                AuthManager.shared.deleteAccount()
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
         
         let userName = input.user.map { return $0.name }
         let userImage = input.user.map { return $0.profileImage }
