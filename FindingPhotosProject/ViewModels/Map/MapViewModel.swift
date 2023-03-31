@@ -1,6 +1,7 @@
 //
 //  MapViewModel.swift
-//  FindingPhotosProject
+//  FindingPhotosProject5
+
 //
 //  Created by 강창혁 on 2023/03/28.
 //
@@ -55,7 +56,6 @@ final class MapViewModel: ViewModelType {
                     return CLLocation() }
                 guard let currentLongitude = manager.location?.coordinate.longitude else {
                     return CLLocation() }
-                print(currentIatitude, currentLongitude)
                 return CLLocation(latitude: currentIatitude, longitude: currentLongitude)
             }
             .flatMap { location in
@@ -68,11 +68,14 @@ final class MapViewModel: ViewModelType {
                 Observable.from(photoStudios.items, scheduler: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
             }
             .map { photoStudio in
-                let marker = NMFMarker(position: NMGTm128(x: Double(photoStudio.mapx)!, y: Double(photoStudio.mapy)!).toLatLng())
+                let photoStudioLocation = NMGTm128(x: Double(photoStudio.mapx)!, y: Double(photoStudio.mapy)!).toLatLng()
+                let marker = NMFMarker(position: photoStudioLocation)
                 marker.captionText = photoStudio.title.htmlEscaped
                 marker.captionRequestedWidth = 0
                 marker.captionTextSize = 13
-                marker.userInfo = ["studioInformation": photoStudio]
+                marker.userInfo["studioInformation"] = photoStudio
+                let distance = LocationService.shared.locationManager.location?.distance(from: CLLocation(latitude: photoStudioLocation.lat, longitude: photoStudioLocation.lng))
+                marker.userInfo["distance"] = distance
                 return marker
             }
         

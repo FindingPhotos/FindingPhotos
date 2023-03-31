@@ -47,7 +47,8 @@ final class MapViewController: UIViewController, ViewModelBindable {
                 marker.mapView = mapViewController.mapView
                 marker.touchHandler = { [weak self] overlay -> Bool in
                     guard let studioInformation = marker.userInfo["studioInformation"] as? Item else { return false }
-                    self?.studioInformationView.bind(item: studioInformation)
+                    guard let distance = marker.userInfo["distance"] as? Double else { return false }
+                    self?.studioInformationView.bind(item: studioInformation, distance: distance)
                     return true
                 }
             })

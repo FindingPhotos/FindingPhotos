@@ -28,6 +28,11 @@ final class StudioInformationView: UIView {
         stackView.distribution = .fillEqually
         return stackView
     }()
+    private let distanceLabel: UILabel = {
+       let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        return label
+    }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
         return likeButton
@@ -39,9 +44,10 @@ final class StudioInformationView: UIView {
         setLayout()
     }
     // MARK: - Helpers
-    func bind(item: Item) {
+    func bind(item: Item, distance: Double) {
         studioNameLabel.text = item.title.htmlEscaped
         studioAddressLabel.text = item.address.htmlEscaped
+        distanceLabel.text = String(round(distance / 100) * 100 / 1000) + "km"
     }
 }
 // MARK: - LayoutProtocol
@@ -51,12 +57,17 @@ extension StudioInformationView: LayoutProtocol {
     }
     func setSubViews() {
         addSubview(studioInformationStackView)
+        addSubview(distanceLabel)
         addSubview(likeButton)
     }
     func setLayout() {
         studioInformationStackView.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(30)
+        }
+        distanceLabel.snp.makeConstraints { make in
+            make.left.equalTo(studioInformationStackView.snp.right).offset(5)
+            make.bottom.equalTo(studioInformationStackView.snp.bottom)
         }
         likeButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
