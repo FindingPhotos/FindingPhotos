@@ -39,7 +39,7 @@ class PhotoDetailView: UIView {
         return button
     }()
     
-    lazy var memoImage: UIImageView = {
+    lazy var memoLabel: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "memo")
         return imageView
@@ -47,10 +47,17 @@ class PhotoDetailView: UIView {
     
     lazy var memoTextView: UITextView = {
         let textView = UITextView()
-        textView.backgroundColor = .superLightGrey
-        textView.layer.cornerRadius = 20
+        textView.backgroundColor = .clear
         return textView
     }()
+    
+    lazy var memoImageView: UIImageView = {
+       let imageView = UIImageView()
+        imageView.image = UIImage(named: "memoImage")
+        return imageView
+    }()
+    
+
     
     // MARK: - LifeCycle
     
@@ -70,10 +77,7 @@ class PhotoDetailView: UIView {
     
     private func configureUI() {
         self.backgroundColor = .white
-//        self.sendSubviewToBack(addPhotoButton)
-
     }
-    
 }
 
 
@@ -85,7 +89,8 @@ extension PhotoDetailView: LayoutProtocol {
         self.addSubview(datePicker)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
-        self.addSubview(memoImage)
+        self.addSubview(memoLabel)
+        self.addSubview(memoImageView)
         self.addSubview(memoTextView)
     }
     
@@ -109,7 +114,7 @@ extension PhotoDetailView: LayoutProtocol {
             make.height.equalTo(photoImageView.snp.height)
         }
         
-        memoImage.snp.makeConstraints { make in
+        memoLabel.snp.makeConstraints { make in
             make.top.equalTo(addPhotoButton.snp.bottom).offset(10)
             make.leading.equalToSuperview().offset(28)
             make.width.equalTo(75)
@@ -117,14 +122,20 @@ extension PhotoDetailView: LayoutProtocol {
         }
         
         memoTextView.snp.makeConstraints { make in
+            make.centerX.equalTo(memoImageView.snp.centerX)
+            make.centerY.equalTo(memoImageView.snp.centerY)
+            make.width.equalTo(315)
+            make.height.equalTo(50)
+        }
+        
+        memoImageView.snp.makeConstraints { make in
             make.width.equalTo(350)
-            make.height.equalTo(85)
-            make.top.equalTo(memoImage.snp.bottom).offset(-10)
+            make.height.equalTo(80)
+            make.top.equalTo(memoLabel.snp.bottom).offset(-15)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
         }
-        
-        memoTextView.layer.zPosition = CGFloat(-1)
+        memoImageView.layer.zPosition = CGFloat(-1)
     }
     
 }

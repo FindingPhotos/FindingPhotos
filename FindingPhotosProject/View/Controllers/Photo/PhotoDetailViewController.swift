@@ -22,7 +22,6 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     private var imagePicker = UIImagePickerController()
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
     
-//    var defualtImg = UIImage(named: "addphoto")
     
     // iPhone 내부에 저장된 realm 파일의 주소를 찾아서 알려주는 코드
     let localRealm = try! Realm()
@@ -56,15 +55,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         navigationController?.popViewController(animated: true)
         let photoViewController = navigationController?.viewControllers[0] as! PhotoViewController
         photoViewController.images.append(photoDetailView.photoImageView.image)
-        
-//        guard let collectionViewPhoto = photoDetailView.photoImageView.image?.jpegData(compressionQuality: 1.0), photoDetailView.photoImageView != defualtImg
-        
-        
-//        let task = PhotoData(date: photoDetailView.datePicker.date, imageData: photoDetailView.photoImageView.image!, memo: photoDetailView.memoTextView.text!)
-        
-//        try! localRealm.write {
-//            localRealm.add(task)
-//        }
+
     }
     
     
