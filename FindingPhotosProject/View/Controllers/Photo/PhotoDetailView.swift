@@ -13,15 +13,29 @@ class PhotoDetailView: UIView {
 
     let imagePicker = UIImagePickerController()
     
-    lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.locale = Locale(identifier: "ko_KR")
-        
-        // ⚠️ 이거 안됨
-        datePicker.backgroundColor = .clear
-        
-        return datePicker
+//    lazy var datePicker: UIDatePicker = {
+//        let datePicker = UIDatePicker()
+//        datePicker.datePickerMode = .date
+//        datePicker.locale = Locale(identifier: "ko_KR")
+//
+//        // ⚠️ 이거 안됨
+//        datePicker.backgroundColor = .clear
+//
+//        return datePicker
+//    }()
+    
+    var date: Date?
+    
+    lazy var dateLabel: UILabel = {
+       let dateLabel = UILabel()
+        let myFormatter = DateFormatter()
+        myFormatter.dateFormat = "yyyy.MM.dd (E)"
+        let today = myFormatter.string(from: Date())
+        dateLabel.text = today
+        dateLabel.textAlignment = .center
+        dateLabel.textColor = .darkGray
+        dateLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        return dateLabel
     }()
     
     lazy var photoImageView: UIImageView = {
@@ -77,6 +91,7 @@ class PhotoDetailView: UIView {
     
     private func configureUI() {
         self.backgroundColor = .white
+        
     }
 }
 
@@ -86,7 +101,8 @@ class PhotoDetailView: UIView {
 extension PhotoDetailView: LayoutProtocol {
     
     func setSubViews() {
-        self.addSubview(datePicker)
+//        self.addSubview(datePicker)
+        self.addSubview(dateLabel)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
         self.addSubview(memoLabel)
@@ -95,14 +111,26 @@ extension PhotoDetailView: LayoutProtocol {
     }
     
     func setLayout() {
-        datePicker.snp.makeConstraints { make in
+//        datePicker.snp.makeConstraints { make in
+//            make.centerX.equalToSuperview()
+//            make.top.equalToSuperview().offset(110)
+//        }
+        
+        dateLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(110)
+            make.width.equalTo(315)
+            make.height.equalTo(50)
         }
         
         photoImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(datePicker)
-            make.top.equalTo(datePicker.snp.bottom).offset(10)
+            
+//            make.centerX.equalTo(datePicker)
+//            make.top.equalTo(datePicker.snp.bottom).offset(10)
+            
+            make.centerX.equalTo(dateLabel)
+            make.top.equalTo(dateLabel.snp.bottom).offset(10)
+            
             make.width.equalTo(350)
             make.height.equalTo(470)
         }
