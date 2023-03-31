@@ -10,9 +10,9 @@ import UIKit
 class PhotoDetailView: UIView {
     
     // MARK: - Properties
-    
-    let imagePicker = UIImagePickerController()
 
+    let imagePicker = UIImagePickerController()
+    
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.datePickerMode = .date
@@ -20,7 +20,7 @@ class PhotoDetailView: UIView {
         
         // ⚠️ 이거 안됨
         datePicker.backgroundColor = .clear
-
+        
         return datePicker
     }()
     
@@ -58,21 +58,30 @@ class PhotoDetailView: UIView {
         super.init(frame: frame)
         configureUI()
         setSubViews()
-        setLayouts()
+        setLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     // MARK: - Helpers
     
     private func configureUI() {
         self.backgroundColor = .white
+//        self.sendSubviewToBack(addPhotoButton)
+
     }
     
-    private func setSubViews() {
+}
+
+
+// MARK: - Layout
+
+extension PhotoDetailView: LayoutProtocol {
+    
+    func setSubViews() {
         self.addSubview(datePicker)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
@@ -80,7 +89,7 @@ class PhotoDetailView: UIView {
         self.addSubview(memoTextView)
     }
     
-    private func setLayouts() {
+    func setLayout() {
         datePicker.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(110)
@@ -118,5 +127,8 @@ class PhotoDetailView: UIView {
         memoTextView.layer.zPosition = CGFloat(-1)
     }
     
-    
 }
+
+
+
+

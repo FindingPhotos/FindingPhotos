@@ -14,7 +14,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties
     
     static let identifier = "PhotoCollectionViewCell"
-    private var imageView = UIImageView()
+    var imageView = UIImageView()
     
     
     // MARK: - LifeCycle
@@ -26,6 +26,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
 
     func setup(with image: UIImage) {
         imageView.image = image
+        imageView.contentMode = .scaleAspectFit
     }
 }
 

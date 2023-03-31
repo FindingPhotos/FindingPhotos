@@ -19,6 +19,7 @@ final class PhotoViewController: UIViewController {
             collectionView.reloadData()
         }
     }
+    
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0.5
@@ -32,9 +33,9 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-
     
-
+    
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -43,7 +44,7 @@ final class PhotoViewController: UIViewController {
         configureUI()
         configureNavigation()
         collectionViewSetup()
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,7 +62,7 @@ final class PhotoViewController: UIViewController {
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }
     
-
+    
     
     // MARK: - Helpers
     
@@ -72,9 +73,14 @@ final class PhotoViewController: UIViewController {
     
     private func configureNavigation() {
         navigationItem.title = "나의 앨범"
-        let rightButton = UIBarButtonItem(title: "추가", style: .plain, target: self, action: #selector(nextButtonTapped))
-        navigationItem.rightBarButtonItem = rightButton
+        
+        let addButton = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
+                                         style: .plain,
+                                         target: self,
+                                         action: #selector(nextButtonTapped))
+        navigationItem.rightBarButtonItem = addButton
     }
+
     
     private func collectionViewSetup() {
         view.addSubview(collectionView)
@@ -104,23 +110,27 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
         
         cell.setup(with: images[indexPath.row]!)
         
         return cell
     }
     
-}
-
-extension PhotoViewController: UICollectionViewDelegateFlowLayout {
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        let width: CGFloat = (collectionView.frame.width / 3) - 1.0
-
-        return CGSize(width: width, height: width)
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("셀 눌렀을 때")
+        let photoDetailVC = PhotoDetailViewController()
+        navigationController?.pushViewController(photoDetailVC, animated: true)
     }
-
 }
+    extension PhotoViewController: UICollectionViewDelegateFlowLayout {
+        
+        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            
+            let width: CGFloat = (collectionView.frame.width / 3) - 1.0
+            
+            return CGSize(width: width, height: width)
+        }
+        
+    }

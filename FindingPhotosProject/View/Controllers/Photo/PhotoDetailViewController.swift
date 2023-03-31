@@ -17,19 +17,27 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    private lazy var photoDetailView = PhotoDetailView(frame: self.view.frame)
+//    private lazy var photoDetailView = PhotoDetailView(frame: self.view.frame)
+    var photoDetailView = PhotoDetailView()
     private var imagePicker = UIImagePickerController()
-    private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus(
-    )
+    private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+    
+//    var defualtImg = UIImage(named: "addphoto")
+    
     // iPhone 내부에 저장된 realm 파일의 주소를 찾아서 알려주는 코드
     let localRealm = try! Realm()
     
     // MARK: - LifeCycle
     
+    override func loadView() {
+        super.loadView()
+        photoDetailView = PhotoDetailView(frame: self.view.frame)
+        self.view = photoDetailView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        self.view = photoDetailView
         configureUI()
         configureNavigation()
         bindButton()
@@ -38,11 +46,20 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     // MARK: - Selectors
     
+    @objc func deleteButtonTapped() {
+        print("사진 삭제")
+    }
+    
+    
     @objc func saveButtonTapped() {
         print("사진 저장")
         navigationController?.popViewController(animated: true)
         let photoViewController = navigationController?.viewControllers[0] as! PhotoViewController
         photoViewController.images.append(photoDetailView.photoImageView.image)
+        
+//        guard let collectionViewPhoto = photoDetailView.photoImageView.image?.jpegData(compressionQuality: 1.0), photoDetailView.photoImageView != defualtImg
+        
+        
 //        let task = PhotoData(date: photoDetailView.datePicker.date, imageData: photoDetailView.photoImageView.image!, memo: photoDetailView.memoTextView.text!)
         
 //        try! localRealm.write {
@@ -57,13 +74,24 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     private func configureUI() {
         view.backgroundColor = .white
+        self.view = photoDetailView
     }
+
     
     private func configureNavigation() {
-        let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let deleteButton = UIBarButtonItem(image: UIImage(named: "deleteButton")?.withRenderingMode(.alwaysOriginal),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(deleteButtonTapped))
         
-        navigationItem.rightBarButtonItem = rightButton
+        let saveButton = UIBarButtonItem(image: UIImage(named: "saveButton")?.withRenderingMode(.alwaysOriginal),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(saveButtonTapped))
+        
+        navigationItem.rightBarButtonItems = [saveButton, deleteButton]
     }
+
     
     
 //    // ⚠️ 여기 수정
