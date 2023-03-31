@@ -31,7 +31,6 @@ final class SettingViewModel: ViewModelType {
     
     let input = Input()
     lazy var output = transform(input: input)
-
     
     func transform(input: Input) -> Output {
 

@@ -29,13 +29,19 @@ final class SettingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setSubViews()
-        setLayout()
         setValue()
         bindTableView()
         bindViewModel()
     }
+    
+    override func loadView() {
+        view = settingView
+    }
     // MARK: - helpers
+    
+    func setValue() {
+        navigationItem.title = "프로필"
+    }
     func bindViewModel() {
         //input
        
@@ -69,24 +75,6 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
-}
-
-extension SettingViewController: LayoutProtocol {
-    
-    func setValue() {
-        view.backgroundColor = .white
-        navigationItem.title = "프로필"
-    }
-    
-    func setSubViews() {
-        view.addSubview(settingView)
-    }
-    
-    func setLayout() {
-        settingView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
 }
 
 extension SettingViewController: UITableViewDelegate {

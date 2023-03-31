@@ -1,17 +1,17 @@
 //
-//  LoginViewController.swift
+//  SignInViewController.swift
 //  FindingPhotosProject
 //
-//  Created by 이형주 on 2023/03/23.
+//  Created by 이형주 on 2023/03/30.
 //
 
 import SnapKit
 
-final class LoginViewController: UIViewController {
+class SignInViewController: UIViewController {
     
     // MARK: - Properties
     
-    let loginView = LoginView()
+    let signInView = SignInView()
     
     // MARK: - Lifecycle
     
@@ -19,13 +19,12 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
 
     }
-    
     override func loadView() {
-        view = loginView
+        view = signInView
     }
+    
     // MARK: - helpers
-    
-    
+
     
 }
 

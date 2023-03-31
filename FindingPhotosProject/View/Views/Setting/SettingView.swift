@@ -74,6 +74,7 @@ class SettingView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setValue()
         setSubViews()
         setLayout()
     }
@@ -88,6 +89,11 @@ class SettingView: UIView {
 }
 
 extension SettingView: LayoutProtocol {
+    
+    func setValue() {
+        self.backgroundColor = .white
+    }
+    
     func setSubViews() {
         
         [profileImageView, nameLabel, profileSetButton].forEach { profileView.addSubview($0) }

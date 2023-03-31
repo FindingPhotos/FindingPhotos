@@ -24,13 +24,21 @@ final class ModifyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
-        setSubViews()
-        setLayout()
         setImagePicker()
         bindViewModel()
     }
     
+    override func loadView() {
+        view = modifyProfileView
+    }
+    
     // MARK: - Helpers
+    
+    func setValue() {
+        navigationItem.title = "프로필 수정"
+        navigationController?.navigationBar.tintColor = .black
+        view.backgroundColor = .white
+    }
     
     private func bindViewModel() {
         // Input
@@ -72,27 +80,4 @@ final class ModifyProfileViewController: UIViewController {
             .bind(to: viewModel.input.selectedImage)
             .disposed(by: disposeBag)
     }
-}
-
-extension ModifyProfileViewController: LayoutProtocol {
-    
-    func setValue() {
-        navigationItem.title = "프로필 수정"
-        navigationController?.navigationBar.tintColor = .black
-        view.backgroundColor = .white
-    }
-    
-    func setSubViews() {
-        view.addSubview(modifyProfileView)
-    }
-    
-    func setLayout() {
-        modifyProfileView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-    }
-    
-    
-    
-    
 }

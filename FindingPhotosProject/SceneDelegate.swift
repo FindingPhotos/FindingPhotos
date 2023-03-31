@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-
+/*
         let tabBarVC = UITabBarController()
         
         let vc1 = UINavigationController(rootViewController: MapViewController())
@@ -38,6 +38,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         items[2].selectedImage = UIImage(systemName: "person.circle.fill")
 
         window?.rootViewController = tabBarVC
+        window?.makeKeyAndVisible()
+ */
+        window?.rootViewController = LoginViewController()
         window?.makeKeyAndVisible()
     }
 }
