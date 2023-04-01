@@ -33,7 +33,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         self.view = photoDetailView
         configureUI()
         configureNavigation()
-        bindButton()
+        configureButtonActions()
     }
     
     // MARK: - Selectors
@@ -41,20 +41,21 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     @objc func saveButtonTapped() {
         
         // 저장할 데이터 객체 생성
+        guard let date = photoDetailView.dateLabel.text else { return }
         let newData = PhotoData()
-        newData.date = photoDetailView.dateLabel.text!
+        newData.date = date
         newData.memo = photoDetailView.memoTextView.text
         
         // Realm 데이터베이스에 데이터 저장
         let image = photoDetailView.photoImageView.image ?? UIImage()
         realmManager.save(photoData: newData, image: image)
-    
+
         popViewController()
+        
     }
 
     @objc func deleteButtonTapped() {
-        print("사진 삭제")
-        
+
         guard let photoData = diary else { return }
         
         // Realm 데이터베이스에서 데이터 삭제
@@ -71,10 +72,11 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     private func configureUI() {
         view.backgroundColor = .white
         self.view = photoDetailView
-        guard let diary else { return }
-        guard let imageData = diary.image else { return }
-        photoDetailView.photoImageView.image = UIImage(data: imageData)
-        photoDetailView.memoTextView.text = diary.memo
+        
+        if let diary = diary, let imageData = diary.image {
+            photoDetailView.photoImageView.image = UIImage(data: imageData)
+            photoDetailView.memoTextView.text = diary.memo
+        }
     }
 
     
@@ -95,7 +97,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     
 //    // ⚠️ 여기 수정
-    func bindButton() {
+    func configureButtonActions() {
         photoDetailView.addPhotoButton.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { photoDetailViewController, _ in

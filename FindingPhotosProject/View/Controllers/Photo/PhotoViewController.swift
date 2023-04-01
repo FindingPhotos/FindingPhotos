@@ -14,6 +14,7 @@ final class PhotoViewController: UIViewController {
     
     // MARK: - Properties
     
+    private let realManager = RealmManager.shared
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -28,12 +29,8 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-
-    var photos: Results<PhotoData>? {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    
+    private var photos: Results<PhotoData>?
     
     // MARK: - Lifecycle
     
@@ -42,7 +39,7 @@ final class PhotoViewController: UIViewController {
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
         
-        self.photos = RealmManager.shared.fetchAll()
+        loadData()
     }
     
     
@@ -51,18 +48,16 @@ final class PhotoViewController: UIViewController {
         
         configureUI()
         configureNavigation()
-        collectionViewSetup()
-        
+        setupCollectionView()
     }
     
 
     // MARK: - Selectors
     
-    @objc func nextButtonTapped(_ sender: Any) {
-        print("DetailVC로 화면 전환")
+    @objc func addButtonTapped(_ sender: Any) {
         let detailViewController = PhotoDetailViewController()
-        detailViewController.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(detailViewController, animated: true)
+        let photoDetailVC = PhotoDetailViewController()
+        navigationController?.pushViewController(photoDetailVC, animated: true)
     }
     
     
@@ -80,12 +75,12 @@ final class PhotoViewController: UIViewController {
         let addButton = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
                                          style: .plain,
                                          target: self,
-                                         action: #selector(nextButtonTapped))
+                                         action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = addButton
     }
 
     
-    private func collectionViewSetup() {
+    private func setupCollectionView() {
         view.addSubview(collectionView)
         
         collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
@@ -97,6 +92,10 @@ final class PhotoViewController: UIViewController {
             make.bottom.equalToSuperview().inset(150)
             
         }
+    }
+    
+    private func loadData() {
+        photos = realManager.fetchAll()
     }
 }
 
