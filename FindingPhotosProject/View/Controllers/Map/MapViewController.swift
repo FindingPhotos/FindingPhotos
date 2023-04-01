@@ -25,6 +25,19 @@ final class MapViewController: UIViewController, ViewModelBindable {
         mapView.positionMode = .direction
         return mapView
     }()
+    private let favoriteListButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitle("즐겨찾기한 사진관", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.layer.cornerRadius = 4
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.masksToBounds = false
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.3
+        return button
+    }()
     private let studioInformationView = StudioInformationView()
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -76,6 +89,7 @@ extension MapViewController: LayoutProtocol {
     func setSubViews() {
         view.addSubview(mapView)
         view.addSubview(studioInformationView)
+        view.addSubview(favoriteListButton)
     }
     func setLayout() {
         mapView.snp.makeConstraints { make in
@@ -85,6 +99,11 @@ extension MapViewController: LayoutProtocol {
         studioInformationView.snp.makeConstraints { make in
             make.bottom.equalTo(mapView.snp.bottom)
             make.size.equalTo(CGSize(width: view.frame.width, height: 70))
+        }
+        favoriteListButton.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.top).offset(10)
+            make.right.equalTo(mapView.snp.right).offset(-10)
+            make.size.equalTo(CGSize(width: view.frame.width * 0.3, height: view.frame.height * 0.04))
         }
     }
 }
