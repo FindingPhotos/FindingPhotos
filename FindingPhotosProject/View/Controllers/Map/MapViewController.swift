@@ -85,6 +85,8 @@ extension MapViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
         navigationItem.title = "근처 사진관 찾기"
+        navigationController?.navigationBar.tintColor = .black
+        navigationItem.backButtonTitle = "뒤로가기"
     }
     func setSubViews() {
         view.addSubview(mapView)
