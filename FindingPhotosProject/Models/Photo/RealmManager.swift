@@ -69,4 +69,18 @@ class RealmManager {
         }
     }
     
+    // MARK: - Sort
+    
+    func sortedPhotos() -> [PhotoData] {
+        let photos = realm.objects(PhotoData.self).sorted(byKeyPath: "date", ascending: true)
+        return photos.toArray()
+    }
+
+}
+
+extension Results {
+    func toArray<T>(ofType: T.Type = T.self) -> [T] {
+        return compactMap { $0 as? T }
+    }
+    
 }

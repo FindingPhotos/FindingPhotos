@@ -29,11 +29,6 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagePicker.delegate = self
-        self.view = photoDetailView
-        configureUI()
-        configureNavigation()
-        configureButtonActions()
     }
     
     // MARK: - Selectors
@@ -68,6 +63,14 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
 
     // MARK: - Helpers
+    
+    private func setUI() {
+        imagePicker.delegate = self
+        self.view = photoDetailView
+        configureUI()
+        configureNavigation()
+        configureButtonActions()
+    }
     
     private func configureUI() {
         view.backgroundColor = .white

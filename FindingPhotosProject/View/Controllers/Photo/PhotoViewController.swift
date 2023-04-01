@@ -14,7 +14,9 @@ final class PhotoViewController: UIViewController {
     
     // MARK: - Properties
     
-    private let realManager = RealmManager.shared
+    private let viewModel = PhotoViewModel()
+//    private let realmManager = RealmManager.shared
+//    private var photos: Results<PhotoData>?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -29,17 +31,13 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-    
-    private var photos: Results<PhotoData>?
-    
+        
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
-        
-        loadData()
     }
     
     
@@ -50,12 +48,11 @@ final class PhotoViewController: UIViewController {
         configureNavigation()
         setupCollectionView()
     }
-    
-
     // MARK: - Selectors
     
     @objc func addButtonTapped(_ sender: Any) {
-        let detailViewController = PhotoDetailViewController()
+//        let detailViewController = PhotoDetailViewController()
+//        let photoDetailVC = PhotoDetailViewController()
         let photoDetailVC = PhotoDetailViewController()
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
@@ -83,8 +80,6 @@ final class PhotoViewController: UIViewController {
     private func setupCollectionView() {
         view.addSubview(collectionView)
         
-        collectionView.register(PhotoCollectionViewCell.self, forCellWithReuseIdentifier: PhotoCollectionViewCell.identifier)
-        
         collectionView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.leading.equalToSuperview().inset(10)
@@ -92,10 +87,6 @@ final class PhotoViewController: UIViewController {
             make.bottom.equalToSuperview().inset(150)
             
         }
-    }
-    
-    private func loadData() {
-        photos = realManager.fetchAll()
     }
 }
 
@@ -107,25 +98,31 @@ final class PhotoViewController: UIViewController {
 extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos?.count ?? 0
+        return viewModel.numberOfItems()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
+//        guard let cellImageData = photos![indexPath.row].image else { return UICollectionViewCell() }
         
-        guard let cellImageData = photos![indexPath.row].image else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as? PhotoCollectionViewCell,
+              let photoData = viewModel.photoData(at: indexPath),
+              let imageData = photoData.image else { return UICollectionViewCell() }
         
-        cell.imageView.image = UIImage(data: cellImageData)
+        cell.imageView.image = UIImage(data: imageData)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let photo = photos?[indexPath.row] else {
-            return
-        }
+//        guard let photo = photos?[indexPath.row] else { return }
+//        let photoDetailVC = PhotoDetailViewController()
+//        photoDetailVC.diary = photo
+        
+        guard let photoData = viewModel.photoData(at: indexPath) else { return }
         let photoDetailVC = PhotoDetailViewController()
-        photoDetailVC.diary = photo
+        photoDetailVC.diary = photoData
+        
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
     
