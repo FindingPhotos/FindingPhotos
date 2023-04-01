@@ -78,6 +78,15 @@ final class MapViewController: UIViewController, ViewModelBindable {
                 print(event.error.localizedDescription)
             }
             .disposed(by: disposeBag)
+        favoriteListButton.rx.tap
+            .withUnretained(self)
+            .bind { mapViewController, _ in
+                let faviorateStudioListViewModel = FaviorateStudioListViewModel()
+                let faviorateStudioListViewController = FaviorateStudioListViewController()
+                faviorateStudioListViewController.bind(viewModel: faviorateStudioListViewModel)
+                mapViewController.navigationController?.pushViewController(faviorateStudioListViewController, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 // MARK: - LayoutProtocol
