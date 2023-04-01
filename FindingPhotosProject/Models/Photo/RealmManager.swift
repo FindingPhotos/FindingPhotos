@@ -10,19 +10,21 @@ import RealmSwift
 
 class RealmManager {
     
-    let realmInstance = try! Realm()
+
+    let realm = try! Realm()
     
-//    private func savePhotos(data: PhotoData) {
-//        let model = PhotoData()
-//        model.date = data.date
-//        model.imageData = data.imageData
-//        model.memo = data.memo
-//
-//        try! realmInstance.write {
-//            realmInstance.add(model)
-//        }
-//    }
+    // MARK: - Create
     
-//    func saveImageToDocumentDirectory(imageName: Str)
+    func save(photoData: PhotoData) {
+        do {
+            try realm.write {
+                realm.add(photoData)
+            }
+        } catch {
+            print("Error saving category \(error)")
+            
+        }
+    }
+ 
     
 }

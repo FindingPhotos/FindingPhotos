@@ -21,6 +21,8 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     private var imagePicker = UIImagePickerController()
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
     
+    let realmManager = RealmManager()
+    
 
     
     // MARK: - LifeCycle
@@ -42,13 +44,33 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     
     @objc func saveButtonTapped() {
+        // 콘솔에 로그 출력
         print("사진 저장")
-        navigationController?.popViewController(animated: true)
-        let photoViewController = navigationController?.viewControllers[0] as! PhotoViewController
+
+        // 네비게이션 컨트롤러에서 이전 뷰 컨트롤러를 가져옴
+        guard let photoViewController = navigationController?.viewControllers.first as? PhotoViewController else {
+            return
+        }
+
+        // 저장할 데이터 객체 생성
+        let newData = PhotoData()
+        newData.date = photoDetailView.dateLabel.text!
+        newData.memo = photoDetailView.memoTextView.text
+        newData.image = photoDetailView.memoImageView.image?.pngData()
+
+        // Realm 데이터베이스에 데이터 저장
+        realmManager.save(photoData: newData)
+
+        // 이미지 배열에 이미지 추가
         photoViewController.images.append(photoDetailView.photoImageView.image)
 
+        // 네비게이션 컨트롤러에서 현재 뷰 컨트롤러 제거
+        navigationController?.popViewController(animated: true)
+
+        // Realm 파일 경로 출력
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
-    
+
     
     
     
