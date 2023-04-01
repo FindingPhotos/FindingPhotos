@@ -69,6 +69,36 @@ final class AuthManager {
             NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
         }
     }
+    func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<Bool>  {
+        
+        return Observable.create { observer in
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                guard error == nil else {
+                    print(error!.localizedDescription)
+                    observer.onNext(false)
+                    return
+                }
+                guard let email = authResult?.user.email,
+                      let uid = authResult?.user.uid else { return }
+                if let image {
+                    ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
+                        let currentUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrlString)
+//                        UserDefaults.standard.set(currentUserModel, forKey: "currentUserModel")
+                        observer.onNext(true)
+                    }
+                } else {
+                    let currentUserModel = UserModel(name: name, email: email, uid: uid)
+                    print("DEBUG: currentUserModel:\(currentUserModel)")
+
+//                    UserDefaults.standard.set(currentUserModel, forKey: "currentUserModel")
+                    observer.onNext(true)
+                }
+                print("DEBUG: 회원가입 성공")
+                NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
+            }
+            return Disposables.create()
+        }
+    }
     /*
     func signInWithAnonymous() {
         Auth.auth().signInAnonymously() { (authResult, error) in

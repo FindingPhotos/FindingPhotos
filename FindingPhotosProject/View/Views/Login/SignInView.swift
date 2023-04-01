@@ -47,6 +47,7 @@ class SignInView: UIView {
         let label = UILabel()
         label.text = "이메일"
         label.textColor = .tabButtondarkGrey
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -54,7 +55,7 @@ class SignInView: UIView {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
         view.layer.borderWidth = 2
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(emailTextField)
         return view
@@ -64,7 +65,7 @@ class SignInView: UIView {
         let textField = UITextField()
         textField.placeholder = "이메일을 입력하세요."
         textField.layer.borderColor = .none
-
+        textField.font = UIFont.systemFont(ofSize: 13)
         return textField
     }()
     
@@ -81,6 +82,7 @@ class SignInView: UIView {
         let label = UILabel()
         label.text = "비밀번호"
         label.textColor = .tabButtondarkGrey
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -88,7 +90,7 @@ class SignInView: UIView {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
         view.layer.borderWidth = 2
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(passwordTextField)
         return view
@@ -98,6 +100,8 @@ class SignInView: UIView {
         let textField = UITextField()
         textField.placeholder = "비밀번호를 입력하세요."
         textField.layer.borderColor = .none
+        textField.font = UIFont.systemFont(ofSize: 13)
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -112,6 +116,7 @@ class SignInView: UIView {
     private lazy var nameTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "닉네임"
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         label.textColor = .tabButtondarkGrey
         return label
     }()
@@ -120,7 +125,7 @@ class SignInView: UIView {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
         view.layer.borderWidth = 2
-        view.layer.cornerRadius = 15
+        view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(nameTextField)
         return view
@@ -130,6 +135,7 @@ class SignInView: UIView {
         let textField = UITextField()
         textField.placeholder = "닉네임을 입력하세요."
         textField.layer.borderColor = .none
+        textField.font = UIFont.systemFont(ofSize: 13)
         return textField
     }()
     
@@ -159,6 +165,14 @@ class SignInView: UIView {
         return button
     }()
     
+    lazy var openPrivacyPolicyButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("개인정보 처리방침", for: .normal)
+        button.setTitleColor(UIColor.systemGray3, for: .normal)
+        button.backgroundColor = .none
+        return button
+    }()
+    
     // MARK: - Lifecycles
     
     override init(frame: CGRect) {
@@ -185,7 +199,7 @@ extension SignInView: LayoutProtocol {
     }
     
     func setSubViews() {
-        [titleLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton]
+        [titleLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton, openPrivacyPolicyButton]
             .forEach { self.addSubview($0) }
     }
 
@@ -197,7 +211,7 @@ extension SignInView: LayoutProtocol {
         }
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(20)
+            make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.width.height.equalTo(150)
         }
         plusIconImageView.snp.makeConstraints { make in
@@ -210,37 +224,41 @@ extension SignInView: LayoutProtocol {
             make.center.equalTo(profileImageView.snp.center)
             make.width.height.equalTo(130)
         }
-        emailTextField.snp.makeConstraints { make in
-            make.height.equalTo(emailTextFieldView)
-            make.width.equalTo(emailTextFieldView).inset(10)
-            make.centerX.equalToSuperview()
-        }
-        passwordTextField.snp.makeConstraints { make in
-            make.height.equalTo(passwordTextFieldView)
-            make.width.equalTo(passwordTextFieldView).inset(10)
-            make.centerX.equalToSuperview()
-        }
-        nameTextField.snp.makeConstraints { make in
-            make.height.equalTo(nameTextFieldView)
-            make.width.equalTo(nameTextFieldView).inset(10)
-            make.centerX.equalToSuperview()
-        }
-        allTextFieldStackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(20)
-            make.top.equalTo(profileImageView.snp.bottom).offset(20)
-        }
-        [nameTitleLabel, emailTitleLabel, passwordTitleLabel].forEach { $0.snp.makeConstraints
+        [emailTextFieldView, passwordTextFieldView, nameTextFieldView].forEach { $0.snp.makeConstraints
             { make in
-                make.width.equalTo(70)
+                make.width.equalTo(270)
                 make.height.equalTo(40)
             }
         }
-//        [nameTextFieldView, email]
+        
+        [emailTextField, passwordTextField, nameTextField].forEach { $0.snp.makeConstraints
+            { make in
+                make.height.equalToSuperview()
+                make.width.equalToSuperview().inset(10)
+                make.centerX.equalToSuperview()
+            }
+        }
+        [nameTitleLabel, emailTitleLabel, passwordTitleLabel].forEach { $0.snp.makeConstraints
+            { make in
+                make.width.equalTo(60)
+                make.height.equalTo(40)
+            }
+        }
+        allTextFieldStackView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview().inset(40)
+            make.top.equalTo(profileImageView.snp.bottom).offset(30)
+        }
         signInButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(allTextFieldStackView.snp.bottom).offset(40)
+            make.top.equalTo(allTextFieldStackView.snp.bottom).offset(30)
             make.height.equalTo(35)
             make.width.equalTo(100)
+        }
+        openPrivacyPolicyButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(signInButton.snp.bottom).offset(20)
+            make.width.equalTo(120)
+            make.height.equalTo(20)
         }
     }
     
