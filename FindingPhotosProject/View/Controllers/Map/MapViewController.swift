@@ -58,10 +58,13 @@ final class MapViewController: UIViewController, ViewModelBindable {
             .withUnretained(self)
             .subscribe(onNext: { mapViewController, marker in
                 marker.mapView = mapViewController.mapView
-                marker.touchHandler = { [weak self] overlay -> Bool in
+                marker.touchHandler = { overlay -> Bool in
                     guard let studioInformation = marker.userInfo["studioInformation"] as? Item else { return false }
+                    guard let currentPosition = marker.userInfo["currentPosition"] as? NMGLatLng else { return false }
                     guard let distance = marker.userInfo["distance"] as? Double else { return false }
-                    self?.studioInformationView.bind(item: studioInformation, distance: distance)
+                    let cameraUpdate = NMFCameraUpdate(scrollTo: currentPosition)
+                    mapViewController.mapView.moveCamera(cameraUpdate)
+                    mapViewController.studioInformationView.bind(item: studioInformation, distance: distance)
                     return true
                 }
             })

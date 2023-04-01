@@ -76,6 +76,7 @@ final class MapViewModel: ViewModelType {
                 marker.userInfo["studioInformation"] = photoStudio
                 let distance = LocationService.shared.locationManager.location?.distance(from: CLLocation(latitude: photoStudioLocation.lat, longitude: photoStudioLocation.lng))
                 marker.userInfo["distance"] = distance
+                marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
             }
         
