@@ -35,7 +35,6 @@ final class StudioInformationView: UIView {
     }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "initialButton"), for: .normal)
         return likeButton
     }()
     // MARK: - Lifecycle
@@ -71,9 +70,8 @@ extension StudioInformationView: LayoutProtocol {
             make.bottom.equalTo(studioInformationStackView.snp.bottom)
         }
         likeButton.snp.makeConstraints { make in
-            make.centerY.equalTo(studioInformationStackView.snp.centerY)
-            make.right.equalToSuperview().offset(-30)
-            make.size.equalTo(CGSize(width: 30, height: 30))
+            make.centerY.equalToSuperview()
+            make.right.equalToSuperview().offset(30)
         }
     }
 }
