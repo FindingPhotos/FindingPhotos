@@ -24,7 +24,7 @@ final class ModifyProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
-        setImagePicker()
+        bindImagePicker()
         bindViewModel()
     }
     
@@ -61,7 +61,7 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     
-    private func setImagePicker() {
+    private func bindImagePicker() {
         modifyProfileView.imagePickerButton.rx.tap
             .flatMapLatest({ [weak self] _ in
                 return UIImagePickerController.rx.createWithParent(self) { picker in

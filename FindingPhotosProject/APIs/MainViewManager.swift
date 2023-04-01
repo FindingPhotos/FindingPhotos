@@ -47,19 +47,7 @@ class MainViewManager {
     @objc private func checkLoginIn() {
         
         if let user = Auth.auth().currentUser {
-            if user.isAnonymous == true {
-                self.setTapBarController()
-            } else {
-                let uid = user.uid
-                FirestoreAddress.collectionUsers.document(uid).getDocument { document, error in
-                    guard let document else { return }
-                    if document.exists {
-                        // 애플로그인 구현을 위해 남겨놓은 조건문
-                        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isUserDataExist)
-                        self.setTapBarController()
-                    }
-                }
-            }
+            setTapBarController()
         } else {
             setLoginViewController()
         }

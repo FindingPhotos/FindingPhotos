@@ -22,7 +22,7 @@ class LoginViewModel: ViewModelType {
     }
     struct Output {
         let isValid: Observable<Bool>
-
+        let isLoginSuccess: Observable<Bool>
     }
     let input = Input()
     lazy var output = transform(input: input)
@@ -31,17 +31,21 @@ class LoginViewModel: ViewModelType {
         
         let isValid = Observable.combineLatest(input.emailTextFieldText, input.passwordTextFieldText)
             .map { email, password in
-                return !email.isEmpty && email.contains("@") && email.contains (".") && password.count > 0
+                return !email.isEmpty && email.contains("@") && email.contains (".") && password.count > 5
             }
+        // 1️⃣ 목표: 로그인버튼 탭 이벤트를 받으면 모듈화된 로그인 서비스 실행, 이후 성공 여부를 반환
+        //         반환된 성공 여부로 로그인 성공/실패 레이블 text 변경
+        // 현재 상황 : 모듈 메서드가 Observable<Void>를 반환하고, 이를 .subscribe()만 하면 성공 여부 반환 없을 시 로그인 실행 성공.
+        // 문제 상황 : 모듈 메서드가 Observable<Bool>을 반환하고, 이를 output의 다른 값으로 bind 불가
+        // 해결 : 탭 받은 후 처리한 데이터를 바로 변수로 반환 가능
         
-        input.logInButtonTapped
+        let isLoginSuccess = input.logInButtonTapped
             .withLatestFrom(Observable.combineLatest (input.emailTextFieldText, input.passwordTextFieldText))
             .flatMap { email, password in
                 AuthManager.shared.logIn(email: email, password: password)
             }
-            .subscribe()
-            .disposed(by: disposeBag)
-            
+            .share()
+        
         input.logInAnonymouslyButtonTapped
             .flatMap({ _ in
                 AuthManager.shared.signInWithAnonymous()
@@ -49,15 +53,7 @@ class LoginViewModel: ViewModelType {
             .subscribe()
             .disposed(by: disposeBag)
 
-//       input.logInButtonTapped
-//            .withLatestFrom(Observable.combineLatest (input.emailTextFieldText, input.passwordTextFieldText))
-//            .flatMap { email, password in
-//                Auth.auth().signIn(withEmail: email, password: password)
-////                AuthManager.shared.logIn2(email: email, password: password)
-//            }
-//            .share()
-
-        return Output(isValid: isValid)
+        return Output(isValid: isValid, isLoginSuccess: isLoginSuccess)
     }
     
 }

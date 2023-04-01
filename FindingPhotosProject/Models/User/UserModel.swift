@@ -11,12 +11,12 @@ struct UserModel {
     var name: String
     var email: String
     var uid: String
-    var profileImage: UIImage?
+    var profileImageUrl: String?
     
-    init(name: String, email: String, uid: String, profileImage: UIImage? = nil) {
+    init(name: String, email: String, uid: String, profileImageUrl: String? = nil) {
         self.name = name
         self.email = email
         self.uid = uid
-        self.profileImage = profileImage
+        self.profileImageUrl = profileImageUrl
     }
 }

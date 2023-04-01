@@ -21,7 +21,7 @@ final class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bindButtons()
+        bindWithoutViewModel()
         bindViewModel()
     }
     
@@ -30,7 +30,7 @@ final class LoginViewController: UIViewController {
     }
     // MARK: - helpers
     
-    private func bindButtons() {
+    private func bindWithoutViewModel() {
         loginView.signInButton.rx.tap
             .withUnretained(self)
             .subscribe { viewController, event in
@@ -64,6 +64,16 @@ final class LoginViewController: UIViewController {
         
         viewModel.output.isValid
             .bind(to: loginView.loginButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isLoginSuccess
+//            .withUnretained(self)
+            .map { $0 ? "로그인되었습니다✅" : "아이디와 비밀번호를 확인해주세요❗️"}
+            .bind(to: loginView.loginCheckedLabel.rx.text)
+            .disposed(by: disposeBag)
+            
+        viewModel.output.isLoginSuccess
+            .bind(to: loginView.loginCheckedLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
         loginView.loginButton.rx.tap

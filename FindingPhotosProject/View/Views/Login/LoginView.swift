@@ -21,7 +21,7 @@ class LoginView: UIView {
     private lazy var emailTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(emailTextField)
@@ -42,7 +42,7 @@ class LoginView: UIView {
     private lazy var passwordTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(passwordTextField)
@@ -57,6 +57,7 @@ class LoginView: UIView {
         let textField = UITextField()
         textField.placeholder = "password"
         textField.layer.borderColor = .none
+        textField.isSecureTextEntry = true
         return textField
     }()
     
@@ -64,7 +65,7 @@ class LoginView: UIView {
         let stackView = UIStackView(arrangedSubviews: [emailTextFieldView, passwordTextFieldView])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.spacing = 15
         return stackView
     }()
     
@@ -88,7 +89,7 @@ class LoginView: UIView {
         button.setTitleColor(UIColor.tabButtonlightGrey, for: .normal)
         button.backgroundColor = .none
         button.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        button.layer.borderWidth = 2
+        button.layer.borderWidth = 1
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
 //        button.snp.makeConstraints { make in
@@ -102,13 +103,15 @@ class LoginView: UIView {
         let stackView = UIStackView(arrangedSubviews: [loginButton, signWithAnonymousButton])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 20
+        stackView.spacing = 15
         return stackView
     }()
     
-    private lazy var loginCheckedLabel: UILabel = {
+    lazy var loginCheckedLabel: UILabel = {
         let label = UILabel()
-//        label.text = "아이디와 비밀번호를 확인해주세요❗️"
+        label.text = "아이디와 비밀번호를 확인해주세요❗️"
+        label.textColor = .systemRed
+        label.isHidden = true
 //        label.text = "로그인되었습니다✅"
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
@@ -129,7 +132,7 @@ class LoginView: UIView {
     
     lazy var openPrivacyPolicyButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("개인정보 처리방침", for: .normal)
+        button.setTitle("비밀번호 찾기", for: .normal)
         button.setTitleColor(UIColor.tabButtonlightGrey, for: .normal)
         button.backgroundColor = .none
         button.snp.makeConstraints { make in
@@ -190,16 +193,16 @@ extension LoginView: LayoutProtocol {
         }
         loginCheckedLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(emailPasswordStackView.snp.bottom).offset(15)
+            make.top.equalTo(emailPasswordStackView.snp.bottom).offset(20)
         }
         loginButtonStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(100)
-            make.top.equalTo(loginCheckedLabel.snp.bottom).offset(15)
+            make.top.equalTo(loginCheckedLabel.snp.bottom).offset(20)
             make.height.equalTo(100)
         }
         signInStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(20)
-            make.top.equalTo(loginButtonStackView.snp.bottom).offset(40)
+            make.top.equalTo(loginButtonStackView.snp.bottom).offset(30)
         }
     }
 }

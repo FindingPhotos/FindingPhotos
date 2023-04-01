@@ -14,6 +14,8 @@
 		AD17E4B329D69E52009E1E22 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B229D69E52009E1E22 /* AuthManager.swift */; };
 		AD17E4B529D6A57A009E1E22 /* UserDefaultsUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B429D6A57A009E1E22 /* UserDefaultsUtil.swift */; };
 		AD17E4B729D6A745009E1E22 /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B629D6A745009E1E22 /* MainViewManager.swift */; };
+		AD17E4B929D7BE7B009E1E22 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */; };
+		AD17E4BB29D80C24009E1E22 /* ImageUploaderToFirestorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4BA29D80C24009E1E22 /* ImageUploaderToFirestorage.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -53,6 +55,8 @@
 		AD17E4B229D69E52009E1E22 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		AD17E4B429D6A57A009E1E22 /* UserDefaultsUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsUtil.swift; sourceTree = "<group>"; };
 		AD17E4B629D6A745009E1E22 /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
+		AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		AD17E4BA29D80C24009E1E22 /* ImageUploaderToFirestorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploaderToFirestorage.swift; sourceTree = "<group>"; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 				632977BC29D04759004FDD85 /* APIKeyList.plist */,
 				AD17E4B229D69E52009E1E22 /* AuthManager.swift */,
 				AD17E4B629D6A745009E1E22 /* MainViewManager.swift */,
+				AD17E4BA29D80C24009E1E22 /* ImageUploaderToFirestorage.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -366,6 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				AD17E4B029D679DA009E1E22 /* LoginViewModel.swift */,
+				AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -496,8 +502,10 @@
 			files = (
 				AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */,
 				AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */,
+				AD17E4BB29D80C24009E1E22 /* ImageUploaderToFirestorage.swift in Sources */,
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
+				AD17E4B929D7BE7B009E1E22 /* SignInViewModel.swift in Sources */,
 				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
 				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
 				AD45813A29D5592F00B8D8A6 /* IQKeyboardManagerObject.swift in Sources */,
