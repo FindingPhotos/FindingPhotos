@@ -23,21 +23,30 @@ final class StudioInformationView: UIView {
         return studioAddressLabel
     }()
     private lazy var studioInformationStackView: UIStackView = {
-       let stackView = UIStackView(arrangedSubviews: [studioNameLabel, studioAddressLabel])
+        let stackView = UIStackView(arrangedSubviews: [studioNameLabel, studioAddressLabel])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
         return stackView
     }()
     private let distanceLabel: UILabel = {
-       let label = UILabel()
+        let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 13)
         return label
     }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
+        likeButton.setImage(UIImage(named: "initialButton"), for: .normal)
         return likeButton
     }()
     // MARK: - Lifecycle
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isHidden = true
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     override func layoutSubviews() {
         setValue()
         setSubViews()
@@ -48,6 +57,7 @@ final class StudioInformationView: UIView {
         studioNameLabel.text = item.title.htmlEscaped
         studioAddressLabel.text = item.address.htmlEscaped
         distanceLabel.text = String(round(distance / 100) * 100 / 1000) + "km"
+        isHidden = false
     }
 }
 // MARK: - LayoutProtocol
@@ -70,8 +80,9 @@ extension StudioInformationView: LayoutProtocol {
             make.bottom.equalTo(studioInformationStackView.snp.bottom)
         }
         likeButton.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.right.equalToSuperview().offset(30)
+            make.centerY.equalTo(studioInformationStackView.snp.centerY)
+            make.right.equalToSuperview().offset(-30)
+            make.size.equalTo(CGSize(width: 30, height: 30))
         }
     }
 }

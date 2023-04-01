@@ -13,6 +13,7 @@ import SnapKit
 
 import RxSwift
 import RxViewController
+import RxGesture
 
 final class MapViewController: UIViewController, ViewModelBindable {
     // MARK: - Properties
@@ -89,6 +90,11 @@ final class MapViewController: UIViewController, ViewModelBindable {
                 faviorateStudioListViewController.bind(viewModel: faviorateStudioListViewModel)
                 mapViewController.navigationController?.pushViewController(faviorateStudioListViewController, animated: true)
             }
+            .disposed(by: disposeBag)
+        mapView.rx.swipeGesture(.right, .left, .down, .up)
+            .when(.recognized)
+            .map { _ in return true }
+            .bind(to: studioInformationView.rx.isHidden)
             .disposed(by: disposeBag)
     }
 }
