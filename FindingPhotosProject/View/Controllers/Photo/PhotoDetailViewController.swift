@@ -22,7 +22,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
     
     let realmManager = RealmManager()
-    
+    var diary: PhotoData?
 
     
     // MARK: - LifeCycle
@@ -38,51 +38,43 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     // MARK: - Selectors
     
-    @objc func deleteButtonTapped() {
-        print("사진 삭제")
-    }
-    
-    
     @objc func saveButtonTapped() {
-        // 콘솔에 로그 출력
-        print("사진 저장")
-
-        // 네비게이션 컨트롤러에서 이전 뷰 컨트롤러를 가져옴
-        guard let photoViewController = navigationController?.viewControllers.first as? PhotoViewController else {
-            return
-        }
-
+        
         // 저장할 데이터 객체 생성
         let newData = PhotoData()
         newData.date = photoDetailView.dateLabel.text!
         newData.memo = photoDetailView.memoTextView.text
         
         // Realm 데이터베이스에 데이터 저장
-        if let image = photoDetailView.photoImageView.image {
-            realmManager.save(photoData: newData, image: image)
-        } else {
-            realmManager.save(photoData: newData, image: UIImage())
-        }
-
-
-        // 이미지 배열에 이미지 추가
-        photoViewController.images.append(photoDetailView.photoImageView.image)
-
-        // 네비게이션 컨트롤러에서 현재 뷰 컨트롤러 제거
-        navigationController?.popViewController(animated: true)
-
-        // Realm 파일 경로 출력
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        let image = photoDetailView.photoImageView.image ?? UIImage()
+        realmManager.save(photoData: newData, image: image)
+    
+        popViewController()
     }
 
+    @objc func deleteButtonTapped() {
+        print("사진 삭제")
+        
+        guard let photoData = diary else { return }
+        
+        // Realm 데이터베이스에서 데이터 삭제
+        let image = photoDetailView.photoImageView.image ?? UIImage()
+        realmManager.delete(photoData: photoData, image: image)
+        
+        popViewController()
+    }
     
     
-    
+
     // MARK: - Helpers
     
     private func configureUI() {
         view.backgroundColor = .white
         self.view = photoDetailView
+        guard let diary else { return }
+        guard let imageData = diary.image else { return }
+        photoDetailView.photoImageView.image = UIImage(data: imageData)
+        photoDetailView.memoTextView.text = diary.memo
     }
 
     
@@ -127,10 +119,15 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 //            .disposed(by: disposeBag)
     }
     
+    private func popViewController() {
+        navigationController?.popViewController(animated: true)
+    }
     
     deinit {
         print("deinit!!!")
     }
+    
+    
 }
 
 // MARK: - 이미지 할당
@@ -144,8 +141,6 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 //        }
 //    }
 //}
-
-
 
 extension PhotoDetailViewController: UIImagePickerControllerDelegate {
     func openImagePicker() {

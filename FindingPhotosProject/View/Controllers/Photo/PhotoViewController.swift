@@ -14,11 +14,6 @@ final class PhotoViewController: UIViewController {
     
     // MARK: - Properties
     
-    var images = [UIImage?]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -33,10 +28,23 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-    
-    
+
+    var photos: Results<PhotoData>? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     // MARK: - Lifecycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.barStyle = .default
+        
+        self.photos = RealmManager.shared.fetchAll()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,12 +55,7 @@ final class PhotoViewController: UIViewController {
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = false
-        navigationController?.navigationBar.barStyle = .default
-    }
-    
+
     // MARK: - Selectors
     
     @objc func nextButtonTapped(_ sender: Any) {
@@ -105,29 +108,35 @@ final class PhotoViewController: UIViewController {
 extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return photos?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCollectionViewCell.identifier, for: indexPath) as! PhotoCollectionViewCell
-        cell.setup(with: images[indexPath.row]!)
         
+        guard let cellImageData = photos![indexPath.row].image else { return UICollectionViewCell() }
+        
+        cell.imageView.image = UIImage(data: cellImageData)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("셀 눌렀을 때")
+        guard let photo = photos?[indexPath.row] else {
+            return
+        }
         let photoDetailVC = PhotoDetailViewController()
+        photoDetailVC.diary = photo
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
+    
 }
+    // MARK: - FlowLayout
+
     extension PhotoViewController: UICollectionViewDelegateFlowLayout {
         
         func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            
             let width: CGFloat = (collectionView.frame.width / 3) - 1.0
-            
             return CGSize(width: width, height: width)
         }
         

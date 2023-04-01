@@ -10,8 +10,10 @@ import RealmSwift
 
 class RealmManager {
     
-
     let realm = try! Realm()
+    
+    static let shared = RealmManager()
+    var photoList = [PhotoData]()
     
     // MARK: - Create
 
@@ -55,9 +57,10 @@ class RealmManager {
     
     // MARK: - Delete
     
-    func delete(photoData: PhotoData) {
+    func delete(photoData: PhotoData, image: UIImage) {
         do {
             try realm.write {
+                photoData.image = image.pngData()
                 realm.delete(photoData)
             }
         } catch {
