@@ -24,38 +24,25 @@ final class AuthManager {
 //            NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
 //        }
 //    }
-    func logIn(email: String, password: String) -> Observable<Void> {
+    func logIn(email: String, password: String) -> Observable<Bool> {
         return Observable.create { observer in
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
                 guard error == nil else {
                     print(error!.localizedDescription)
                     print("DEBUG: 로그인 실패")
+                    observer.onNext(false)
                     return
                 }
                 NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
+                observer.onNext(true)
             }
             return Disposables.create()
         }
     }
-    /*
-    func logIn(email: String, password: String) -> Observable<(AuthDataResult?, Error)> {
-        Observable.create { observer in
-            Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-                guard error == nil else {
-                    print(error!.localizedDescription)
-                    print("DEBUG: 로그인 실패")
-                     observer.onNext((nil, error))
-                }
-                NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
-                observer.onNext((authResult, nil))
-                print("DEBUG: 로그인 성공 ")
-            }
-            return Disposables.create()
-        }
-    }
-     */
     
-    func signIn(email: String, password: String, name: String) {
+    
+    /*
+    func signIn(email: String, password: String, name: String)  {
         
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             guard error == nil else {
@@ -69,6 +56,10 @@ final class AuthManager {
             NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
         }
     }
+    */
+    
+  
+    
     func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<Bool>  {
         
         return Observable.create { observer in
@@ -99,6 +90,7 @@ final class AuthManager {
             return Disposables.create()
         }
     }
+
     /*
     func signInWithAnonymous() {
         Auth.auth().signInAnonymously() { (authResult, error) in
@@ -143,13 +135,12 @@ final class AuthManager {
 //                firestore에 유저데이터 생성 시 지워주기
 //                collectionUsers.document(uid).delete()
                print("DEBUG: delete error:\(error)")
-               UserDefaults.standard.removeObject(forKey: "currentUserModel")
+//               UserDefaults.standard.removeObject(forKey: "currentUserModel")
             }
         } catch {
             
         }
     }
-    
 }
 
 

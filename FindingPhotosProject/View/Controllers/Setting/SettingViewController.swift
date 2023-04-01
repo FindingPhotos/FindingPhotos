@@ -52,13 +52,12 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // Output
-        viewModel.output.userName
-            .bind(to: settingView.nameLabel.rx.text)
+        viewModel.output.didLogOut
+            .subscribe()
             .disposed(by: disposeBag)
-        viewModel.output.userImage
-            .bind(to: settingView.profileImageView.rx.image)
+        viewModel.output.didSignOut
+            .subscribe()
             .disposed(by: disposeBag)
-        
     }
     
     func bindTableView() {
@@ -107,5 +106,4 @@ extension SettingViewController: MFMailComposeViewControllerDelegate {
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
            controller.dismiss(animated: true, completion: nil)
        }
-
 }
