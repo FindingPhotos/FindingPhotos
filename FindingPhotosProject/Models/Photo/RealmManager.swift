@@ -14,10 +14,11 @@ class RealmManager {
     let realm = try! Realm()
     
     // MARK: - Create
-    
-    func save(photoData: PhotoData) {
+
+    func save(photoData: PhotoData, image: UIImage) {
         do {
             try realm.write {
+                photoData.image = image.pngData()
                 realm.add(photoData)
             }
         } catch {
@@ -25,6 +26,44 @@ class RealmManager {
             
         }
     }
- 
+    
+    // MARK: - Read
+    
+    func fetchAll() -> Results<PhotoData> {
+        let results = realm.objects(PhotoData.self)
+        return results
+    }
+    
+    func fetch(byDate date: String) -> PhotoData? {
+        let predicate = NSPredicate(format: "date == %@", date)
+        let results = realm.objects(PhotoData.self).filter(predicate)
+        return results.first
+    }
+    
+    // MARK: - Update
+
+    func update(photoData: PhotoData, memo: String, image: UIImage) {
+        do {
+            try realm.write {
+                photoData.memo = memo
+                photoData.image = image.pngData()
+            }
+        } catch {
+            print("Error updating photoData: \(error)")
+        }
+    }
+    
+    // MARK: - Delete
+    
+    func delete(photoData: PhotoData) {
+        do {
+            try realm.write {
+                realm.delete(photoData)
+            }
+        } catch {
+            print("Error deleting photoData: \(error)")
+
+        }
+    }
     
 }

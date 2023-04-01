@@ -56,10 +56,14 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         let newData = PhotoData()
         newData.date = photoDetailView.dateLabel.text!
         newData.memo = photoDetailView.memoTextView.text
-        newData.image = photoDetailView.memoImageView.image?.pngData()
-
+        
         // Realm 데이터베이스에 데이터 저장
-        realmManager.save(photoData: newData)
+        if let image = photoDetailView.photoImageView.image {
+            realmManager.save(photoData: newData, image: image)
+        } else {
+            realmManager.save(photoData: newData, image: UIImage())
+        }
+
 
         // 이미지 배열에 이미지 추가
         photoViewController.images.append(photoDetailView.photoImageView.image)
