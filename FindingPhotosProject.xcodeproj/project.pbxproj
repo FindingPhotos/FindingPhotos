@@ -12,6 +12,9 @@
 		632977BD29D04759004FDD85 /* APIKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 632977BC29D04759004FDD85 /* APIKeyList.plist */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
 		634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A720D29D2FB670066F767 /* PhotoStudios.swift */; };
+		6365B5A929D6E6D0003A4123 /* FaviorateStudioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */; };
+		6365B5AB29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365B5AA29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift */; };
+		6365B5AD29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365B5AC29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift */; };
 		638C1AF729D18B160028F2FA /* RxDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */; };
 		63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */; };
 		63AA9B4629D2C2E300CF7F4B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AA9B4529D2C2E300CF7F4B /* LocationService.swift */; };
@@ -39,6 +42,9 @@
 		632977BC29D04759004FDD85 /* APIKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = APIKeyList.plist; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		634A720D29D2FB670066F767 /* PhotoStudios.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStudios.swift; sourceTree = "<group>"; };
+		6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviorateStudioListViewController.swift; sourceTree = "<group>"; };
+		6365B5AA29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviorateStudioListTableViewCell.swift; sourceTree = "<group>"; };
+		6365B5AC29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviorateStudioListViewModel.swift; sourceTree = "<group>"; };
 		638C1AF629D18B160028F2FA /* RxDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDelegateProxy.swift; sourceTree = "<group>"; };
 		63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		63AA9B4529D2C2E300CF7F4B /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
@@ -97,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				63AA9B4229D2B45200CF7F4B /* MapViewModel.swift */,
+				6365B5AC29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -230,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				AD45811A29D051ED00B8D8A6 /* SettingCell.swift */,
+				6365B5AA29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -295,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */,
+				6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -473,10 +482,13 @@
 				AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */,
 				634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */,
 				6303B89D29D5906800A79F45 /* StudioInformationView.swift in Sources */,
+				6365B5AB29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift in Sources */,
 				63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */,
+				6365B5AD29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
 				63AA9B4629D2C2E300CF7F4B /* LocationService.swift in Sources */,
+				6365B5A929D6E6D0003A4123 /* FaviorateStudioListViewController.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,7 +632,7 @@
 				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 가져옵니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -653,7 +665,7 @@
 				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자 위치를 가져옵니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
