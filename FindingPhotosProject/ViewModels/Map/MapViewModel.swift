@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 
 import NMapsMap
+import RealmSwift
 
 import RxSwift
 import RxCocoa
@@ -19,6 +20,7 @@ final class MapViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppear = BehaviorRelay<Bool>(value: false)
+        let faviorateButtonTapped = PublishRelay<StudioInformation>()
     }
     struct Output {
         let marker: Observable<NMFMarker>
@@ -79,6 +81,21 @@ final class MapViewModel: ViewModelType {
                 marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
             }
+        input.faviorateButtonTapped
+            .subscribe(onNext: { studioName, studioAddress in
+                let realm = try! Realm()
+                let studio = PhotoStudio(name: studioName ?? "", address: studioAddress ?? "")
+                try! realm.write({
+                    let savedData = realm.objects(PhotoStudio.self).filter { return $0.title == studio.title }
+                    print(savedData)
+                    if savedData.isEmpty {
+                        realm.add(studio)
+                    } else {
+                        realm.delete(savedData)
+                    }
+                })
+            })
+            .disposed(by: disposeBag)
         
         return Output(marker: marker,
                       deinied: denied,

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RealmSwift
 
 // MARK: - PhotoStudios
 struct PhotoStudios: Codable {
@@ -20,4 +21,14 @@ struct Item: Codable {
     let link: String
     let category, description, telephone, address: String
     let roadAddress, mapx, mapy: String
+}
+
+class PhotoStudio: Object {
+    @objc dynamic var title: String = ""
+    @objc dynamic var roadAddress: String = ""
+    convenience init(name: String, address: String) {
+        self.init()
+        self.title = name
+        self.roadAddress = address
+    }
 }

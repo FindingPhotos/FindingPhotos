@@ -14,6 +14,7 @@ import SnapKit
 import RxSwift
 import RxViewController
 import RxGesture
+import RealmSwift
 
 final class MapViewController: UIViewController, ViewModelBindable {
     // MARK: - Properties
@@ -65,7 +66,8 @@ final class MapViewController: UIViewController, ViewModelBindable {
                     guard let distance = marker.userInfo["distance"] as? Double else { return false }
                     let cameraUpdate = NMFCameraUpdate(scrollTo: currentPosition)
                     mapViewController.mapView.moveCamera(cameraUpdate)
-                    mapViewController.studioInformationView.bind(item: studioInformation, distance: distance)
+                    mapViewController.studioInformationView.disposeBag = DisposeBag()
+                    mapViewController.studioInformationView.bind(item: studioInformation, distance: distance, viewModel: mapViewController.viewModel)
                     return true
                 }
             })
@@ -87,8 +89,8 @@ final class MapViewController: UIViewController, ViewModelBindable {
             .bind { mapViewController, _ in
                 let faviorateStudioListViewModel = FaviorateStudioListViewModel()
                 let faviorateStudioListViewController = FaviorateStudioListViewController()
-                faviorateStudioListViewController.bind(viewModel: faviorateStudioListViewModel)
                 mapViewController.navigationController?.pushViewController(faviorateStudioListViewController, animated: true)
+                faviorateStudioListViewController.bind(viewModel: faviorateStudioListViewModel)
             }
             .disposed(by: disposeBag)
         mapView.rx.swipeGesture(.right, .left, .down, .up)
@@ -104,7 +106,7 @@ extension MapViewController: LayoutProtocol {
         view.backgroundColor = .white
         navigationItem.title = "근처 사진관 찾기"
         navigationController?.navigationBar.tintColor = .black
-        navigationItem.backButtonTitle = "뒤로가기"
+        navigationItem.backButtonTitle = ""
     }
     func setSubViews() {
         view.addSubview(mapView)

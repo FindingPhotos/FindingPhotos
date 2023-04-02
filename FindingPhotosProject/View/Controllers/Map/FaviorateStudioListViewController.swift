@@ -26,12 +26,23 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
     }
     // MARK: - bindViewModel
     func bindViewModel() {
+        rx.viewWillAppear
+            .bind(to: viewModel.input.viewWillAppear)
+            .disposed(by: disposeBag)
+        viewModel.output.photoStudios
+            .subscribe(onNext: { photoStudio in
+                photoStudio.forEach { studio in
+                    print(studio)
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
 extension FaviorateStudioListViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
+        navigationItem.title = "즐겨찾는 사진관"
     }
     func setSubViews() {
         

@@ -9,8 +9,13 @@ import UIKit
 
 import SnapKit
 
+import RxSwift
+
+typealias StudioInformation = (String?, String?)
+
 final class StudioInformationView: UIView {
     // MARK: - Properties
+    var disposeBag = DisposeBag()
     private let studioNameLabel: UILabel = {
         let studioNameLabel = UILabel()
         studioNameLabel.font = UIFont.boldSystemFont(ofSize: 15)
@@ -53,11 +58,18 @@ final class StudioInformationView: UIView {
         setLayout()
     }
     // MARK: - Helpers
-    func bind(item: Item, distance: Double) {
+    func bind(item: Item, distance: Double, viewModel: MapViewModel) {
+        isHidden = false
         studioNameLabel.text = item.title.htmlEscaped
         studioAddressLabel.text = item.address.htmlEscaped
         distanceLabel.text = String(round(distance / 100) * 100 / 1000) + "km"
-        isHidden = false
+        likeButton.rx.tap
+            .withUnretained(self)
+            .map { studioInformationView, _ in
+                return (studioInformationView.studioNameLabel.text, studioInformationView.studioAddressLabel.text)
+            }
+            .bind(to: viewModel.input.faviorateButtonTapped)
+            .disposed(by: disposeBag)
     }
 }
 // MARK: - LayoutProtocol
