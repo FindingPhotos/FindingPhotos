@@ -11,23 +11,24 @@ import RxCocoa
 
 final class RxImagePickerDelegateProxy: DelegateProxy<UIImagePickerController, UINavigationControllerDelegate & UIImagePickerControllerDelegate>,
                                         DelegateProxyType, UINavigationControllerDelegate & UIImagePickerControllerDelegate {
-
+    
     static func currentDelegate(for object: UIImagePickerController) -> (UIImagePickerControllerDelegate & UINavigationControllerDelegate)? {
         return object.delegate
     }
-
+    
     static func setCurrentDelegate(_ delegate: (UIImagePickerControllerDelegate & UINavigationControllerDelegate)?,
                                    to object: UIImagePickerController) {
         object.delegate = delegate
     }
-
+    
     static func registerKnownImplementations() {
-//        self.register { RxImagePickerDelegateProxy(parentObject: $0,
-//                                                   delegateProxy: RxImagePickerDelegateProxy.self) }
+        //        self.register { RxImagePickerDelegateProxy(parentObject: $0,
+        //                                                   delegateProxy: RxImagePickerDelegateProxy.self) }
         self.register { (imagePicker) -> RxImagePickerDelegateProxy in
             RxImagePickerDelegateProxy(parentObject: imagePicker, delegateProxy: self)
         }
-     }
+    }
+}
 
 class RxCLLocationManagerDelegateProxy: DelegateProxy<CLLocationManager, CLLocationManagerDelegate>, DelegateProxyType, CLLocationManagerDelegate {
     static func registerKnownImplementations() {

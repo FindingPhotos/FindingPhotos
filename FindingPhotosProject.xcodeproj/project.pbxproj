@@ -24,6 +24,8 @@
 		AD17E4B729D6A745009E1E22 /* MainViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B629D6A745009E1E22 /* MainViewManager.swift */; };
 		AD17E4B929D7BE7B009E1E22 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */; };
 		AD17E4BB29D80C24009E1E22 /* ImageUploaderToFirestorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD17E4BA29D80C24009E1E22 /* ImageUploaderToFirestorage.swift */; };
+		AD3FAF8429D973FB00CF197A /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3FAF8329D973FB00CF197A /* UserModel.swift */; };
+		AD3FAF8729D9744200CF197A /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD3FAF8629D9744200CF197A /* SettingModel.swift */; };
 		AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */; };
 		AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */; };
 		AD4580D929CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = AD4580D729CC71C600B8D8A6 /* FindingPhotosProject.xcdatamodeld */; };
@@ -41,13 +43,11 @@
 		AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812129D0749300B8D8A6 /* LogoutView.swift */; };
 		AD45812529D0771400B8D8A6 /* PhotoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */; };
 		AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */; };
-		AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812929D1745600B8D8A6 /* SettingModel.swift */; };
 		AD45812C29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812B29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift */; };
 		AD45812E29D2F75B00B8D8A6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812D29D2F75B00B8D8A6 /* Constants.swift */; };
 		AD45813029D2FA5B00B8D8A6 /* ModifyProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45812F29D2FA5B00B8D8A6 /* ModifyProfileView.swift */; };
 		AD45813229D3101600B8D8A6 /* RxDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */; };
 		AD45813429D4682500B8D8A6 /* ModifyProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813329D4682500B8D8A6 /* ModifyProfileViewModel.swift */; };
-		AD45813629D468F400B8D8A6 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813529D468F400B8D8A6 /* UserModel.swift */; };
 		AD45813A29D5592F00B8D8A6 /* IQKeyboardManagerObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */; };
 		AD45813C29D5628A00B8D8A6 /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813B29D5628A00B8D8A6 /* SettingView.swift */; };
 		AD45813E29D59A4900B8D8A6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813D29D59A4900B8D8A6 /* LoginView.swift */; };
@@ -73,6 +73,8 @@
 		AD17E4B629D6A745009E1E22 /* MainViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewManager.swift; sourceTree = "<group>"; };
 		AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
 		AD17E4BA29D80C24009E1E22 /* ImageUploaderToFirestorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageUploaderToFirestorage.swift; sourceTree = "<group>"; };
+		AD3FAF8329D973FB00CF197A /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserModel.swift; path = FindingPhotosProject/Models/User/UserModel.swift; sourceTree = SOURCE_ROOT; };
+		AD3FAF8629D9744200CF197A /* SettingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingModel.swift; path = FindingPhotosProject/Models/Setting/SettingModel.swift; sourceTree = SOURCE_ROOT; };
 		AD4580CB29CC71C600B8D8A6 /* FindingPhotosProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FindingPhotosProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,13 +94,11 @@
 		AD45812129D0749300B8D8A6 /* LogoutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogoutView.swift; sourceTree = "<group>"; };
 		AD45812429D0771400B8D8A6 /* PhotoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewController.swift; sourceTree = "<group>"; };
 		AD45812629D1654F00B8D8A6 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
-		AD45812929D1745600B8D8A6 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		AD45812B29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewController.swift; sourceTree = "<group>"; };
 		AD45812D29D2F75B00B8D8A6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AD45812F29D2FA5B00B8D8A6 /* ModifyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileView.swift; sourceTree = "<group>"; };
 		AD45813129D3101600B8D8A6 /* RxDelegateProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxDelegateProxy.swift; sourceTree = "<group>"; };
 		AD45813329D4682500B8D8A6 /* ModifyProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyProfileViewModel.swift; sourceTree = "<group>"; };
-		AD45813529D468F400B8D8A6 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		AD45813929D5592F00B8D8A6 /* IQKeyboardManagerObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IQKeyboardManagerObject.swift; sourceTree = "<group>"; };
 		AD45813B29D5628A00B8D8A6 /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		AD45813D29D59A4900B8D8A6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -163,6 +163,22 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		AD3FAF8229D973DA00CF197A /* User */ = {
+			isa = PBXGroup;
+			children = (
+				AD3FAF8329D973FB00CF197A /* UserModel.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		AD3FAF8529D9740500CF197A /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				AD3FAF8629D9744200CF197A /* SettingModel.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
 		AD4580C229CC71C600B8D8A6 = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +204,7 @@
 				AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */,
 				AD4580E729CC784000B8D8A6 /* GoogleService-Info.plist */,
 				AD4580F729CC828900B8D8A6 /* Resources */,
+				AD4580F629CC824200B8D8A6 /* Models */,
 				AD4580F529CC823F00B8D8A6 /* View */,
 				AD4580F429CC823C00B8D8A6 /* ViewModels */,
 				63AA9B4429D2C19700CF7F4B /* Services */,
@@ -260,12 +277,12 @@
 		AD4580F629CC824200B8D8A6 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				AD4580FE29CC868600B8D8A6 /* User */,
+				AD3FAF8529D9740500CF197A /* Setting */,
+				AD3FAF8229D973DA00CF197A /* User */,
 				AD4580FD29CC868500B8D8A6 /* Location */,
-				AD4580FC29CC868400B8D8A6 /* Photo */,
-				AD45812829D1743800B8D8A6 /* Setting */,
 			);
-			path = Models;
+			name = Models;
+			path = Resources/Models;
 			sourceTree = "<group>";
 		};
 		AD4580F729CC828900B8D8A6 /* Resources */ = {
@@ -274,7 +291,6 @@
 				AD4580DA29CC71C700B8D8A6 /* Assets.xcassets */,
 				AD4580DC29CC71C700B8D8A6 /* LaunchScreen.storyboard */,
 				AD4580DF29CC71C700B8D8A6 /* Info.plist */,
-				AD4580F629CC824200B8D8A6 /* Models */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -307,27 +323,12 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		AD4580FC29CC868400B8D8A6 /* Photo */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Photo;
-			sourceTree = "<group>";
-		};
 		AD4580FD29CC868500B8D8A6 /* Location */ = {
 			isa = PBXGroup;
 			children = (
 				634A720D29D2FB670066F767 /* PhotoStudios.swift */,
 			);
 			path = Location;
-			sourceTree = "<group>";
-		};
-		AD4580FE29CC868600B8D8A6 /* User */ = {
-			isa = PBXGroup;
-			children = (
-				AD45813529D468F400B8D8A6 /* UserModel.swift */,
-			);
-			path = User;
 			sourceTree = "<group>";
 		};
 		AD4580FF29CC86C600B8D8A6 /* Setting */ = {
@@ -407,14 +408,6 @@
 				AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */,
 			);
 			path = Login;
-			sourceTree = "<group>";
-		};
-		AD45812829D1743800B8D8A6 /* Setting */ = {
-			isa = PBXGroup;
-			children = (
-				AD45812929D1745600B8D8A6 /* SettingModel.swift */,
-			);
-			path = Setting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -546,8 +539,8 @@
 				AD45813429D4682500B8D8A6 /* ModifyProfileViewModel.swift in Sources */,
 				AD45810B29CC878000B8D8A6 /* Extensions.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
+				AD3FAF8729D9744200CF197A /* SettingModel.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
-				AD45813629D468F400B8D8A6 /* UserModel.swift in Sources */,
 				AD4580EE29CC7F6000B8D8A6 /* PhotoViewController.swift in Sources */,
 				AD45813E29D59A4900B8D8A6 /* LoginView.swift in Sources */,
 				AD45812729D1654F00B8D8A6 /* SettingViewModel.swift in Sources */,
@@ -555,9 +548,9 @@
 				634A720E29D2FB680066F767 /* PhotoStudios.swift in Sources */,
 				6303B89D29D5906800A79F45 /* StudioInformationView.swift in Sources */,
 				6365B5AB29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift in Sources */,
+				AD3FAF8429D973FB00CF197A /* UserModel.swift in Sources */,
 				63AA9B4329D2B45200CF7F4B /* MapViewModel.swift in Sources */,
 				6365B5AD29D6E9E9003A4123 /* FaviorateStudioListViewModel.swift in Sources */,
-				AD45812A29D1745600B8D8A6 /* SettingModel.swift in Sources */,
 				AD45812C29D2F4FE00B8D8A6 /* ModifyProfileViewController.swift in Sources */,
 				AD45814229D5B0E900B8D8A6 /* SignInView.swift in Sources */,
 				AD45814029D5B07600B8D8A6 /* SignInViewController.swift in Sources */,
@@ -713,7 +706,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BGU99JP2HN;
+				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
@@ -746,7 +739,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BGU99JP2HN;
+				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
