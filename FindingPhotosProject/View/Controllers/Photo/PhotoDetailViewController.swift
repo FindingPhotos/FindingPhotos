@@ -6,76 +6,194 @@
 //
 
 import UIKit
-import SnapKit
+import RxSwift
+import RxCocoa
+import PhotosUI
+import RealmSwift
 
-class PhotoDetailViewController: UIViewController {
+
+class PhotoDetailViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - Properties
     
-    lazy var textField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 200, height: 30))
-        textField.text = ""
-        textField.borderStyle = UITextField.BorderStyle.roundedRect
-        textField.layer.position = CGPoint(x: self.view.bounds.width/2, y: self.view.bounds.height - 100)
-        return textField
-    }()
+    private let disposeBag = DisposeBag()
+    private lazy var photoDetailView = PhotoDetailView(frame: self.view.frame)
+    private var imagePicker = UIImagePickerController()
+    private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
     
-    lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 150, width: self.view.frame.width, height: 200))
-        datePicker.timeZone = NSTimeZone.local
-        datePicker.backgroundColor = .white
-        datePicker.layer.cornerRadius = 5.0
-        
-        datePicker.addTarget(self, action: #selector(onDidChangeDate(sender:)), for: .valueChanged)
-        return datePicker
-    }()
+    let realmManager = RealmManager()
+    var diary: PhotoData?
     
-    
+    var defaultImage = UIImage(systemName: "addphoto")
+
     
     // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureUI()
-        configureNavigation()
-        configureNavigation()
-        
-        self.view.addSubview(self.textField)
-        self.view.addSubview(self.datePicker)
+        setUI()
     }
     
     // MARK: - Selectors
     
-    @objc func saveButtonTapped(_ sender: Any) {
-        print("사진 저장")
-    }
-    
-    @objc func onDidChangeDate(sender: UIDatePicker) {
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd hh:mm"
+    @objc func saveButtonTapped() {
+        // 저장할 데이터 객체 생성
+        guard let date = photoDetailView.dateLabel.text else { return }
         
-        // 형식에 따라 날짜 가져오기
-        let selectedDate: String = dateFormatter.string(from: sender.date)
-        self.textField.text = selectedDate
+        let newData = PhotoData()
+        newData.date = date
+        newData.memo = photoDetailView.memoTextView.text
+        
+        if diary != nil {
+            newData.id = diary!.id
+            let image = photoDetailView.photoImageView.image ?? UIImage()
+            realmManager.update(photoData: newData, image: image)
+        } else {
+            // 객체가 존재하지 않으면 새로운 객체로 저장
+            newData.id = UUID().uuidString
+            
+            if let image = photoDetailView.photoImageView.image, image != UIImage(named: "addphoto") {
+                     realmManager.save(photoData: newData, image: image)
+                     popViewController()
+                 } else {
+                     let alert = UIAlertController(title: "📸", message: "사진을 추가하세요.", preferredStyle: .alert)
+                     let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                     alert.addAction(okAction)
+                     present(alert, animated: true, completion: nil)
+                 }
+
+        }
+
+        popViewController()
     }
+
+
+    @objc func deleteButtonTapped() {
+        
+        guard let photoData = diary else {
+            let alert = UIAlertController(title: "🚫", message: "삭제할 항목이 없습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        let alert = UIAlertController(title: "🗑", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            let image = self.photoDetailView.photoImageView.image ?? UIImage()
+            self.realmManager.delete(photoData: photoData, image: image)
+            self.popViewController()
+        }
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+
     
-    
-    
+
     // MARK: - Helpers
+    
+    private func setUI() {
+        imagePicker.delegate = self
+        self.view = photoDetailView
+        configureUI()
+        configureNavigation()
+        configureButtonActions()
+    }
     
     private func configureUI() {
         view.backgroundColor = .white
+        self.view = photoDetailView
+        
+        if let diary = diary, let imageData = diary.image {
+            photoDetailView.photoImageView.image = UIImage(data: imageData)
+            photoDetailView.memoTextView.text = diary.memo
+        }
     }
+
     
     private func configureNavigation() {
-        let rightButton = UIBarButtonItem(title: "저장", style: .plain, target: self, action: #selector(saveButtonTapped))
+        let deleteButton = UIBarButtonItem(image: UIImage(named: "deleteButton")?.withRenderingMode(.alwaysOriginal),
+                                            style: .plain,
+                                            target: self,
+                                            action: #selector(deleteButtonTapped))
         
-        navigationItem.rightBarButtonItem = rightButton
+        let saveButton = UIBarButtonItem(image: UIImage(named: "saveButton")?.withRenderingMode(.alwaysOriginal),
+                                          style: .plain,
+                                          target: self,
+                                          action: #selector(saveButtonTapped))
+        
+        navigationItem.rightBarButtonItems = [saveButton, deleteButton]
+    }
+
+
+    
+    
+//    // ⚠️ 여기 수정
+    func configureButtonActions() {
+        photoDetailView.addPhotoButton.rx.tap
+            .withUnretained(self)
+            .subscribe(onNext: { photoDetailViewController, _ in
+                photoDetailViewController.openImagePicker()
+            })
+            .disposed(by: disposeBag)
+//            .subscribe(onNext: { photoDetailViewController
+//                photode.openImagePicker()
+//            })
+//            .disposed(by: disposeBag)
+//
+//        imagePicker.rx.didFinishPickingMediaWithInfo
+//        // ⚠️ 여기 정리
+//            .withUnretained(self)
+//            .bind { photoDetailViewController ,info in
+//                photoDetailViewController.dismiss(animated: true, completion: nil)
+//                if let img = info[.originalImage] as? UIImage {
+//                    photoDetailViewController.photoDetailView.photoImageView.image = img
+//                }
+//            }
+//            .disposed(by: disposeBag)
     }
     
-    private func configureDataPicker() {
-        self.view.addSubview(self.datePicker)
+    private func popViewController() {
+        navigationController?.popViewController(animated: true)
     }
     
+    deinit {
+        print("deinit!!!")
+    }
+    
+    
+}
+
+// MARK: - 이미지 할당
+//
+//extension PhotoDetailViewController {
+//    func openImagePicker() {
+//        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+//            imagePicker.sourceType = .photoLibrary
+//            imagePicker.allowsEditing = false
+//            present(imagePicker, animated: true, completion: nil)
+//        }
+//    }
+//}
+
+extension PhotoDetailViewController: UIImagePickerControllerDelegate {
+    func openImagePicker() {
+        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.allowsEditing = false
+            present(imagePicker, animated: true, completion: nil)
+        }
+    }
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
+            dismiss(animated: true, completion: nil)
+            if let img = info[.originalImage] as? UIImage {
+                self.photoDetailView.photoImageView.image = img
+            }
+        }
 }
