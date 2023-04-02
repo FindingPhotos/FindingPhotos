@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: windowScene)
-
+/*
         let tabBarVC = UITabBarController()
         let mapViewModel = MapViewModel()
         let mapViewController = MapViewController()
@@ -41,6 +41,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         window?.rootViewController = tabBarVC
         window?.makeKeyAndVisible()
+ */
+        guard let window else { return }
+        MainViewManager.shared.show(in: window)
+        window.makeKeyAndVisible()
     }
 }
 

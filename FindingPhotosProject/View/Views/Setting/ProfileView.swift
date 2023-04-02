@@ -13,12 +13,12 @@ final class ProfileView: UIView {
     
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "프로필"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = "익명으로 로그인되었습니다."
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
-    private lazy var profileSetButton: UIButton = {
+    lazy var profileSetButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)

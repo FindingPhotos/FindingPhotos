@@ -6,10 +6,12 @@
 //
 
 import UIKit
-import CoreLocation
-
+import SafariServices
+import MessageUI
 import RxSwift
 import RxCocoa
+import CoreLocation
+
 // MARK: - UIColor Extension
 extension UIColor {
     // 나누기 255 할 필요 없음, alpha값 1로 고정
@@ -54,6 +56,114 @@ extension ViewModelBindable where Self: UIViewController {
         bindViewModel()
     }
 }
+
+extension UIViewController {
+    func openSFSafari(url: String) {
+        guard let url = URL(string: url) else { return }
+        let safariViewController = SFSafariViewController(url: url)
+        present(safariViewController, animated: true, completion: nil)
+    }
+}
+
+
+extension MFMailComposeViewControllerDelegate {
+    
+    func sendEmail(self: UIViewController, _ completion: () -> Void) {
+           if MFMailComposeViewController.canSendMail() {
+               let compseVC = MFMailComposeViewController()
+               compseVC.mailComposeDelegate = (self as! any MFMailComposeViewControllerDelegate)
+               compseVC.setToRecipients(["leehyungju20@gmail.com"])
+               compseVC.setSubject("'FindingPhotos' 문의")
+//               compseVC.setMessageBody("문의계정: \(userEmail)\n문의하실 내용을 입력하세요.", isHTML: false)
+               compseVC.setMessageBody("문의하실 내용을 입력하세요.", isHTML: false)
+               self.present(compseVC, animated: true, completion: nil)
+               completion()
+           }
+           else {
+               self.showAlert("메일을 전송 실패", "아이폰 이메일 설정을 확인하고 다시 시도해주세요.", nil)
+           }
+       }
+}
+
+extension UIViewController {
+    func showAlert(_ title: String, _ message: String, _ okAction: (() -> Void)?) {
+        let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertVC.addAction(UIAlertAction(title: "취소", style: .cancel))
+        if let okAction {
+            let ok = UIAlertAction(title: "확인", style: .default){ _ in
+                okAction()
+            }
+            alertVC.addAction(ok)
+        }
+        present(alertVC, animated: true, completion: nil)
+        
+    }
+}
+
+extension Reactive where Base: UIImagePickerController {
+    var rxDelegate: DelegateProxy<UIImagePickerController, UIImagePickerControllerDelegate & UINavigationControllerDelegate> {
+        return RxImagePickerDelegateProxy.proxy(for: self.base)
+    }
+    var didFinishPickingMediaWithInfo: Observable<[UIImagePickerController.InfoKey : Any]> {
+        return rxDelegate
+            // methodInvoked는 viewDidAppear처럼 observable이 생성된 후에 작동
+            .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
+            .map { (parameters) in
+                return parameters[1] as! [UIImagePickerController.InfoKey : Any]
+            }
+        
+    }
+    var didCancel: Observable<()> {
+        return rxDelegate
+            .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerControllerDidCancel(_:)))
+            .map { _ in ( ) }
+    }
+}
+
+func dismissViewController(_ viewController: UIViewController, animated: Bool) {
+    if viewController.isBeingDismissed || viewController.isBeingPresented {
+        DispatchQueue.main.async {
+            dismissViewController(viewController, animated: animated)
+        }
+        return
+    }
+    if viewController.presentingViewController != nil {
+        viewController.dismiss(animated: animated)
+    }
+}
+
+extension Reactive where Base: UIImagePickerController {
+    static func createWithParent(_ parent: UIViewController?, animated: Bool = true, configureImagePicker: @escaping (UIImagePickerController) throws -> Void = { x in }) -> Observable<UIImagePickerController> {
+        return Observable.create { [weak parent] observer in
+            let imagePicker = UIImagePickerController()
+            let dismissDisposable = imagePicker.rx
+                .didCancel
+                .subscribe { [weak imagePicker] in
+                    guard let imagePicker else { return }
+                    dismissViewController(imagePicker, animated: animated)
+                }
+            do {
+                try configureImagePicker(imagePicker)
+            }
+            catch let error {
+                observer.on(.error(error))
+                return Disposables.create()
+            }
+            guard let parent else {
+                observer.on(.completed)
+                return Disposables.create()
+            }
+            parent.present(imagePicker, animated: animated)
+//            parent.show(imagePicker, sender: self)
+            observer.on(.next(imagePicker))
+            
+            return Disposables.create(dismissDisposable, Disposables.create {
+                dismissViewController(imagePicker, animated: animated)
+            })
+        }
+    }
+}
+
 // MARK: - Reactive Extension
 typealias CLLocationsEvent = (manager: CLLocationManager, locations: [CLLocation])
 typealias CLErrorEvent = (manager: CLLocationManager, error: Error)
