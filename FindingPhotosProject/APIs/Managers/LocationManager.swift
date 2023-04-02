@@ -10,9 +10,9 @@ import CoreLocation
 
 import RxSwift
 
-final class LocationService {
+final class LocationManager {
     
-    static let shared = LocationService()
+    static let shared = LocationManager()
     let locationManager: CLLocationManager!
     
     private init() {

@@ -36,7 +36,7 @@ final class MapViewModel: ViewModelType {
         
         let manager = input.viewWillAppear
             .flatMap { _ in
-                LocationService.shared.locationManager.rx.locationManagerDidChangeAuthorization
+                LocationManager.shared.locationManager.rx.locationManagerDidChangeAuthorization
             }
         manager.filter { return $0.authorizationStatus == .notDetermined}
             .subscribe(onNext: { manager in
@@ -50,9 +50,9 @@ final class MapViewModel: ViewModelType {
             .disposed(by: disposeBag)
         let denied = manager.filter { return $0.authorizationStatus == .denied }
         
-        let didError = LocationService.shared.locationManager.rx.didError
+        let didError = LocationManager.shared.locationManager.rx.didError
         
-        let marker = LocationService.shared.locationManager.rx.didUpdateLocations
+        let marker = LocationManager.shared.locationManager.rx.didUpdateLocations
             .map { (manager: CLLocationManager, locations: [CLLocation]) in
                 guard let currentIatitude = manager.location?.coordinate.latitude else {
                     return CLLocation() }
@@ -61,10 +61,10 @@ final class MapViewModel: ViewModelType {
                 return CLLocation(latitude: currentIatitude, longitude: currentLongitude)
             }
             .flatMap { location in
-                LocationService.shared.getPlaceMark(location: location)
+                LocationManager.shared.getPlaceMark(location: location)
             }
             .flatMap { currentAddress in
-                LocationService.shared.getPhthoStudios(currentAddress: currentAddress)
+                LocationManager.shared.getPhthoStudios(currentAddress: currentAddress)
             }
             .flatMap { photoStudios in
                 Observable.from(photoStudios.items, scheduler: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
@@ -76,7 +76,7 @@ final class MapViewModel: ViewModelType {
                 marker.captionRequestedWidth = 0
                 marker.captionTextSize = 13
                 marker.userInfo["studioInformation"] = photoStudio
-                let distance = LocationService.shared.locationManager.location?.distance(from: CLLocation(latitude: photoStudioLocation.lat, longitude: photoStudioLocation.lng))
+                let distance = LocationManager.shared.locationManager.location?.distance(from: CLLocation(latitude: photoStudioLocation.lat, longitude: photoStudioLocation.lng))
                 marker.userInfo["distance"] = distance
                 marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
