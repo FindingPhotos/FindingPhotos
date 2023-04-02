@@ -44,7 +44,9 @@ final class ModifyProfileViewController: UIViewController {
         // Input
         modifyProfileView.modifyButton.rx.tap
             .withUnretained(self)
-            .subscribe { viewController, _ in
+            .debug("---")
+            .subscribe { viewController, event in
+                viewController.viewModel.input.ModifyButtonTapped.accept(event)
                 viewController.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
@@ -56,9 +58,15 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         // Output
+        viewModel.output.userInformation
+            .map { $0?.name }
+            .bind(to: modifyProfileView.nameTextField.rx.text)
+            .disposed(by: disposeBag)
+        
         viewModel.output.changedImage
             .bind(to: modifyProfileView.profileImageView.rx.image)
             .disposed(by: disposeBag)
+        
     }
     
     private func bindImagePicker() {

@@ -14,16 +14,6 @@ final class AuthManager {
     
     static let shared = AuthManager()
     
-//    func logIn(email: String, password: String) {
-//        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-//            guard error == nil else {
-//                print(error!.localizedDescription)
-//                print("DEBUG: 로그인 실패")
-//                return
-//            }
-//            NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
-//        }
-//    }
     func logIn(email: String, password: String) -> Observable<Bool> {
         return Observable.create { observer in
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
@@ -40,26 +30,6 @@ final class AuthManager {
         }
     }
     
-    
-    /*
-    func signIn(email: String, password: String, name: String)  {
-        
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            guard let email = authResult?.user.email,
-                  let uid = authResult?.user.uid else { return }
-            let currentUserModel = UserModel(name: name, email: email, uid: uid)
-            UserDefaults.standard.set(currentUserModel, forKey: "currentUserModel")
-            NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
-        }
-    }
-    */
-    
-  
-    
     func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<Bool>  {
         
         return Observable.create { observer in
@@ -74,14 +44,13 @@ final class AuthManager {
                 if let image {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
                         let currentUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrlString)
-//                        UserDefaults.standard.set(currentUserModel, forKey: "currentUserModel")
+                        FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
                         observer.onNext(true)
                     }
                 } else {
                     let currentUserModel = UserModel(name: name, email: email, uid: uid)
                     print("DEBUG: currentUserModel:\(currentUserModel)")
-
-//                    UserDefaults.standard.set(currentUserModel, forKey: "currentUserModel")
+                    FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": ""])
                     observer.onNext(true)
                 }
                 print("DEBUG: 회원가입 성공")
@@ -90,18 +59,7 @@ final class AuthManager {
             return Disposables.create()
         }
     }
-
-    /*
-    func signInWithAnonymous() {
-        Auth.auth().signInAnonymously() { (authResult, error) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
-        }
-    }
-    */
+    
     func signInWithAnonymous() -> Observable<Void> {
         return Observable.create { observer in
             Auth.auth().signInAnonymously() { (authResult, error) in
@@ -140,6 +98,25 @@ final class AuthManager {
             return Disposables.create()
         }
     }
+    
+    func updateUserInformation(changedName: String?, changedImageUrl: String?) -> Observable<Void> {
+        return Observable.create { observer in
+            guard let uid = Auth.auth().currentUser?.uid else { return Disposables.create() }
+            if changedName != nil && changedImageUrl != nil {
+                guard let changedName, let changedImageUrl else { return Disposables.create() }
+                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "image": changedImageUrl])
+            } else if let changedName {
+                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
+            } else if let changedImageUrl {
+                FirestoreAddress.collectionUsers.document(uid).updateData(["image": changedImageUrl])
+            }
+            observer.onCompleted()
+            return Disposables.create()
+        }
+    }
+    
+    
+    
     func logOut() {
         let firebaseAuth = Auth.auth()
         do {
@@ -152,15 +129,9 @@ final class AuthManager {
     func deleteAccount() {
         let firebaseAuth = Auth.auth()
         guard let uid = firebaseAuth.currentUser?.uid else { return }
-        do {
-           try firebaseAuth.currentUser?.delete() { error in
-//                firestore에 유저데이터 생성 시 지워주기
-//                collectionUsers.document(uid).delete()
-               print("DEBUG: delete error:\(error)")
-//               UserDefaults.standard.removeObject(forKey: "currentUserModel")
-            }
-        } catch {
-            
+        firebaseAuth.currentUser?.delete() { error in
+            guard error != nil else { return print("DEBUG: delete error:\(error)") }
+            FirestoreAddress.collectionUsers.document(uid).delete()
         }
     }
 }

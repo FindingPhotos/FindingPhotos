@@ -16,10 +16,12 @@ final class ModifyProfileViewModel: ViewModelType {
     struct Input {
         let textFieldText = PublishRelay<String>()
         let selectedImage = PublishRelay<UIImage?>()
+        let ModifyButtonTapped = PublishRelay<Void>()
     }
     struct Output {
         let changedName: PublishRelay<String>
         let changedImage: PublishRelay<UIImage>
+        let userInformation: Observable<UserModel?>
     }
     var disposeBag = DisposeBag()
 
@@ -31,14 +33,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedName = PublishRelay<String>()
         let changedImage = PublishRelay<UIImage>()
         
-//        input.textFieldText
-//            .withUnretained(self)
-//            .subscribe { viewModel, text in
-//                changedName.accept(text)
-//            }
-//            .disposed(by: disposeBag)
-        
-        let changedText = input.textFieldText
+        let user = AuthManager.shared.getUserInformation()
         
         input.selectedImage
             .withUnretained(self)
@@ -52,8 +47,17 @@ final class ModifyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
+        input.ModifyButtonTapped
+            .withLatestFrom(Observable.combineLatest(input.textFieldText, input.selectedImage))
+            .flatMap { changedName, changedImage in
+                AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: "")
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         return Output(changedName: changedName,
-                      changedImage: changedImage)
+                      changedImage: changedImage,
+                      userInformation: user)
         
     }
     // 이후 기본 유저 모델값을 만들고 기본값으로 넣어주면 될듯

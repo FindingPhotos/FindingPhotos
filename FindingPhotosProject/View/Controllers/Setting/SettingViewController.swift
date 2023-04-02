@@ -50,7 +50,7 @@ final class SettingViewController: UIViewController {
         settingView.signoutButton.rx.tap
             .bind(to: viewModel.input.signoutButtonTapped)
             .disposed(by: disposeBag)
-        
+
         // Output
         viewModel.output.didLogOut
             .subscribe()
@@ -58,6 +58,17 @@ final class SettingViewController: UIViewController {
         viewModel.output.didSignOut
             .subscribe()
             .disposed(by: disposeBag)
+        viewModel.output.userInformation
+            .map { $0?.name }
+            .bind(to: settingView.nameLabel.rx.text)
+            .disposed(by: disposeBag)
+//        viewModel.output.userInformation
+//            .debug("--")
+//            .filter { $0 == nil }
+//            .map { _ in "익명으로 로그인되었습니다." }
+//            .bind(to: settingView.nameLabel.rx.text)
+//            .disposed(by: disposeBag)
+
     }
     
     func bindTableView() {
