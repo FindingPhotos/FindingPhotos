@@ -8,17 +8,16 @@
 import UIKit
 
 final class FaviorateStudioListTableViewCell: UITableViewCell {
-
     // MARK: - Properties
     static let cellIdentifier = "FaviorateStudioListTableViewCell"
     private let studioNameLabel: UILabel = {
         let studioNameLabel = UILabel()
-        studioNameLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        studioNameLabel.font = UIFont.boldSystemFont(ofSize: 17)
         return studioNameLabel
     }()
     private let studioAddressLabel: UILabel = {
         let studioAddressLabel = UILabel()
-        studioAddressLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        studioAddressLabel.font = UIFont.boldSystemFont(ofSize: 15)
         studioAddressLabel.textColor = .tabButtonlightGrey
         return studioAddressLabel
     }()
@@ -26,6 +25,7 @@ final class FaviorateStudioListTableViewCell: UITableViewCell {
        let stackView = UIStackView(arrangedSubviews: [studioNameLabel, studioAddressLabel])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
+        stackView.spacing = 5
         return stackView
     }()
     private let likeButton: UIButton = {
@@ -36,6 +36,10 @@ final class FaviorateStudioListTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         setSubViews()
         setLayout()
+    }
+    func bind(photoStudio: PhotoStudio) {
+        studioNameLabel.text = photoStudio.title
+        studioAddressLabel.text = photoStudio.roadAddress
     }
 }
 // MARK: - LayoutProtocol

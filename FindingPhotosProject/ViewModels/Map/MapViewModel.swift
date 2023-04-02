@@ -87,7 +87,6 @@ final class MapViewModel: ViewModelType {
                 let studio = PhotoStudio(name: studioName ?? "", address: studioAddress ?? "")
                 try! realm.write({
                     let savedData = realm.objects(PhotoStudio.self).filter { return $0.title == studio.title }
-                    print(savedData)
                     if savedData.isEmpty {
                         realm.add(studio)
                     } else {

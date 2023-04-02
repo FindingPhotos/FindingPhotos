@@ -28,9 +28,7 @@ final class FaviorateStudioListViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let realm = try! Realm()
         let savedData = realm.objects(PhotoStudio.self)
-        
         let photoStudios = Observable.array(from: savedData)
-            
         return Output(photoStudios: photoStudios)
     }
 }

@@ -13,9 +13,12 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
     // MARK: - Properties
     var viewModel: FaviorateStudioListViewModel!
     var disposeBag = DisposeBag()
-    private let faviorateStudioListTableView: UITableView = {
+    private lazy var faviorateStudioListTableView: UITableView = {
         let listTableView = UITableView()
         listTableView.register(FaviorateStudioListTableViewCell.self, forCellReuseIdentifier: FaviorateStudioListTableViewCell.cellIdentifier)
+        listTableView.separatorStyle = .singleLine
+        listTableView.separatorColor = .black
+        listTableView.rowHeight = self.view.frame.height * 0.1
         return listTableView
     }()
     // MARK: - Lifecycle
@@ -30,11 +33,10 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
             .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         viewModel.output.photoStudios
-            .subscribe(onNext: { photoStudio in
-                photoStudio.forEach { studio in
-                    print(studio)
-                }
-            })
+            .debug("-----")
+            .bind(to: faviorateStudioListTableView.rx.items(cellIdentifier: FaviorateStudioListTableViewCell.cellIdentifier, cellType: FaviorateStudioListTableViewCell.self)) { row, photoStudio, cell in
+                cell.bind(photoStudio: photoStudio)
+            }
             .disposed(by: disposeBag)
     }
 }
@@ -45,9 +47,11 @@ extension FaviorateStudioListViewController: LayoutProtocol {
         navigationItem.title = "즐겨찾는 사진관"
     }
     func setSubViews() {
-        
+        view.addSubview(faviorateStudioListTableView)
     }
     func setLayout() {
-        
+        faviorateStudioListTableView.snp.makeConstraints { make in
+            make.top.left.right.bottom.equalTo(view.safeAreaInsets)
+        }
     }
 }
