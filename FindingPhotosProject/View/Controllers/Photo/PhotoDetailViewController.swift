@@ -69,8 +69,13 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 
 
     @objc func deleteButtonTapped() {
-
-        guard let photoData = diary else { return }
+        
+        guard let photoData = diary else {
+            let alert = UIAlertController(title: "🚫", message: "삭제할 항목이 없습니다.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+            return
+        }
         
         let alert = UIAlertController(title: "🗑", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
         
