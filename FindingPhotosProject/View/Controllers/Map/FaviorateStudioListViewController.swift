@@ -33,7 +33,6 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
             .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         viewModel.output.photoStudios
-            .debug("-----")
             .bind(to: faviorateStudioListTableView.rx.items(cellIdentifier: FaviorateStudioListTableViewCell.cellIdentifier, cellType: FaviorateStudioListTableViewCell.self)) { row, photoStudio, cell in
                 cell.bind(photoStudio: photoStudio)
             }
