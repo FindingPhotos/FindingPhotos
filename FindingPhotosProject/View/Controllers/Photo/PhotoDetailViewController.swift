@@ -72,13 +72,21 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 
         guard let photoData = diary else { return }
         
-        // Realm 데이터베이스에서 데이터 삭제
-        let image = photoDetailView.photoImageView.image ?? UIImage()
-        realmManager.delete(photoData: photoData, image: image)
+        let alert = UIAlertController(title: "🗑", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
         
-        popViewController()
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            let image = self.photoDetailView.photoImageView.image ?? UIImage()
+            self.realmManager.delete(photoData: photoData, image: image)
+            self.popViewController()
+        }
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true, completion: nil)
     }
-    
+
     
 
     // MARK: - Helpers
@@ -183,14 +191,4 @@ extension PhotoDetailViewController: UIImagePickerControllerDelegate {
                 self.photoDetailView.photoImageView.image = img
             }
         }
-}
-
-extension UIViewController {
-    func alert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-    }
-
 }
