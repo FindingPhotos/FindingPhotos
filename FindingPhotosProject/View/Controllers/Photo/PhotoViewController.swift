@@ -47,7 +47,8 @@ final class PhotoViewController: UIViewController {
         
         configureUI()
         configureNavigation()
-        setupCollectionView()
+        setSubViews()
+        setLayout()
         collectionView.reloadData()
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
@@ -81,18 +82,6 @@ final class PhotoViewController: UIViewController {
         navigationItem.rightBarButtonItem = addButton
     }
 
-    
-    private func setupCollectionView() {
-        view.addSubview(collectionView)
-        
-        collectionView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
-            make.leading.equalToSuperview().inset(10)
-            make.trailing.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().inset(150)
-            
-        }
-    }
 }
 
 
@@ -142,3 +131,24 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         
     }
+
+
+
+// MARK: - Layout Extension 
+
+extension PhotoViewController: LayoutProtocol {
+    func setSubViews() {
+        view.addSubview(collectionView)
+    }
+    
+    func setLayout() {
+        collectionView.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(150)
+        }
+    }
+    
+    
+}
