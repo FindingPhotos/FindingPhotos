@@ -23,6 +23,8 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     let realmManager = RealmManager()
     var diary: PhotoData?
+    
+    var defaultImage = UIImage(systemName: "addphoto")
 
     
     // MARK: - LifeCycle
@@ -49,9 +51,19 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         } else {
             // 객체가 존재하지 않으면 새로운 객체로 저장
             newData.id = UUID().uuidString
-            let image = photoDetailView.photoImageView.image ?? UIImage()
-            realmManager.save(photoData: newData, image: image)
+            
+            if let image = photoDetailView.photoImageView.image, image != UIImage(named: "addphoto") {
+                     realmManager.save(photoData: newData, image: image)
+                     popViewController()
+                 } else {
+                     let alert = UIAlertController(title: "📸", message: "사진을 추가하세요.", preferredStyle: .alert)
+                     let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+                     alert.addAction(okAction)
+                     present(alert, animated: true, completion: nil)
+                 }
+
         }
+
         popViewController()
     }
 
@@ -171,4 +183,14 @@ extension PhotoDetailViewController: UIImagePickerControllerDelegate {
                 self.photoDetailView.photoImageView.image = img
             }
         }
+}
+
+extension UIViewController {
+    func alert(message: String) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+
 }
