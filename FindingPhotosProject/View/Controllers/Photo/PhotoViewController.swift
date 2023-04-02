@@ -38,6 +38,7 @@ final class PhotoViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
+        collectionView.reloadData()
     }
     
     
@@ -47,6 +48,10 @@ final class PhotoViewController: UIViewController {
         configureUI()
         configureNavigation()
         setupCollectionView()
+        collectionView.reloadData()
+        
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
     }
     // MARK: - Selectors
     

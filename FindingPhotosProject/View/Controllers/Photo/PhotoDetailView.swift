@@ -12,20 +12,7 @@ class PhotoDetailView: UIView {
     // MARK: - Properties
 
     let imagePicker = UIImagePickerController()
-    
-//    lazy var datePicker: UIDatePicker = {
-//        let datePicker = UIDatePicker()
-//        datePicker.datePickerMode = .date
-//        datePicker.locale = Locale(identifier: "ko_KR")
-//
-//        // ⚠️ 이거 안됨
-//        datePicker.backgroundColor = .clear
-//
-//        return datePicker
-//    }()
-    
-    var date: Date?
-    
+
     lazy var dateLabel: UILabel = {
        let dateLabel = UILabel()
         let myFormatter = DateFormatter()
@@ -101,7 +88,6 @@ class PhotoDetailView: UIView {
 extension PhotoDetailView: LayoutProtocol {
     
     func setSubViews() {
-//        self.addSubview(datePicker)
         self.addSubview(dateLabel)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
@@ -111,10 +97,6 @@ extension PhotoDetailView: LayoutProtocol {
     }
     
     func setLayout() {
-//        datePicker.snp.makeConstraints { make in
-//            make.centerX.equalToSuperview()
-//            make.top.equalToSuperview().offset(110)
-//        }
         
         dateLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
@@ -124,13 +106,8 @@ extension PhotoDetailView: LayoutProtocol {
         }
         
         photoImageView.snp.makeConstraints { make in
-            
-//            make.centerX.equalTo(datePicker)
-//            make.top.equalTo(datePicker.snp.bottom).offset(10)
-            
             make.centerX.equalTo(dateLabel)
             make.top.equalTo(dateLabel.snp.bottom).offset(10)
-            
             make.width.equalTo(350)
             make.height.equalTo(470)
         }

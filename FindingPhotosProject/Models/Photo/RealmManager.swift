@@ -18,16 +18,25 @@ class RealmManager {
     // MARK: - Create
 
     func save(photoData: PhotoData, image: UIImage) {
-        do {
-            try realm.write {
-                photoData.image = image.pngData()
-                realm.add(photoData)
-            }
-        } catch {
-            print("Error saving category \(error)")
-            
+        // 저장할 데이터 객체 생성
+        let newData = PhotoData()
+        newData.id = UUID().uuidString
+        newData.date = photoData.date
+        newData.memo = photoData.memo
+        newData.image = image.pngData()
+        
+        // Realm 데이터베이스에 데이터 저장
+        try! realm.write {
+            realm.add(newData)
         }
     }
+    
+    func getData(withId id: String) -> PhotoData? {
+        // 기존 데이터 가져오기
+        let existingData = realm.objects(PhotoData.self).filter { $0.id == id }.first
+        return existingData
+    }
+    
     
     // MARK: - Read
     
@@ -44,15 +53,22 @@ class RealmManager {
     
     // MARK: - Update
 
-    func update(photoData: PhotoData, memo: String, image: UIImage) {
+    
+    func update(photoData: PhotoData, image: UIImage) {
+        // 기존 데이터 업데이트
+        guard let existingData = getData(withId: photoData.id) else {
+            return
+        }
         do {
             try realm.write {
-                photoData.memo = memo
-                photoData.image = image.pngData()
+                existingData.date = photoData.date
+                existingData.memo = photoData.memo
+                existingData.image = image.pngData()
             }
         } catch {
-            print("Error updating photoData: \(error)")
+            print("????")
         }
+
     }
     
     // MARK: - Delete

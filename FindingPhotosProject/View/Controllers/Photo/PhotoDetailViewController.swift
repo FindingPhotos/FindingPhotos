@@ -29,25 +29,32 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUI()
     }
     
     // MARK: - Selectors
     
     @objc func saveButtonTapped() {
-        
         // 저장할 데이터 객체 생성
         guard let date = photoDetailView.dateLabel.text else { return }
+        
         let newData = PhotoData()
         newData.date = date
         newData.memo = photoDetailView.memoTextView.text
         
-        // Realm 데이터베이스에 데이터 저장
-        let image = photoDetailView.photoImageView.image ?? UIImage()
-        realmManager.save(photoData: newData, image: image)
-
+        if diary != nil {
+            newData.id = diary!.id
+            let image = photoDetailView.photoImageView.image ?? UIImage()
+            realmManager.update(photoData: newData, image: image)
+        } else {
+            // 객체가 존재하지 않으면 새로운 객체로 저장
+            newData.id = UUID().uuidString
+            let image = photoDetailView.photoImageView.image ?? UIImage()
+            realmManager.save(photoData: newData, image: image)
+        }
         popViewController()
-        
     }
+
 
     @objc func deleteButtonTapped() {
 
@@ -96,6 +103,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         
         navigationItem.rightBarButtonItems = [saveButton, deleteButton]
     }
+
 
     
     
