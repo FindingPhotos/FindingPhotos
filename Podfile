@@ -22,6 +22,7 @@ target 'FindingPhotosProject' do
     pod 'RxDataSources', '~> 5.0'
     pod 'RealmSwift', '~>10'
     pod "RxRealm"
+    pod 'Kingfisher', '~> 7.0'
 
 post_install do |installer|
     installer.pods_project.targets.each do |target|

@@ -728,6 +728,7 @@ PODS:
   - gRPC-Core/Interface (1.44.0)
   - GTMSessionFetcher/Core (3.1.0)
   - IQKeyboardManagerSwift (6.5.11)
+  - Kingfisher (7.6.2)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -780,6 +781,7 @@ DEPENDENCIES:
   - FirebaseMessaging
   - FirebaseStorage
   - IQKeyboardManagerSwift
+  - Kingfisher (~> 7.0)
   - NMapsMap
   - RealmSwift (~> 10)
   - RxCocoa (= 6.5.0)
@@ -812,6 +814,7 @@ SPEC REPOS:
     - gRPC-Core
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - Kingfisher
     - leveldb-library
     - Libuv-gRPC
     - nanopb
@@ -850,6 +853,7 @@ SPEC CHECKSUMS:
   gRPC-Core: 943e491cb0d45598b0b0eb9e910c88080369290b
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   IQKeyboardManagerSwift: c7955c0bdbf7b2eb29bb7daaa44e3d90f55a9a85
+  Kingfisher: 6c5449c6450c5239166510ba04afe374a98afc4f
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
@@ -867,6 +871,6 @@ SPEC CHECKSUMS:
   RxViewController: 56486fa0afd629a1d6b5ba077f3b8cd9dc31b5d2
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
 
-PODFILE CHECKSUM: 0ce58480be1af132c000ba77d2c083a9f6bd55d6
+PODFILE CHECKSUM: ed14c5266acb5f58c86022e701f82d83570908d2
 
 COCOAPODS: 1.11.3
