@@ -10,6 +10,7 @@ import RxSwift
 import RxRelay
 import RxCocoa
 import RxDataSources
+import FirebaseAuth
 
 enum SettingSection: String {
     case policies = "약관 및 정책"
@@ -25,7 +26,7 @@ final class SettingViewModel: ViewModelType {
     struct Output {
         let didLogOut: Observable<Void>
         let didSignOut: Observable<Void>
-
+        let userInformation: Observable<UserModel?>
     }
     var disposeBag = DisposeBag()
     
@@ -34,21 +35,19 @@ final class SettingViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
 
-
-        
         let logOut = input.logoutButtonTapped
             .map { _ in
                 AuthManager.shared.logOut()
             }
-            
             
         let signOut = input.signoutButtonTapped
             .map { _ in
                 AuthManager.shared.deleteAccount()
             }
         
-            
-        return Output(didLogOut: logOut, didSignOut: signOut)
+        let user = AuthManager.shared.getUserInformation()
+        
+        return Output(didLogOut: logOut, didSignOut: signOut, userInformation: user)
     }
     
     let settingDatas = BehaviorRelay<[SectionOfDocument]>(value: [

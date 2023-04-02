@@ -118,6 +118,28 @@ final class AuthManager {
     }
     
     
+    func getUserInformation() -> Observable<UserModel?> {
+        return Observable.create { observer in
+            guard let currentUser = Auth.auth().currentUser else { return Disposables.create() }
+//            guard !currentUser.isAnonymous else {
+//                return Disposables.create()
+//            }
+            let uid = currentUser.uid
+            FirestoreAddress.collectionUsers.document(uid).getDocument { snapshot, error in
+                guard error == nil else { return observer.onError(error!)}
+                snapshot?.data().map { data in
+                    let name = data["name"] as? String ?? ""
+                    let email = data["email"] as? String ?? ""
+                    let uid = data["uid"] as? String ?? ""
+                    let imageUrl = data["imageUrl"] as? String ?? ""
+                    let userModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrl)
+                    observer.onNext(userModel)
+                    observer.onCompleted()
+                }
+            }
+            return Disposables.create()
+        }
+    }
     func logOut() {
         let firebaseAuth = Auth.auth()
         do {
