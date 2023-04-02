@@ -23,6 +23,7 @@ final class LocationService {
             let geoCoder = CLGeocoder()
             geoCoder.reverseGeocodeLocation(location) { placeMark, _ in
                 observer.onNext(placeMark?.last?.thoroughfare)
+                observer.onCompleted()
             }
             return Disposables.create()
         }

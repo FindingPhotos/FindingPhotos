@@ -1,6 +1,7 @@
 //
 //  MapViewModel.swift
-//  FindingPhotosProject
+//  FindingPhotosProject5
+
 //
 //  Created by 강창혁 on 2023/03/28.
 //
@@ -9,6 +10,7 @@ import Foundation
 import CoreLocation
 
 import NMapsMap
+import RealmSwift
 
 import RxSwift
 import RxCocoa
@@ -18,6 +20,7 @@ final class MapViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppear = BehaviorRelay<Bool>(value: false)
+        let faviorateButtonTapped = PublishRelay<StudioInformation>()
     }
     struct Output {
         let marker: Observable<NMFMarker>
@@ -55,7 +58,6 @@ final class MapViewModel: ViewModelType {
                     return CLLocation() }
                 guard let currentLongitude = manager.location?.coordinate.longitude else {
                     return CLLocation() }
-                print(currentIatitude, currentLongitude)
                 return CLLocation(latitude: currentIatitude, longitude: currentLongitude)
             }
             .flatMap { location in
@@ -68,13 +70,31 @@ final class MapViewModel: ViewModelType {
                 Observable.from(photoStudios.items, scheduler: ConcurrentDispatchQueueScheduler(queue: DispatchQueue.global()))
             }
             .map { photoStudio in
-                let marker = NMFMarker(position: NMGTm128(x: Double(photoStudio.mapx)!, y: Double(photoStudio.mapy)!).toLatLng())
+                let photoStudioLocation = NMGTm128(x: Double(photoStudio.mapx)!, y: Double(photoStudio.mapy)!).toLatLng()
+                let marker = NMFMarker(position: photoStudioLocation)
                 marker.captionText = photoStudio.title.htmlEscaped
                 marker.captionRequestedWidth = 0
                 marker.captionTextSize = 13
-                marker.userInfo = ["studioInformation": photoStudio]
+                marker.userInfo["studioInformation"] = photoStudio
+                let distance = LocationService.shared.locationManager.location?.distance(from: CLLocation(latitude: photoStudioLocation.lat, longitude: photoStudioLocation.lng))
+                marker.userInfo["distance"] = distance
+                marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
             }
+        input.faviorateButtonTapped
+            .subscribe(onNext: { studioName, studioAddress in
+                let realm = try! Realm()
+                let studio = PhotoStudio(name: studioName ?? "", address: studioAddress ?? "")
+                try! realm.write({
+                    let savedData = realm.objects(PhotoStudio.self).filter { return $0.title == studio.title }
+                    if savedData.isEmpty {
+                        realm.add(studio)
+                    } else {
+                        realm.delete(savedData)
+                    }
+                })
+            })
+            .disposed(by: disposeBag)
         
         return Output(marker: marker,
                       deinied: denied,
