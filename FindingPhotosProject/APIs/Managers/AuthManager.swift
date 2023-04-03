@@ -79,9 +79,10 @@ final class AuthManager {
     func getUserInformation() -> Observable<UserModel?> {
         return Observable.create { observer in
             guard let currentUser = Auth.auth().currentUser else { return Disposables.create() }
-//            guard !currentUser.isAnonymous else {
-//                return Disposables.create()
-//            }
+            guard currentUser.isAnonymous == false else {
+                observer.onNext(nil)
+                return Disposables.create()
+            }
             let uid = currentUser.uid
             FirestoreAddress.collectionUsers.document(uid).getDocument { snapshot, error in
                 guard error == nil else { return observer.onError(error!)}
@@ -98,6 +99,26 @@ final class AuthManager {
             return Disposables.create()
         }
     }
+    
+    /* return 값으로 UserModel을 여기서
+    func getUserInformation() -> UserModel? {
+        var userModel: UserModel?
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        let uid = currentUser.uid
+        FirestoreAddress.collectionUsers.document(uid).getDocument { snapshot, error in
+            guard error == nil else { return }
+            snapshot?.data().map { data in
+                let name = data["name"] as? String ?? ""
+                let email = data["email"] as? String ?? ""
+                let uid = data["uid"] as? String ?? ""
+                let imageUrl = data["imageUrl"] as? String ?? ""
+                let fetchedUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrl)
+                userModel = fetchedUserModel
+            }
+        }
+        return userModel
+    }
+*/
     
     func updateUserInformation(changedName: String?, changedImageUrl: String?) -> Observable<Void> {
         return Observable.create { observer in

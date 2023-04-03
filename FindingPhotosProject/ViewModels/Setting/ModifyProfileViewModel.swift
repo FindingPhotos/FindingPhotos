@@ -34,7 +34,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedImage = PublishRelay<UIImage>()
         
         let user = AuthManager.shared.getUserInformation()
-        
+//        let user2 = BehaviorRelay(value: user)
         input.selectedImage
             .withUnretained(self)
             .subscribe { viewModel, image in

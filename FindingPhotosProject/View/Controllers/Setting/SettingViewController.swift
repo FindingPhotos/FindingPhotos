@@ -59,9 +59,19 @@ final class SettingViewController: UIViewController {
             .subscribe()
             .disposed(by: disposeBag)
         viewModel.output.userInformation
-            .map { $0?.name }
+            .debug("--")
+//            .map { $0?.name }
+            .map({ userModel in
+                if userModel == nil {
+                    return "익명으로 로그인되었습니다."
+                } else {
+                    return userModel?.name
+                }
+            })
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
+        // 2️⃣ userInformation은 Observable<UserModel?> 반환.
+        // 이 때, 옵셔널인 userModel이 nil 일 경우 대체 텍스트를 입력하고 싶은데,
 //        viewModel.output.userInformation
 //            .debug("--")
 //            .filter { $0 == nil }
