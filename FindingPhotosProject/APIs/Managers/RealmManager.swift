@@ -23,7 +23,7 @@ class RealmManager {
         newData.id = UUID().uuidString
         newData.date = photoData.date
         newData.memo = photoData.memo
-        newData.image = image.pngData()
+        newData.image = image.jpegData(compressionQuality: 0.5)
         
         // Realm 데이터베이스에 데이터 저장
         try! realm.write {
@@ -63,7 +63,7 @@ class RealmManager {
             try realm.write {
                 existingData.date = photoData.date
                 existingData.memo = photoData.memo
-                existingData.image = image.pngData()
+                existingData.image = image.jpegData(compressionQuality: 0.5)
             }
         } catch {
             print("????")
@@ -76,7 +76,7 @@ class RealmManager {
     func delete(photoData: PhotoData, image: UIImage) {
         do {
             try realm.write {
-                photoData.image = image.pngData()
+                photoData.image = image.jpegData(compressionQuality: 0.5)
                 realm.delete(photoData)
             }
         } catch {
