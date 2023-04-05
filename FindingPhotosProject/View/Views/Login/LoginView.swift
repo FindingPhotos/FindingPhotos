@@ -76,10 +76,6 @@ class LoginView: UIView {
         button.backgroundColor = UIColor.tabButtondarkGrey
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
-//        button.snp.makeConstraints { make in
-//            make.width.equalTo(150)
-//            make.height.equalTo(0)
-//        }
         return button
     }()
     
@@ -92,10 +88,6 @@ class LoginView: UIView {
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
-//        button.snp.makeConstraints { make in
-//            make.width.equalTo(100)
-//            make.height.equalTo(20)
-//        }
         return button
     }()
     
@@ -112,7 +104,6 @@ class LoginView: UIView {
         label.text = "아이디와 비밀번호를 확인해주세요❗️"
         label.textColor = .systemRed
         label.isHidden = true
-//        label.text = "로그인되었습니다✅"
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
     }()
@@ -184,7 +175,7 @@ extension LoginView: LayoutProtocol {
     func setLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(200)
+            make.top.equalToSuperview().inset(140)
         }
         emailPasswordStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(50)

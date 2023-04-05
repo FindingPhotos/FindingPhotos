@@ -309,8 +309,8 @@
 			isa = PBXGroup;
 			children = (
 				6303B89A29D58F4E00A79F45 /* Map */,
-				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810429CC870400B8D8A6 /* Photo */,
+				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810529CC870F00B8D8A6 /* Setting */,
 			);
 			path = Views;

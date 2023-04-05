@@ -207,7 +207,7 @@ extension SignInView: LayoutProtocol {
         
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(170)
+            make.top.equalToSuperview().inset(100)
         }
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

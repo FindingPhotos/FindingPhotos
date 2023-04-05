@@ -23,11 +23,10 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         bindWithoutViewModel()
         bindViewModel()
+        setSubViews()
+        setLayout()
     }
     
-    override func loadView() {
-        view = loginView
-    }
     // MARK: - helpers
     
     private func bindWithoutViewModel() {
@@ -88,3 +87,16 @@ final class LoginViewController: UIViewController {
     
 }
 
+extension LoginViewController: LayoutProtocol {
+    func setSubViews() {
+        self.view.addSubview(loginView)
+    }
+    
+    func setLayout() {
+        loginView.snp.makeConstraints { make in
+            make.width.equalTo(375)
+            make.height.equalTo(660)
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+}

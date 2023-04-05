@@ -23,19 +23,17 @@ final class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
+        setSubViews()
+        setLayout()
         bindWithoutViewModel()
         bindViewModel()
         bindImagePicker()
     }
-    override func loadView() {
-        view = signInView
-    }
+
     
     // MARK: - helpers
 
-    func setValue() {
-        navigationController?.navigationItem.title = "회원가입"
-    }
+
     
     private func bindWithoutViewModel() {
         signInView.openPrivacyPolicyButton.rx.tap
@@ -118,3 +116,20 @@ final class SignInViewController: UIViewController {
     
 }
 
+extension SignInViewController: LayoutProtocol {
+    func setValue() {
+        navigationController?.navigationItem.title = "회원가입"
+        view.backgroundColor = .white
+    }
+    func setSubViews() {
+        view.addSubview(signInView)
+    }
+    
+    func setLayout() {
+        signInView.snp.makeConstraints { make in
+            make.width.equalTo(375)
+            make.height.equalTo(660)
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+}
