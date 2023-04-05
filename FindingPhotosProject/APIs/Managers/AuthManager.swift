@@ -43,7 +43,6 @@ final class AuthManager {
                       let uid = authResult?.user.uid else { return }
                 if let image {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
-                        let currentUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrlString)
                         FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
                         observer.onNext(true)
                     }
@@ -100,43 +99,17 @@ final class AuthManager {
         }
     }
     
-    /* return 값으로 UserModel을 여기서
-    func getUserInformation() -> UserModel? {
-        var userModel: UserModel?
-        guard let currentUser = Auth.auth().currentUser else { return nil }
-        let uid = currentUser.uid
-        FirestoreAddress.collectionUsers.document(uid).getDocument { snapshot, error in
-            guard error == nil else { return }
-            snapshot?.data().map { data in
-                let name = data["name"] as? String ?? ""
-                let email = data["email"] as? String ?? ""
-                let uid = data["uid"] as? String ?? ""
-                let imageUrl = data["imageUrl"] as? String ?? ""
-                let fetchedUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrl)
-                userModel = fetchedUserModel
-            }
-        }
-        return userModel
-    }
-*/
-    
-    func updateUserInformation(changedName: String?, changedImageUrl: String?) -> Observable<Void> {
-        return Observable.create { observer in
-            guard let uid = Auth.auth().currentUser?.uid else { return Disposables.create() }
-            if changedName != nil && changedImageUrl != nil {
-                guard let changedName, let changedImageUrl else { return Disposables.create() }
-                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "image": changedImageUrl])
-            } else if let changedName {
-                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
-            } else if let changedImageUrl {
-                FirestoreAddress.collectionUsers.document(uid).updateData(["image": changedImageUrl])
-            }
-            observer.onCompleted()
-            return Disposables.create()
+    func updateUserInformation(changedName: String?, changedImageUrl: String?) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        if changedName != nil && changedImageUrl != nil {
+            guard let changedName, let changedImageUrl else { return }
+            FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "imageUrl": changedImageUrl])
+        } else if let changedName {
+            FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
+        } else if let changedImageUrl {
+            FirestoreAddress.collectionUsers.document(uid).updateData(["imageUrl": changedImageUrl])
         }
     }
-    
-    
     
     func logOut() {
         let firebaseAuth = Auth.auth()
@@ -156,7 +129,3 @@ final class AuthManager {
         }
     }
 }
-
-
-
-//        Auth.auth().addStateDidChangeListener(<#T##listener: (Auth, User?) -> Void##(Auth, User?) -> Void#>)

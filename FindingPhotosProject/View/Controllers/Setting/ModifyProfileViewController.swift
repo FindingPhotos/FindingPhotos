@@ -65,6 +65,16 @@ final class ModifyProfileViewController: UIViewController {
             .bind(to: modifyProfileView.nameTextField.rx.text)
             .disposed(by: disposeBag)
         
+        viewModel.output.userInformation
+            .debug()
+            .withUnretained(self)
+            .map {viewController, userModel in
+                guard let urlString = userModel?.profileImageUrl else { return }
+                viewController.modifyProfileView.profileImageView.setImage(with: urlString)
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         viewModel.output.changedImage
             .bind(to: modifyProfileView.profileImageView.rx.image)
             .disposed(by: disposeBag)
