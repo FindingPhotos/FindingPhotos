@@ -32,7 +32,7 @@ class SettingView: UIView {
         imageView.backgroundColor = .tabButtonlightGrey
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     

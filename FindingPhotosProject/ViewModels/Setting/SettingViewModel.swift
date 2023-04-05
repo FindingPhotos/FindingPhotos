@@ -81,6 +81,4 @@ final class SettingViewModel: ViewModelType {
         
         return dataSource
     }
-    
-    
 }

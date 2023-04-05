@@ -11,6 +11,7 @@ import RxCocoa
 import RxRelay
 import RxDataSources
 import MessageUI
+import Kingfisher
 
 
 final class SettingViewController: UIViewController {
@@ -58,26 +59,71 @@ final class SettingViewController: UIViewController {
         viewModel.output.didSignOut
             .subscribe()
             .disposed(by: disposeBag)
+        
+        // 1️⃣질문: 같은 output에서 bind하는 VC 인스턴스가 다를 땐 따로 mapping 후 bind 하는게 맞을까?
         viewModel.output.userInformation
             .debug("--")
-//            .map { $0?.name }
-            .map({ userModel in
+            .map { userModel in
                 if userModel == nil {
                     return "익명으로 로그인되었습니다."
                 } else {
                     return userModel?.name
                 }
-            })
+            }
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
-        // 2️⃣ userInformation은 Observable<UserModel?> 반환.
-        // 이 때, 옵셔널인 userModel이 nil 일 경우 대체 텍스트를 입력하고 싶은데,
-//        viewModel.output.userInformation
-//            .debug("--")
-//            .filter { $0 == nil }
-//            .map { _ in "익명으로 로그인되었습니다." }
-//            .bind(to: settingView.nameLabel.rx.text)
-//            .disposed(by: disposeBag)
+        
+        viewModel.output.userInformation
+            .debug()
+            .withUnretained(self)
+            .map {viewController, userModel in
+                if userModel == nil {
+                    guard let image = UIImage(systemName: "person.fill") else { return }
+                    image.withTintColor(.tabButtondarkGrey, renderingMode: .alwaysTemplate)
+                    viewController.settingView.profileImageView.image = image
+                } else {
+                    guard let urlString = userModel?.profileImageUrl else { return }
+                    viewController.settingView.profileImageView.setImage(with: urlString)
+                }
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+        
+        viewModel.output.userInformation
+            .map { userModel in
+                if userModel == nil {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            .bind(to: settingView.profileSetButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        /*
+         // userModel에서 image로 바로 매핑해 return 하려던 방법
+         // 하지만 kf/Urlsession 모두 다운받은 이미지를 바로 방출하는 방법을 못찾겠다.
+        viewModel.output.userInformation
+            .debug()
+            .map { userModel in
+                if userModel == nil {
+                    guard let image = UIImage(systemName: "person.fill") else { return UIImage()}
+//                    image.withTintColor(.tabButtondarkGrey, renderingMode: .alwaysTemplate)
+                    return image
+                } else {
+                    guard let urlString = userModel?.profileImageUrl,
+                          let imageUrl = URL(string: urlString) else { return UIImage()}
+                    lazy var fetchedImage = UIImage()
+                    URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                        guard let data,
+                              let image = UIImage(data: data) else { return }
+                        fetchedImage = image
+                    }.resume()
+                    return fetchedImage
+                }
+            }
+            .bind(to: settingView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+*/
 
     }
     
