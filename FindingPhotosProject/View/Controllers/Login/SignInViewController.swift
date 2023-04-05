@@ -82,12 +82,14 @@ final class SignInViewController: UIViewController {
             .bind(to: signInView.signInButton.rx.isEnabled)
             .disposed(by: disposeBag)
     
+        viewModel.output.profileImage
+            .bind(to: signInView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
         // 실패했을 때 알람처리 해줘야 함...
         viewModel.output.isSignInSuccess
             .subscribe()
             .disposed(by: disposeBag)
-  
-        
         
             // isSignInSuccess가 true 이면~ 이런식으로 조건절을 넣는건 안되고
             // 애초에 output의 observable을 Observable<Void> 와 같이 이벤트처럼 처리해서 받아와야 할까?

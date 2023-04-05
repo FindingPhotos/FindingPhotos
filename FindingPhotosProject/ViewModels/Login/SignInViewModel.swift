@@ -14,7 +14,7 @@ class SignInViewModel: ViewModelType {
     var disposeBag = DisposeBag()
     
     struct Input {
-        let selectedImage = PublishRelay<UIImage?>()
+        let selectedImage = BehaviorRelay<UIImage?>(value: nil)
         let emailTextFieldText = BehaviorRelay<String>(value: "")
         let passwordTextFieldText = BehaviorRelay<String>(value: "")
         let nameTextFieldText = BehaviorRelay<String>(value: "")
@@ -24,7 +24,7 @@ class SignInViewModel: ViewModelType {
     
     struct Output {
         let isValid: Observable<Bool>
-        let changedImage: PublishRelay<UIImage?>
+        let profileImage: PublishRelay<UIImage?>
         let isSignInSuccess: Observable<Bool>
     }
     
@@ -33,8 +33,7 @@ class SignInViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let changedImage = PublishRelay<UIImage?>()
-//        let isSignInSuccess = Observable<Bool>()
+        let profileImage = PublishRelay<UIImage?>()
 
         let isValid = Observable.combineLatest(input.emailTextFieldText, input.passwordTextFieldText, input.nameTextFieldText)
             .map { email, password, name in
@@ -45,7 +44,7 @@ class SignInViewModel: ViewModelType {
             .withUnretained(self)
             .subscribe { viewModel, image in
                 guard let image else { return }
-                changedImage.accept(image)
+                profileImage.accept(image)
             }
             .disposed(by: disposeBag)
             
@@ -54,15 +53,15 @@ class SignInViewModel: ViewModelType {
         // 문제상황: output으로 isSignInSuccess을 받아, 이를 이용해 유저모델을 만드는 처리 따로 실행해야 함.
         // 해결방안: 유저모델이 필요가 없어짐.
         let isSignInSuccess = input.signInButtonTapped
-            .withLatestFrom(Observable.combineLatest(input.emailTextFieldText, input.passwordTextFieldText, input.nameTextFieldText))
-            .flatMap { email, password, name in
-                AuthManager.shared.signIn(email: email, password: password, name: name, image: nil)
+            .withLatestFrom(Observable.combineLatest(input.emailTextFieldText, input.passwordTextFieldText, input.nameTextFieldText, input.selectedImage))
+            .flatMap { email, password, name, image in
+                AuthManager.shared.signIn(email: email, password: password, name: name, image: image)
             }
             .share()
             
 
         
-        return Output(isValid: isValid, changedImage: changedImage, isSignInSuccess: isSignInSuccess)
+        return Output(isValid: isValid, profileImage: profileImage, isSignInSuccess: isSignInSuccess)
     }
     
 }
