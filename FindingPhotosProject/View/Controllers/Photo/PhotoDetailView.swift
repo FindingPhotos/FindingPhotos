@@ -13,17 +13,49 @@ class PhotoDetailView: UIView {
 
     let imagePicker = UIImagePickerController()
 
+//    lazy var dateLabel: UILabel = {
+//       let dateLabel = UILabel()
+//        let myFormatter = DateFormatter()
+//        myFormatter.dateFormat = "yyyy.MM.dd (E)"
+//        let today = myFormatter.string(from: Date())
+//        dateLabel.text = today
+//        dateLabel.textAlignment = .center
+//        dateLabel.textColor = .darkGray
+//        dateLabel.font = UIFont.boldSystemFont(ofSize: 18)
+//        return dateLabel
+//    }()
+    
+    lazy var yearLabel: UILabel = {
+       let dateLabel = UILabel()
+        let myFormatter = DateFormatter()
+        myFormatter.dateFormat = "yyyy"
+        let today = myFormatter.string(from: Date())
+        dateLabel.text = today
+        dateLabel.textAlignment = .left
+        dateLabel.textColor = .darkGray
+        dateLabel.font = UIFont.systemFont(ofSize: 32, weight: .black)
+        return dateLabel
+    }()
+    
     lazy var dateLabel: UILabel = {
        let dateLabel = UILabel()
         let myFormatter = DateFormatter()
-        myFormatter.dateFormat = "yyyy.MM.dd (E)"
+        myFormatter.dateFormat = "MM월 dd일"
         let today = myFormatter.string(from: Date())
         dateLabel.text = today
-        dateLabel.textAlignment = .center
+        dateLabel.textAlignment = .left
         dateLabel.textColor = .darkGray
-        dateLabel.font = UIFont.boldSystemFont(ofSize: 18)
+        dateLabel.font = UIFont.systemFont(ofSize: 20, weight: .black)
         return dateLabel
     }()
+    
+    lazy var dateStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [yearLabel, dateLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        return stackView
+    }()
+    
     
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -88,7 +120,7 @@ class PhotoDetailView: UIView {
 extension PhotoDetailView: LayoutProtocol {
     
     func setSubViews() {
-        self.addSubview(dateLabel)
+        self.addSubview(dateStackView)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
         self.addSubview(memoLabel)
@@ -98,11 +130,11 @@ extension PhotoDetailView: LayoutProtocol {
     
     func setLayout() {
         
-        dateLabel.snp.makeConstraints { make in
+        dateStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(110)
-            make.width.equalTo(315)
-            make.height.equalTo(50)
+            make.leading.equalToSuperview().offset(30)
+            make.trailing.equalToSuperview().offset(-30)
         }
         
         photoImageView.snp.makeConstraints { make in
