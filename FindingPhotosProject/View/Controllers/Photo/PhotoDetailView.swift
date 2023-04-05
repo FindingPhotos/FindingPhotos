@@ -25,6 +25,7 @@ class PhotoDetailView: UIView {
 //        return dateLabel
 //    }()
     
+    
     lazy var yearLabel: UILabel = {
        let dateLabel = UILabel()
         let myFormatter = DateFormatter()
@@ -34,6 +35,12 @@ class PhotoDetailView: UIView {
         dateLabel.textAlignment = .left
         dateLabel.textColor = .darkGray
         dateLabel.font = UIFont.systemFont(ofSize: 32, weight: .black)
+        
+        // ⭐️ 폰트 동적할당
+        dateLabel.adjustsFontSizeToFitWidth = true
+        dateLabel.minimumScaleFactor = 0.5 // 최소 스케일링 비율
+        dateLabel.numberOfLines = 0 // 필요한 만큼 행 수를 표시하도록 설정
+        dateLabel.sizeToFit() // 레이블의 크기를 내용에 맞게 자동 조정
         return dateLabel
     }()
     
@@ -120,6 +127,8 @@ class PhotoDetailView: UIView {
 extension PhotoDetailView: LayoutProtocol {
     
     func setSubViews() {
+        
+
         self.addSubview(dateStackView)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
@@ -129,10 +138,13 @@ extension PhotoDetailView: LayoutProtocol {
     }
     
     func setLayout() {
-        
+
         dateStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(110)
+//            make.top.equalToSuperview().offset(110)
+            
+            // ⭐️ 여기 수정
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(110)
             make.leading.equalToSuperview().offset(30)
             make.trailing.equalToSuperview().offset(-30)
         }

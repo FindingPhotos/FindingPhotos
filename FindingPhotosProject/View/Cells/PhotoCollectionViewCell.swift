@@ -36,5 +36,8 @@ extension PhotoCollectionViewCell: LayoutProtocol {
     }
     func setLayout() {
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+    
     }
 }
