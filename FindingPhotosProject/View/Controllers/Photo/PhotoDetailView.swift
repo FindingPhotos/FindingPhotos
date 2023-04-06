@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PhotoDetailView: UIView {
+final class PhotoDetailView: UIView {
     
     // MARK: - Properties
 

@@ -10,7 +10,7 @@ import RealmSwift
 
 // PhotoData를 가져오고, View에 필요한 데이터를 처리하여 제공
 
-class PhotoViewModel {
+final class PhotoViewModel {
    
     static let realmManager = RealmManager.shared
     
