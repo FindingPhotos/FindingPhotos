@@ -30,8 +30,36 @@ final class AuthManager {
         }
     }
     
+    func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<String?>  {
+        return Observable.create { observer in
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                guard error == nil else {
+                    print("debug: \(error!.localizedDescription)")
+                    observer.onNext("이미 가입한 이메일입니다❌")
+                    return
+                }
+                guard let email = authResult?.user.email,
+                      let uid = authResult?.user.uid else { return }
+                if let image {
+                    ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
+                        FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
+                        observer.onNext(nil)
+                    }
+                } else {
+                    let currentUserModel = UserModel(name: name, email: email, uid: uid)
+                    print("DEBUG: currentUserModel:\(currentUserModel)")
+                    FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": ""])
+                    observer.onNext(nil)
+                }
+                print("DEBUG: 회원가입 성공")
+                NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
+            }
+            return Disposables.create()
+        }
+    }
+    
+    /*
     func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<Bool>  {
-        
         return Observable.create { observer in
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 guard error == nil else {
@@ -58,6 +86,7 @@ final class AuthManager {
             return Disposables.create()
         }
     }
+    */
     
     func signInWithAnonymous() -> Observable<Void> {
         return Observable.create { observer in

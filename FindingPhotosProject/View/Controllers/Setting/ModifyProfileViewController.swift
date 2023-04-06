@@ -46,7 +46,6 @@ final class ModifyProfileViewController: UIViewController {
         // Input
         modifyProfileView.modifyButton.rx.tap
             .withUnretained(self)
-            .debug("---")
             .subscribe { viewController, event in
                 viewController.viewModel.input.ModifyButtonTapped.accept(event)
                 viewController.navigationController?.popViewController(animated: true)
@@ -66,7 +65,6 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.userInformation
-            .debug()
             .withUnretained(self)
             .map {viewController, userModel in
                 guard let urlString = userModel?.profileImageUrl else { return }

@@ -121,9 +121,9 @@ class LoginView: UIView {
         return button
     }()
     
-    lazy var openPrivacyPolicyButton: UIButton = {
+    lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitle("비밀번호 재설정", for: .normal)
         button.setTitleColor(UIColor.tabButtonlightGrey, for: .normal)
         button.backgroundColor = .none
         button.snp.makeConstraints { make in
@@ -134,7 +134,7 @@ class LoginView: UIView {
     }()
     
     private lazy var signInStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [signInButton, openPrivacyPolicyButton])
+        let stackView = UIStackView(arrangedSubviews: [signInButton, forgotPasswordButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 50

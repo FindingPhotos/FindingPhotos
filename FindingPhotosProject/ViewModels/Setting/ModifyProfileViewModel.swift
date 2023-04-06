@@ -22,6 +22,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedName: PublishRelay<String>
         let changedImage: PublishRelay<UIImage>
         let userInformation: Observable<UserModel?>
+        let userName: Observable<String>
     }
     var disposeBag = DisposeBag()
 
@@ -34,6 +35,15 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedImage = PublishRelay<UIImage>()
         
         let user = AuthManager.shared.getUserInformation()
+        
+        let userName = user.map { userModel in
+            if userModel == nil {
+                return "익명으로 로그인되었습니다."
+            } else {
+                return userModel!.name
+            }
+        }
+        
         input.selectedImage
             .withUnretained(self)
             .subscribe { viewModel, image in
@@ -51,6 +61,7 @@ final class ModifyProfileViewModel: ViewModelType {
                     }
                 } else {
                     AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
+                    
                 }
             }
             .asObservable()
@@ -59,7 +70,8 @@ final class ModifyProfileViewModel: ViewModelType {
         
         return Output(changedName: changedName,
                       changedImage: changedImage,
-                      userInformation: user)
+                      userInformation: user,
+                      userName: userName)
         
     }
 }

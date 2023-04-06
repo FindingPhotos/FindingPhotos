@@ -36,10 +36,10 @@ final class LoginViewController: UIViewController {
                 viewController.navigationController?.pushViewController(SignInViewController(), animated: true)
             }
             .disposed(by: disposeBag)
-        loginView.openPrivacyPolicyButton.rx.tap
+        loginView.forgotPasswordButton.rx.tap
             .withUnretained(self)
             .subscribe { viewController, event in
-                viewController.openSFSafari(url: "https://thread-pike-aca.notion.site/Personal-Information-Policy-17a0bfbcb74446f8b6a166bd289e33d4")
+                viewController.navigationController?.pushViewController(ResetPasswordViewController(), animated: true)
             }
             .disposed(by: disposeBag)
     }

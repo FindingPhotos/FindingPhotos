@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import RxDataSources
+import RxViewController
 import MessageUI
 import Kingfisher
 
@@ -34,6 +35,10 @@ final class SettingViewController: UIViewController {
         bindTableView()
         bindViewModel()
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        bindViewModel()
+//    }
     
     override func loadView() {
         view = settingView
@@ -48,33 +53,35 @@ final class SettingViewController: UIViewController {
         settingView.logoutButton.rx.tap
             .bind(to: viewModel.input.logoutButtonTapped)
             .disposed(by: disposeBag)
+        
         settingView.signoutButton.rx.tap
             .bind(to: viewModel.input.signoutButtonTapped)
             .disposed(by: disposeBag)
-
+        
+//        self.rx.viewWillAppear
+//            .bind(to: viewModel.input.viewWillAppear)
+//            .disposed(by: disposeBag)
+        
         // Output
         viewModel.output.didLogOut
             .subscribe()
             .disposed(by: disposeBag)
+        
         viewModel.output.didSignOut
             .subscribe()
             .disposed(by: disposeBag)
         
-        // 1️⃣질문: 같은 output에서 bind하는 VC 인스턴스가 다를 땐 따로 mapping 후 bind 하는게 맞을까?
-        viewModel.output.userInformation
-            .debug("--")
-            .map { userModel in
-                if userModel == nil {
-                    return "익명으로 로그인되었습니다."
-                } else {
-                    return userModel?.name
-                }
-            }
+        viewModel.output.userName
+            .debug("userName")
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
         
+        viewModel.output.isUserInformationExist
+            .bind(to: settingView.profileSetButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
         viewModel.output.userInformation
-            .debug()
+            .debug("userInfo")
             .withUnretained(self)
             .map {viewController, userModel in
                 if userModel == nil {
@@ -88,43 +95,6 @@ final class SettingViewController: UIViewController {
             }
             .subscribe()
             .disposed(by: disposeBag)
-        
-        viewModel.output.userInformation
-            .map { userModel in
-                if userModel == nil {
-                    return true
-                } else {
-                    return false
-                }
-            }
-            .bind(to: settingView.profileSetButton.rx.isHidden)
-            .disposed(by: disposeBag)
-        /*
-         // userModel에서 image로 바로 매핑해 return 하려던 방법
-         // 하지만 kf/Urlsession 모두 다운받은 이미지를 바로 방출하는 방법을 못찾겠다.
-        viewModel.output.userInformation
-            .debug()
-            .map { userModel in
-                if userModel == nil {
-                    guard let image = UIImage(systemName: "person.fill") else { return UIImage()}
-//                    image.withTintColor(.tabButtondarkGrey, renderingMode: .alwaysTemplate)
-                    return image
-                } else {
-                    guard let urlString = userModel?.profileImageUrl,
-                          let imageUrl = URL(string: urlString) else { return UIImage()}
-                    lazy var fetchedImage = UIImage()
-                    URLSession.shared.dataTask(with: imageUrl) { data, response, error in
-                        guard let data,
-                              let image = UIImage(data: data) else { return }
-                        fetchedImage = image
-                    }.resume()
-                    return fetchedImage
-                }
-            }
-            .bind(to: settingView.profileImageView.rx.image)
-            .disposed(by: disposeBag)
-*/
-
     }
     
     func bindTableView() {
