@@ -41,7 +41,7 @@ class RealmManager {
     // MARK: - Read
     
     func fetchAll() -> Results<PhotoData> {
-        let results = realm.objects(PhotoData.self)
+        let results = realm.objects(PhotoData.self).sorted(byKeyPath: "dateAdded", ascending: false)
         return results
     }
     
@@ -81,22 +81,13 @@ class RealmManager {
             }
         } catch {
             print("Error deleting photoData: \(error)")
-
+            
         }
     }
     
     // MARK: - Sort
     
-    func sortedPhotos() -> [PhotoData] {
-        let photos = realm.objects(PhotoData.self).sorted(byKeyPath: "date", ascending: true)
-        return photos.toArray()
-    }
 
-}
 
-extension Results {
-    func toArray<T>(ofType: T.Type = T.self) -> [T] {
-        return compactMap { $0 as? T }
-    }
     
 }

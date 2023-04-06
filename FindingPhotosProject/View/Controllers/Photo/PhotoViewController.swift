@@ -15,8 +15,6 @@ final class PhotoViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = PhotoViewModel()
-//    private let realmManager = RealmManager.shared
-//    private var photos: Results<PhotoData>?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()

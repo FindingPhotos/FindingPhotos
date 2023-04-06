@@ -113,8 +113,6 @@ class PhotoDetailView: UIView {
 extension PhotoDetailView: LayoutProtocol {
     
     func setSubViews() {
-        
-
         self.addSubview(dateStackView)
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
