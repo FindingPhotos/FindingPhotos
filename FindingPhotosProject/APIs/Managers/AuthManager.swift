@@ -80,6 +80,7 @@ final class AuthManager {
             guard let currentUser = Auth.auth().currentUser else { return Disposables.create() }
             guard currentUser.isAnonymous == false else {
                 observer.onNext(nil)
+                observer.onCompleted()
                 return Disposables.create()
             }
             let uid = currentUser.uid
@@ -128,4 +129,26 @@ final class AuthManager {
             FirestoreAddress.collectionUsers.document(uid).delete()
         }
     }
+    
+    func sendForgotPasswordEmail(email: String) -> Observable<String?> {
+        let firebaseAuth = Auth.auth()
+        return Observable.create { observer in
+            firebaseAuth.sendPasswordReset(withEmail: email) { error in
+                guard error == nil else {
+                    print("DEBUG: Password reset error occured :\(error?.localizedDescription)")
+                    observer.onNext("입력하신 이메일이 존재하지 않습니다❌")
+                    return
+                }
+                observer.onNext(nil)
+            }
+            return Disposables.create()
+        }
+    }
+    
+    // Auth 리스트에 존재하는 이메일인지 확인 불가...
+//    func checkEmailForReset(email : String) {
+//        let firebaseAuth = Auth.auth()
+//
+//
+//    }
 }

@@ -28,6 +28,33 @@ final class ResetPasswordViewController: UIViewController {
     
     // MARK: - Helpers
     
+    func bindViewModel() {
+        resetPasswordView.emailTextField.rx.text
+            .orEmpty
+            .distinctUntilChanged()
+            .bind(to: viewModel.input.textFieldText)
+            .disposed(by: disposeBag)
+        
+        resetPasswordView.resetButton.rx.tap
+            .bind(to: viewModel.input.resetButtonTapped)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.resetErrorText
+            .bind(to: resetPasswordView.resultLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isErrorOccured
+            .bind(to: resetPasswordView.resultLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isEmailValid
+            .debug("isEmailValid")
+            .map { $0 ? 1 : 0.3}
+            .bind(to: resetPasswordView.resetButton.rx.alpha)
+            .disposed(by: disposeBag)
+    }
+    
+}
 
 extension ResetPasswordViewController: LayoutProtocol {
     func setValue() {
