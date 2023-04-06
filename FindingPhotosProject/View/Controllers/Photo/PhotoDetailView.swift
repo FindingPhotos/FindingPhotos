@@ -12,19 +12,6 @@ class PhotoDetailView: UIView {
     // MARK: - Properties
 
     let imagePicker = UIImagePickerController()
-
-//    lazy var dateLabel: UILabel = {
-//       let dateLabel = UILabel()
-//        let myFormatter = DateFormatter()
-//        myFormatter.dateFormat = "yyyy.MM.dd (E)"
-//        let today = myFormatter.string(from: Date())
-//        dateLabel.text = today
-//        dateLabel.textAlignment = .center
-//        dateLabel.textColor = .darkGray
-//        dateLabel.font = UIFont.boldSystemFont(ofSize: 18)
-//        return dateLabel
-//    }()
-    
     
     lazy var yearLabel: UILabel = {
        let dateLabel = UILabel()
@@ -62,7 +49,6 @@ class PhotoDetailView: UIView {
         stackView.spacing = 0
         return stackView
     }()
-    
     
     lazy var photoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -141,19 +127,20 @@ extension PhotoDetailView: LayoutProtocol {
 
         dateStackView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-//            make.top.equalToSuperview().offset(110)
-            
-            // ⭐️ 여기 수정
-            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(110)
+            make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(10)
             make.leading.equalToSuperview().offset(30)
             make.trailing.equalToSuperview().offset(-30)
         }
         
         photoImageView.snp.makeConstraints { make in
-            make.centerX.equalTo(dateLabel)
+            make.centerX.equalToSuperview()
             make.top.equalTo(dateLabel.snp.bottom).offset(10)
-            make.width.equalTo(350)
-            make.height.equalTo(470)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            
+            // 부모 뷰의 가로 크기의 80%와 세로 크기의 60%에 해당하는 크기
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalToSuperview().multipliedBy(0.55)
         }
         
         addPhotoButton.snp.makeConstraints { make in
