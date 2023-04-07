@@ -18,7 +18,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     
     lazy var highlightIndicator: UIView = {
        let view = UIView()
-        view.backgroundColor = UIColor.gray.withAlphaComponent(0.5)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         view.isHidden = true
         return view
     }()
@@ -75,6 +75,7 @@ extension PhotoCollectionViewCell: LayoutProtocol {
         imageView.snp.makeConstraints { $0.edges.equalToSuperview() }
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+
     
         highlightIndicator.snp.makeConstraints { make in
             make.edges.equalToSuperview()

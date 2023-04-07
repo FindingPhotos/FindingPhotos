@@ -12,6 +12,8 @@ final class PhotoDetailView: UIView {
     // MARK: - Properties
 
     let imagePicker = UIImagePickerController()
+    let height = UIScreen.main.bounds.height * 80 / 844
+    let textViewHeight = UIScreen.main.bounds.height * 50 / 844
     
     lazy var yearLabel: UILabel = {
        let dateLabel = UILabel()
@@ -74,6 +76,8 @@ final class PhotoDetailView: UIView {
     lazy var memoTextView: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = .clear
+        textView.font = UIFont.boldSystemFont(ofSize: textView.font?.pointSize ?? UIFont.systemFontSize)
+        textView.textColor = .darkGray
         return textView
     }()
     
@@ -103,7 +107,6 @@ final class PhotoDetailView: UIView {
     
     private func configureUI() {
         self.backgroundColor = .white
-        
     }
 }
 
@@ -149,7 +152,7 @@ extension PhotoDetailView: LayoutProtocol {
         }
         
         memoLabel.snp.makeConstraints { make in
-            make.top.equalTo(addPhotoButton.snp.bottom).offset(10)
+            make.top.equalTo(addPhotoButton.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(28)
             make.width.equalTo(75)
             make.height.equalTo(30)
@@ -159,12 +162,12 @@ extension PhotoDetailView: LayoutProtocol {
             make.centerX.equalTo(memoImageView.snp.centerX)
             make.centerY.equalTo(memoImageView.snp.centerY)
             make.width.equalTo(315)
-            make.height.equalTo(50)
+            make.height.equalTo(textViewHeight)
         }
         
         memoImageView.snp.makeConstraints { make in
             make.width.equalTo(350)
-            make.height.equalTo(80)
+            make.height.equalTo(height)
             make.top.equalTo(memoLabel.snp.bottom).offset(-15)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)

@@ -24,8 +24,8 @@ final class PhotoViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0.5
-        layout.minimumInteritemSpacing = 0.5
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -144,7 +144,7 @@ final class PhotoViewController: UIViewController {
                 }
             } else {
                 eMode = .select
-                collectionView.alpha = 0.5
+                collectionView.alpha = 0.7
                 deleteBarButton.isEnabled = true
             }
         }
@@ -201,7 +201,7 @@ final class PhotoViewController: UIViewController {
 
     
     private func configureNavigation() {
-        navigationItem.title = "나의앨범"
+        navigationItem.title = "📷"
         let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         space.width = 10
         navigationItem.rightBarButtonItems = [space, addButton, space, selectBarButton]
