@@ -46,6 +46,17 @@ final class ResetPasswordViewController: UIViewController {
         viewModel.output.isErrorOccured
             .bind(to: resetPasswordView.resultLabel.rx.isHidden)
             .disposed(by: disposeBag)
+        viewModel.output.resetFailureText
+            .withUnretained(self)
+            .subscribe { viewController, string in
+                if string != nil {
+                    viewController.resetPasswordView.resultLabel.isHidden = false
+                    viewController.resetPasswordView.resultLabel.text = string
+                } else {
+                    viewController.resetPasswordView.resultLabel.isHidden = true
+                }
+            }
+            .disposed(by: disposeBag)
         
         viewModel.output.isEmailValid
             .debug("isEmailValid")
