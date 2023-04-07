@@ -136,8 +136,18 @@ final class PhotoViewController: UIViewController {
     }
     
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
-        eMode = eMode == .view ? .select : .view
-    }
+            if eMode == .select {
+                eMode = .view
+                collectionView.alpha = 1.0
+                if dictionarySelectedIndexPath.isEmpty {
+                    deleteBarButton.isEnabled = false
+                }
+            } else {
+                eMode = .select
+                collectionView.alpha = 0.5
+                deleteBarButton.isEnabled = true
+            }
+        }
     
     @objc func didCanceledButtonClicked(_ sender: UIBarButtonItem) {
         print("선택 취소")
@@ -146,24 +156,40 @@ final class PhotoViewController: UIViewController {
         selectBarButton.action = #selector(didSelectButtonClicked)
         addButton.image = UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal)
         addButton.action = #selector(addButtonTapped)
+        collectionView.alpha = 1.0
+        collectionView.reloadData()
     }
     
     @objc func didDeleteButtonClicked(_ sender: UIBarButtonItem) {
-        var deleteNeededIndexPaths: [IndexPath] = []
         
-        for (key, value) in dictionarySelectedIndexPath {
-            if value {
-                deleteNeededIndexPaths.append(key)
+        let alert = UIAlertController(title: nil, message: "삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            
+            var deleteNeededIndexPaths: [IndexPath] = []
+            
+            for (key, value) in self.dictionarySelectedIndexPath {
+                if value {
+                    deleteNeededIndexPaths.append(key)
+                }
             }
-        }
-        
-        for i in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
-        }
-        
-        collectionView.deleteItems(at: deleteNeededIndexPaths)
-        dictionarySelectedIndexPath.removeAll()
-        collectionView.reloadData()
+            
+            for i in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
+            }
+            
+            self.collectionView.deleteItems(at: deleteNeededIndexPaths)
+            self.dictionarySelectedIndexPath.removeAll()
+            self.collectionView.reloadData()
 
+        }
+        alert.addAction(deleteAction)
+        
+        present(alert, animated: true, completion: nil)
+
+        
     }
     
     // MARK: - Helpers
