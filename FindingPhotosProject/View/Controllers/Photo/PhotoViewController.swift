@@ -1,3 +1,6 @@
+
+
+
 //
 //  PhotoViewController.swift
 //  FindingPhotosProject
@@ -15,6 +18,9 @@ final class PhotoViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = PhotoViewModel()
+    var selectedIndexes = [IndexPath]()
+    var photoDatas: [PhotoData] = []
+    var realmManager = RealmManager()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -30,6 +36,74 @@ final class PhotoViewController: UIViewController {
         return collectionView
     }()
         
+    lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
+                                      style: .plain,
+                                      target: self,
+                                      action: #selector(addButtonTapped))
+        return button
+    }()
+    
+    lazy var selectBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(didSelectButtonClicked))
+        return button
+    }()
+    
+    lazy var canceledBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(didDeleteButtonClicked))
+        return button
+    }()
+    
+    lazy var deleteBarButton : UIBarButtonItem = {
+        let button = UIBarButtonItem(image: UIImage(named: "deletedButtonGrey")?.withRenderingMode(.alwaysOriginal),
+                                     style: .plain,
+                                     target: self,
+                                     action: #selector(didDeleteButtonClicked))
+        return button
+    }()
+    
+    
+    // MARK: - Selected Button
+    
+    enum Mode {
+        case view
+        case select
+    }
+
+    var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
+
+    var eMode: Mode = .view {
+            didSet {
+                switch eMode {
+                case .view:
+                    for (key, value) in dictionarySelectedIndexPath {
+                        if value {
+                            collectionView.deselectItem(at: key, animated: true)
+                        }
+                    }
+                    dictionarySelectedIndexPath.removeAll()
+                    
+                    collectionView.allowsMultipleSelection = false
+                    
+                case .select:
+                    selectBarButton.image = UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal)
+                    selectBarButton.action = #selector(didCanceledButtonClicked)
+                    
+                    addButton.image = UIImage(named: "deleteButtonGrey")?.withRenderingMode(.alwaysOriginal)
+                    addButton.action = #selector(didDeleteButtonClicked)
+                    collectionView.allowsMultipleSelection = true
+                }
+            }
+        }
+    
+    
+        
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +113,6 @@ final class PhotoViewController: UIViewController {
         collectionView.reloadData()
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,11 +120,12 @@ final class PhotoViewController: UIViewController {
         configureNavigation()
         setSubViews()
         setLayout()
+        deleteSelectedItems()
         collectionView.reloadData()
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        
     }
+    
     // MARK: - Selectors
     
     @objc func addButtonTapped(_ sender: Any) {
@@ -61,7 +135,36 @@ final class PhotoViewController: UIViewController {
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
     
+    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
+        eMode = eMode == .view ? .select : .view
+    }
     
+    @objc func didCanceledButtonClicked(_ sender: UIBarButtonItem) {
+        print("선택 취소")
+        eMode = .view
+        selectBarButton.image = UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal)
+        selectBarButton.action = #selector(didSelectButtonClicked)
+        addButton.image = UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal)
+        addButton.action = #selector(addButtonTapped)
+    }
+    
+    @objc func didDeleteButtonClicked(_ sender: UIBarButtonItem) {
+        var deleteNeededIndexPaths: [IndexPath] = []
+        
+        for (key, value) in dictionarySelectedIndexPath {
+            if value {
+                deleteNeededIndexPaths.append(key)
+            }
+        }
+        
+        for i in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
+        }
+        
+        collectionView.deleteItems(at: deleteNeededIndexPaths)
+        dictionarySelectedIndexPath.removeAll()
+        collectionView.reloadData()
+
+    }
     
     // MARK: - Helpers
     
@@ -69,21 +172,32 @@ final class PhotoViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .tabButtondarkGrey
     }
+
     
     private func configureNavigation() {
-        navigationItem.title = "나의 앨범"
-        
-        let addButton = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(addButtonTapped))
-        navigationItem.rightBarButtonItem = addButton
+        navigationItem.title = "나의앨범"
+        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        space.width = 10
+        navigationItem.rightBarButtonItems = [space, addButton, space, selectBarButton]
     }
-
+    
+    func deleteSelectedItems() {
+        // 선택한 셀의 인덱스를 가져옴
+        let selectedIndexPaths = Array(dictionarySelectedIndexPath.keys)
+        
+        // 선택한 셀의 데이터를 삭제
+        for indexPath in selectedIndexPaths {
+            let photoData = photoDatas[indexPath.item]
+            delete(photoData)
+            photoDatas.remove(at: indexPath.item)
+        }
+        
+        // 선택 상태를 초기화
+        dictionarySelectedIndexPath.removeAll()
+        collectionView.reloadData()
+    }
+    
 }
-
-
-
 
 // MARK: - CollectionView
 
@@ -111,14 +225,19 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
 //        let photoDetailVC = PhotoDetailViewController()
 //        photoDetailVC.diary = photo
         
-        guard let photoData = viewModel.photoData(at: indexPath) else { return }
-        let photoDetailVC = PhotoDetailViewController()
-        photoDetailVC.diary = photoData
-        
-        navigationController?.pushViewController(photoDetailVC, animated: true)
+        switch eMode {
+        case .view:
+            guard let photoData = viewModel.photoData(at: indexPath) else { return }
+            let photoDetailVC = PhotoDetailViewController()
+            photoDetailVC.diary = photoData
+            navigationController?.pushViewController(photoDetailVC, animated: true)
+            
+        case .select:
+            dictionarySelectedIndexPath[indexPath]
+        }
     }
-    
 }
+
     // MARK: - FlowLayout
 
     extension PhotoViewController: UICollectionViewDelegateFlowLayout {
@@ -130,9 +249,7 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
     }
 
-
-
-// MARK: - Layout Extension 
+// MARK: - Layout Extension
 
 extension PhotoViewController: LayoutProtocol {
     func setSubViews() {
@@ -148,5 +265,5 @@ extension PhotoViewController: LayoutProtocol {
         }
     }
     
-    
 }
+
