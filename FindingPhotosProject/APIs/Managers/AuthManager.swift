@@ -155,7 +155,7 @@ final class AuthManager {
         let firebaseAuth = Auth.auth()
         guard let uid = firebaseAuth.currentUser?.uid else { return }
         firebaseAuth.currentUser?.delete() { error in
-            guard error != nil else { return print("DEBUG: delete error:\(error)") }
+            guard error == nil else { return print("DEBUG: delete error:\(error)") }
             FirestoreAddress.collectionUsers.document(uid).delete()
         }
     }

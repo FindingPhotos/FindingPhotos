@@ -20,8 +20,8 @@ enum SettingSection: String {
 final class SettingViewModel: ViewModelType {
     
     struct Input {
-        let logoutButtonTapped = PublishRelay<Void>()
-        let signoutButtonTapped = PublishRelay<Void>()
+        let logoutButtonTapped = PublishRelay<Bool>()
+        let signoutButtonTapped = PublishRelay<Bool>()
         let viewWillAppear = BehaviorRelay<Bool>(value: false)
     }
     struct Output {
@@ -45,14 +45,22 @@ final class SettingViewModel: ViewModelType {
     func transform(input: Input) -> Output {
 
         let logOut = input.logoutButtonTapped
-            .map { _ in
-                AuthManager.shared.logOut()
+            .map { bool in
+                if bool {
+                    AuthManager.shared.logOut()
+                }
             }
             
         let signOut = input.signoutButtonTapped
-            .map { _ in
-                AuthManager.shared.deleteAccount()
+            .map { bool in
+                if bool {
+                    AuthManager.shared.deleteAccount()
+                }
             }
+//        let signOut = input.signoutButtonTapped
+//            .map { _ in
+//                AuthManager.shared.deleteAccount()
+//            }
         /*
         let user = input.viewWillAppear
             .debug("--------------")

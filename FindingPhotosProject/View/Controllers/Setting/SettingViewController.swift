@@ -50,17 +50,57 @@ final class SettingViewController: UIViewController {
     }
     func bindViewModel() {
         //input
-        settingView.logoutButton.rx.tap
-            .bind(to: viewModel.input.logoutButtonTapped)
-            .disposed(by: disposeBag)
+//        settingView.logoutButton.rx.tap
+//            .bind(to: viewModel.input.logoutButtonTapped)
+//            .disposed(by: disposeBag)
         
-        settingView.signoutButton.rx.tap
-            .bind(to: viewModel.input.signoutButtonTapped)
-            .disposed(by: disposeBag)
+//        settingView.signoutButton.rx.tap
+//            .bind(to: viewModel.input.signoutButtonTapped)
+//            .disposed(by: disposeBag)
         
 //        self.rx.viewWillAppear
 //            .bind(to: viewModel.input.viewWillAppear)
 //            .disposed(by: disposeBag)
+        
+        settingView.logoutButton.rx.tap
+            .flatMap { _ in
+                self.showAlertWithCancel("로그아웃 하시겠습니까?", "메인 화면으로 돌아갑니다.")
+            }
+            .flatMap { actionType -> Observable<Bool> in
+                switch actionType {
+                case .ok:
+                    return Observable.create { observer in
+                        observer.onNext(true)
+                        observer.onCompleted()
+                        return Disposables.create()
+                    }
+                case .cancel:
+                    return Observable.empty()
+                }
+            }
+            .bind(to: self.viewModel.input.logoutButtonTapped)
+            .disposed(by: disposeBag)
+            
+        
+        settingView.signoutButton.rx.tap
+            .flatMap { _ in
+                self.showAlertWithCancel("회원탈퇴 하시겠습니까?", "삭제된 계정은 복구할 수 없습니다.")
+            }
+            .flatMap { actionType -> Observable<Bool> in
+                switch actionType {
+                case .ok:
+                    return Observable.create { observer in
+                        observer.onNext(true)
+                        observer.onCompleted()
+                        return Disposables.create()
+                    }
+                case .cancel:
+                    return Observable.empty()
+                }
+            }
+            .bind(to: self.viewModel.input.signoutButtonTapped)
+            .disposed(by: disposeBag)
+        
         
         // Output
         viewModel.output.didLogOut
@@ -111,7 +151,6 @@ final class SettingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-
 }
 
 extension SettingViewController: UITableViewDelegate {
