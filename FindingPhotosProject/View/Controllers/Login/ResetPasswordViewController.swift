@@ -39,13 +39,20 @@ final class ResetPasswordViewController: UIViewController {
             .bind(to: viewModel.input.resetButtonTapped)
             .disposed(by: disposeBag)
         
-        viewModel.output.resetErrorText
+        viewModel.output.resetResultLabel
+            .bind(to: resetPasswordView.resultLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        /*
+        viewModel.output.resetFailureText
             .bind(to: resetPasswordView.resultLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.output.isErrorOccured
             .bind(to: resetPasswordView.resultLabel.rx.isHidden)
             .disposed(by: disposeBag)
+        */
+         
         viewModel.output.resetFailureText
             .withUnretained(self)
             .subscribe { viewController, string in
@@ -57,9 +64,9 @@ final class ResetPasswordViewController: UIViewController {
                 }
             }
             .disposed(by: disposeBag)
+
         
         viewModel.output.isEmailValid
-            .debug("isEmailValid")
             .map { $0 ? 1 : 0.3}
             .bind(to: resetPasswordView.resetButton.rx.alpha)
             .disposed(by: disposeBag)

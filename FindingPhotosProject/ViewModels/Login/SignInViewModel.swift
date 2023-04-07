@@ -27,6 +27,7 @@ class SignInViewModel: ViewModelType {
         let profileImage: PublishRelay<UIImage?>
         let isSignInSuccess: Observable<Bool>
         let isAlreadyExistText: Observable<String?>
+        let resetResultLabel: Observable<Bool>
     }
     
     let input = Input()
@@ -68,12 +69,10 @@ class SignInViewModel: ViewModelType {
             }
         }
             
-            
-        
-        
+        let resetResultLabel = Observable.combineLatest(input.emailTextFieldText, input.nameTextFieldText, input.passwordTextFieldText)
+            .map { _ in return true}
 
-        
-        return Output(isValid: isValid, profileImage: profileImage, isSignInSuccess: isSignInSuccess, isAlreadyExistText: isAlreadyExistText)
+        return Output(isValid: isValid, profileImage: profileImage, isSignInSuccess: isSignInSuccess, isAlreadyExistText: isAlreadyExistText, resetResultLabel: resetResultLabel)
     }
     
 }

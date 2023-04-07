@@ -70,7 +70,10 @@ final class LoginViewController: UIViewController {
             .map { $0 ? "로그인되었습니다✅" : "아이디와 비밀번호를 확인해주세요❗️"}
             .bind(to: loginView.loginCheckedLabel.rx.text)
             .disposed(by: disposeBag)
-            
+        
+        viewModel.output.resetResultLabel
+            .bind(to: loginView.loginCheckedLabel.rx.isHidden)
+        
         viewModel.output.isLoginSuccess
             .bind(to: loginView.loginCheckedLabel.rx.isHidden)
             .disposed(by: disposeBag)

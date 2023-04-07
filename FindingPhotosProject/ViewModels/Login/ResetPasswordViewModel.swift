@@ -23,25 +23,26 @@ class ResetPasswordViewModel: ViewModelType {
     struct Output {
         let isEmailValid: Observable<Bool>
         let isErrorOccured: Observable<Bool>
-        let resetErrorText: Observable<String?>
+        let resetFailureText: Observable<String?>
+        let resetResultLabel: Observable<Bool>
     }
     
     func transform(input: Input) -> Output {
         
-
-        
-        
         let isEmailValid = input.textFieldText
-            .debug("what")
             .map { !$0.isEmpty && $0.contains("@") && $0.contains (".") }
         
-        let resetErrorText = input.resetButtonTapped
+        let resetResultLabel = input.textFieldText
+            .map { _ in return true}
+        
+        let resetFailureText = input.resetButtonTapped
             .withLatestFrom(input.textFieldText)
             .flatMap { email in
                 AuthManager.shared.sendForgotPasswordEmail(email: email)
             }
-
-        let isErrorOccured = resetErrorText.map { error in
+            .debug("resetFailureText")
+    
+        let isErrorOccured = resetFailureText.map { error in
             if error == nil {
                 return true
             } else {
@@ -50,7 +51,7 @@ class ResetPasswordViewModel: ViewModelType {
         }
         
         
-        return Output(isEmailValid: isEmailValid, isErrorOccured: isErrorOccured, resetErrorText: resetErrorText)
+        return Output(isEmailValid: isEmailValid, isErrorOccured: isErrorOccured, resetFailureText: resetFailureText, resetResultLabel: resetResultLabel)
     }
     
 }

@@ -93,6 +93,9 @@ final class SignInViewController: UIViewController {
             .bind(to: signInView.isAlreadyExistLabel.rx.text)
             .disposed(by: disposeBag)
 
+        viewModel.output.resetResultLabel
+            .bind(to: signInView.isAlreadyExistLabel.rx.isHidden)
+            .disposed(by: disposeBag)
         
     }
     
