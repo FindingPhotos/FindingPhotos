@@ -19,7 +19,6 @@ final class PhotoViewController: UIViewController {
     
     private let viewModel = PhotoViewModel()
     var selectedIndexes = [IndexPath]()
-    var photoDatas: [PhotoData] = []
     var realmManager = RealmManager()
     
     private lazy var collectionView: UICollectionView = {
@@ -120,7 +119,6 @@ final class PhotoViewController: UIViewController {
         configureNavigation()
         setSubViews()
         setLayout()
-        deleteSelectedItems()
         collectionView.reloadData()
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
@@ -170,16 +168,18 @@ final class PhotoViewController: UIViewController {
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
             
             var deleteNeededIndexPaths: [IndexPath] = []
-            
+            print(deleteNeededIndexPaths.isEmpty)
             for (key, value) in self.dictionarySelectedIndexPath {
                 if value {
                     deleteNeededIndexPaths.append(key)
                 }
             }
-            
-            for i in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
+            // realm 데이터 삭제
+            for indexPath in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
+                guard let photoData = self.viewModel.photoData(at: indexPath) else { return }
+                self.realmManager.delete(photoData: photoData)
             }
-            
+            // colletionViewCell 삭제
             self.collectionView.deleteItems(at: deleteNeededIndexPaths)
             self.dictionarySelectedIndexPath.removeAll()
             self.collectionView.reloadData()
@@ -205,22 +205,6 @@ final class PhotoViewController: UIViewController {
         let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         space.width = 10
         navigationItem.rightBarButtonItems = [space, addButton, space, selectBarButton]
-    }
-    
-    func deleteSelectedItems() {
-        // 선택한 셀의 인덱스를 가져옴
-        let selectedIndexPaths = Array(dictionarySelectedIndexPath.keys)
-        
-        // 선택한 셀의 데이터를 삭제
-        for indexPath in selectedIndexPaths {
-            let photoData = photoDatas[indexPath.item]
-            delete(photoData)
-            photoDatas.remove(at: indexPath.item)
-        }
-        
-        // 선택 상태를 초기화
-        dictionarySelectedIndexPath.removeAll()
-        collectionView.reloadData()
     }
     
 }
@@ -259,7 +243,7 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
             navigationController?.pushViewController(photoDetailVC, animated: true)
             
         case .select:
-            dictionarySelectedIndexPath[indexPath]
+            dictionarySelectedIndexPath[indexPath] = true
         }
     }
 }

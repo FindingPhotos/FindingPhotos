@@ -73,10 +73,9 @@ final class RealmManager {
     
     // MARK: - Delete
     
-    func delete(photoData: PhotoData, image: UIImage) {
+    func delete(photoData: PhotoData) {
         do {
             try realm.write {
-                photoData.image = image.jpegData(compressionQuality: 0.5)
                 realm.delete(photoData)
             }
         } catch {

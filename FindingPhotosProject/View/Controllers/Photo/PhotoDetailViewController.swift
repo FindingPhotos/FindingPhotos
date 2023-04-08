@@ -84,7 +84,7 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
         
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
             let image = self.photoDetailView.photoImageView.image ?? UIImage()
-            self.realmManager.delete(photoData: photoData, image: image)
+            self.realmManager.delete(photoData: photoData)
             self.popViewController()
         }
         alert.addAction(deleteAction)
