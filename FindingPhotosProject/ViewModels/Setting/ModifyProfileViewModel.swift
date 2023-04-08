@@ -23,7 +23,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedImage: PublishRelay<UIImage>
         let userInformation: Observable<UserModel?>
         let userName: Observable<String>
-        let isModifiyFinished: Observable<Bool>
+        let isModifiyFinished: Observable<Void>
     }
     var disposeBag = DisposeBag()
 
@@ -52,26 +52,67 @@ final class ModifyProfileViewModel: ViewModelType {
                 changedImage.accept(image)
             }
             .disposed(by: disposeBag)
-
+/*
         let isModifyFinished = input.ModifyButtonTapped
+            .debug("isModifyFinished in VM")
             .withLatestFrom(Observable.combineLatest(input.textFieldText, input.selectedImage))
-            .map { changedName, changedImage -> Bool in
+            .map { changedName, changedImage in
                 if let changedImage, changedName != "" {
                     ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
                         AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
-                        return true
                     }
                 } else if let changedImage, changedName == "" {
                     ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
                         AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
-                        return true
                     }
                 } else {
                     AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
-                    return true
                 }
-                return false
             }
+ */
+        let uploadedImageUrl = input.ModifyButtonTapped
+            .debug("isModifyFinished in VM")
+            .withLatestFrom(input.selectedImage)
+            .flatMap({ image in
+                ImageUploaderToFirestorage.uploadImageRx(image: image)
+            })
+            
+            
+        let isModifyFinishedRx = Observable.combineLatest(input.textFieldText, uploadedImageUrl)
+            .map { changedName, changedImage in
+                if let changedImage, changedName != "" {
+                        AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: changedImage)
+                    
+                } else if let changedImage, changedName == "" {
+                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: changedImage)
+                } else {
+                    AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
+                }
+            }
+            
+        
+        
+        
+    
+        
+
+            
+        
+//            .map { changedName, changedImage in
+//                if let changedImage, changedName != "" {
+//                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
+//                        AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
+//                    }
+//                } else if let changedImage, changedName == "" {
+//                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
+//                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
+//                    }
+//                } else {
+//                    AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
+//                }
+//            }
+            
+            
             
 
         
@@ -79,7 +120,7 @@ final class ModifyProfileViewModel: ViewModelType {
                       changedImage: changedImage,
                       userInformation: user,
                       userName: userName,
-                      isModifiyFinished: isModifyFinished)
+                      isModifiyFinished: isModifyFinishedRx)
         
     }
 }
