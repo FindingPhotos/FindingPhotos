@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		399BF8566BA242976067DBA2 /* Pods_FindingPhotosProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */; };
 		6303B89D29D5906800A79F45 /* StudioInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6303B89C29D5906800A79F45 /* StudioInformationView.swift */; };
+		632770A129E181E400877811 /* IndicatorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632770A029E181E400877811 /* IndicatorViewController.swift */; };
 		632977BF29D047F1004FDD85 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632977BE29D047F1004FDD85 /* Protocols.swift */; };
 		6365B5A929D6E6D0003A4123 /* FaviorateStudioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */; };
 		6365B5AB29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6365B5AA29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift */; };
@@ -69,6 +70,7 @@
 /* Begin PBXFileReference section */
 		0C91FF69D084BFA68B47EF0E /* Pods-FindingPhotosProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.release.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.release.xcconfig"; sourceTree = "<group>"; };
 		6303B89C29D5906800A79F45 /* StudioInformationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudioInformationView.swift; sourceTree = "<group>"; };
+		632770A029E181E400877811 /* IndicatorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorViewController.swift; sourceTree = "<group>"; };
 		632977BE29D047F1004FDD85 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviorateStudioListViewController.swift; sourceTree = "<group>"; };
 		6365B5AA29D6E7E2003A4123 /* FaviorateStudioListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaviorateStudioListTableViewCell.swift; sourceTree = "<group>"; };
@@ -355,6 +357,7 @@
 			children = (
 				AD4580EB29CC7F3A00B8D8A6 /* MapViewController.swift */,
 				6365B5A829D6E6D0003A4123 /* FaviorateStudioListViewController.swift */,
+				632770A029E181E400877811 /* IndicatorViewController.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -586,6 +589,7 @@
 				AD4580F029CC800C00B8D8A6 /* SettingViewController.swift in Sources */,
 				AD17E4BB29D80C24009E1E22 /* ImageUploaderToFirestorage.swift in Sources */,
 				AD4580EC29CC7F3A00B8D8A6 /* MapViewController.swift in Sources */,
+				632770A129E181E400877811 /* IndicatorViewController.swift in Sources */,
 				AD3FAF9329D99ED400CF197A /* UIColor.swift in Sources */,
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
 				AD17E4B929D7BE7B009E1E22 /* SignInViewModel.swift in Sources */,
@@ -772,7 +776,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C52UTF3KCV;
+				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
@@ -805,7 +809,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C52UTF3KCV;
+				DEVELOPMENT_TEAM = BGU99JP2HN;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";

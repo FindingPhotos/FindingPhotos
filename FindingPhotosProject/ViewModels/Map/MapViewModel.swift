@@ -24,10 +24,11 @@ final class MapViewModel: ViewModelType {
         let studioNameLabelText = PublishRelay<String>()
     }
     struct Output {
-        let marker: Observable<NMFMarker>
+        let marker: PublishRelay<NMFMarker>
         let deinied: Observable<CLLocationManager>
         let didError: ControlEvent<CLErrorEvent>
         let faviorateButtonImage: BehaviorRelay<UIImage?>
+        let currentPosition: Observable<CLLocation>
     }
     
     var disposeBag = DisposeBag()
@@ -36,10 +37,8 @@ final class MapViewModel: ViewModelType {
     
     func transform(input: Input) -> Output {
         
-        let manager = input.viewWillAppear
-            .flatMap { _ in
-                LocationManager.shared.locationManager.rx.locationManagerDidChangeAuthorization
-            }
+        let manager = LocationManager.shared.locationManager.rx.locationManagerDidChangeAuthorization
+        
         manager.filter { return $0.authorizationStatus == .notDetermined}
             .subscribe(onNext: { manager in
                 manager.requestWhenInUseAuthorization()
@@ -54,7 +53,9 @@ final class MapViewModel: ViewModelType {
         
         let didError = LocationManager.shared.locationManager.rx.didError
         
-        let marker = LocationManager.shared.locationManager.rx.didUpdateLocations
+        let marker = PublishRelay<NMFMarker>()
+        
+        let currentPosition = LocationManager.shared.locationManager.rx.didUpdateLocations
             .map { (manager: CLLocationManager, locations: [CLLocation]) in
                 guard let currentIatitude = manager.location?.coordinate.latitude else {
                     return CLLocation() }
@@ -62,6 +63,7 @@ final class MapViewModel: ViewModelType {
                     return CLLocation() }
                 return CLLocation(latitude: currentIatitude, longitude: currentLongitude)
             }
+        currentPosition
             .flatMap { location in
                 LocationManager.shared.getPlaceMark(location: location)
             }
@@ -83,6 +85,8 @@ final class MapViewModel: ViewModelType {
                 marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
             }
+            .bind(to: marker)
+            .disposed(by: disposeBag)
         
         let buttonImage = BehaviorRelay<UIImage?>(value: nil)
         
@@ -113,12 +117,11 @@ final class MapViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        
-        
         return Output(marker: marker,
                       deinied: denied,
                       didError: didError,
-                      faviorateButtonImage: buttonImage)
+                      faviorateButtonImage: buttonImage,
+                      currentPosition: currentPosition)
     }
     func presentLocationPermissionAlertController() -> UIAlertController {
         let alert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)
