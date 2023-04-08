@@ -15,7 +15,7 @@ extension UIColor {
     // 메인 색상 4가지
     static let tabButtonlightGrey = UIColor(red: 0.829, green: 0.819, blue: 0.819, alpha: 1)
     static let tabButtondarkGrey = UIColor(red: 0.287, green: 0.287, blue: 0.287, alpha: 1)
-    static let darked = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     static let buttonYellow = UIColor(red: 0.962, green: 0.837, blue: 0.393, alpha: 1)
     static let superLightGrey = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
+    static let darkRed = UIColor(red: 0.642, green: 0.107, blue: 0.107, alpha: 1)
 }
