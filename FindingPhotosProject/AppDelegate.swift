@@ -9,14 +9,14 @@ import UIKit
 import CoreData
 import NMapsMap
 import RealmSwift
-import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        IQKeyboardManager.shared.enable = true
         NMFAuthManager.shared().clientId = Bundle.main.naverMapApiKey
+        IQKeyboardManagerObject.setting()
+    
         return true
     }
 

@@ -54,7 +54,7 @@ final class ModifyProfileView: UIView {
     
     lazy var nameTextField: UITextField = {
         let textField = UITextField()
-        textField.text = "바꿀 닉네임 입력"
+//        textField.text = "바꿀 닉네임 입력"
         textField.layer.borderColor = .none
         return textField
     }()

@@ -23,11 +23,10 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         bindWithoutViewModel()
         bindViewModel()
+        setSubViews()
+        setLayout()
     }
     
-    override func loadView() {
-        view = loginView
-    }
     // MARK: - helpers
     
     private func bindWithoutViewModel() {
@@ -37,10 +36,10 @@ final class LoginViewController: UIViewController {
                 viewController.navigationController?.pushViewController(SignInViewController(), animated: true)
             }
             .disposed(by: disposeBag)
-        loginView.openPrivacyPolicyButton.rx.tap
+        loginView.forgotPasswordButton.rx.tap
             .withUnretained(self)
             .subscribe { viewController, event in
-                viewController.openSFSafari(url: "https://thread-pike-aca.notion.site/Personal-Information-Policy-17a0bfbcb74446f8b6a166bd289e33d4")
+                viewController.navigationController?.pushViewController(ResetPasswordViewController(), animated: true)
             }
             .disposed(by: disposeBag)
     }
@@ -71,7 +70,10 @@ final class LoginViewController: UIViewController {
             .map { $0 ? "로그인되었습니다✅" : "아이디와 비밀번호를 확인해주세요❗️"}
             .bind(to: loginView.loginCheckedLabel.rx.text)
             .disposed(by: disposeBag)
-            
+        
+        viewModel.output.resetResultLabel
+            .bind(to: loginView.loginCheckedLabel.rx.isHidden)
+        
         viewModel.output.isLoginSuccess
             .bind(to: loginView.loginCheckedLabel.rx.isHidden)
             .disposed(by: disposeBag)
@@ -88,3 +90,16 @@ final class LoginViewController: UIViewController {
     
 }
 
+extension LoginViewController: LayoutProtocol {
+    func setSubViews() {
+        self.view.addSubview(loginView)
+    }
+    
+    func setLayout() {
+        loginView.snp.makeConstraints { make in
+            make.width.equalTo(375)
+            make.height.equalTo(660)
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+}

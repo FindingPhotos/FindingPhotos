@@ -54,6 +54,10 @@
 		AD45813E29D59A4900B8D8A6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813D29D59A4900B8D8A6 /* LoginView.swift */; };
 		AD45814029D5B07600B8D8A6 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45813F29D5B07600B8D8A6 /* SignInViewController.swift */; };
 		AD45814229D5B0E900B8D8A6 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD45814129D5B0E900B8D8A6 /* SignInView.swift */; };
+		ADCF002129DACEEB00D465FE /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF002029DACEEB00D465FE /* UIImageView.swift */; };
+		ADCF002329DE729D00D465FE /* ResetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF002229DE729D00D465FE /* ResetPasswordView.swift */; };
+		ADCF002529DE80FA00D465FE /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF002429DE80FA00D465FE /* ResetPasswordViewController.swift */; };
+		ADCF002729DE953C00D465FE /* ResetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCF002629DE953C00D465FE /* ResetPasswordViewModel.swift */; };
 		C8167D1329D2A583009458DA /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8167D1229D2A583009458DA /* PhotoDetailView.swift */; };
 		C8783C5029D312030047C3D1 /* PhotoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8783C4F29D312030047C3D1 /* PhotoViewModel.swift */; };
 		C89DBFE329D5604400E369D5 /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C89DBFE229D5604400E369D5 /* PhotoCollectionViewCell.swift */; };
@@ -111,6 +115,10 @@
 		AD45813D29D59A4900B8D8A6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AD45813F29D5B07600B8D8A6 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		AD45814129D5B0E900B8D8A6 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		ADCF002029DACEEB00D465FE /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		ADCF002229DE729D00D465FE /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
+		ADCF002429DE80FA00D465FE /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		ADCF002629DE953C00D465FE /* ResetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewModel.swift; sourceTree = "<group>"; };
 		C8167D1229D2A583009458DA /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoDetailView.swift; path = FindingPhotosProject/View/Controllers/Photo/PhotoDetailView.swift; sourceTree = SOURCE_ROOT; };
 		C8783C4F29D312030047C3D1 /* PhotoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoViewModel.swift; path = FindingPhotosProject/View/Controllers/Photo/PhotoViewModel.swift; sourceTree = SOURCE_ROOT; };
 		C89DBFE229D5604400E369D5 /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PhotoCollectionViewCell.swift; path = FindingPhotosProject/View/Cells/PhotoCollectionViewCell.swift; sourceTree = SOURCE_ROOT; };
@@ -183,11 +191,12 @@
 		AD3FAF8D29D99ED400CF197A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				AD3FAF8E29D99ED400CF197A /* UIColor.swift */,
 				AD3FAF8F29D99ED400CF197A /* RxExtensions.swift */,
+				AD3FAF8E29D99ED400CF197A /* UIColor.swift */,
 				AD3FAF9029D99ED400CF197A /* String.swift */,
 				AD3FAF9129D99ED400CF197A /* Etc.swift */,
 				AD3FAF9229D99ED400CF197A /* UIViewController.swift */,
+				ADCF002029DACEEB00D465FE /* UIImageView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -253,9 +262,9 @@
 		AD4580F329CC823900B8D8A6 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				AD4580FA29CC85F400B8D8A6 /* Login */,
 				AD45810129CC86CB00B8D8A6 /* Map */,
 				AD45810029CC86C700B8D8A6 /* Photo */,
+				AD4580FA29CC85F400B8D8A6 /* Login */,
 				AD4580FF29CC86C600B8D8A6 /* Setting */,
 			);
 			path = Controllers;
@@ -265,8 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				63AA9B4029D2B42D00CF7F4B /* Map */,
-				AD45810929CC872E00B8D8A6 /* Login */,
 				AD45810729CC872A00B8D8A6 /* Photo */,
+				AD45810929CC872E00B8D8A6 /* Login */,
 				AD45810629CC872900B8D8A6 /* Setting */,
 			);
 			path = ViewModels;
@@ -306,8 +315,8 @@
 			isa = PBXGroup;
 			children = (
 				6303B89A29D58F4E00A79F45 /* Map */,
-				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810429CC870400B8D8A6 /* Photo */,
+				AD45810229CC86F200B8D8A6 /* Login */,
 				AD45810529CC870F00B8D8A6 /* Setting */,
 			);
 			path = Views;
@@ -318,6 +327,7 @@
 			children = (
 				AD4580E929CC7F2E00B8D8A6 /* LoginViewController.swift */,
 				AD45813F29D5B07600B8D8A6 /* SignInViewController.swift */,
+				ADCF002429DE80FA00D465FE /* ResetPasswordViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -354,6 +364,7 @@
 			children = (
 				AD45813D29D59A4900B8D8A6 /* LoginView.swift */,
 				AD45814129D5B0E900B8D8A6 /* SignInView.swift */,
+				ADCF002229DE729D00D465FE /* ResetPasswordView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -399,6 +410,7 @@
 			children = (
 				AD17E4B029D679DA009E1E22 /* LoginViewModel.swift */,
 				AD17E4B829D7BE7B009E1E22 /* SignInViewModel.swift */,
+				ADCF002629DE953C00D465FE /* ResetPasswordViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -406,10 +418,10 @@
 		C8A21BC329D54A4400029EAC /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C8CFA50529D9939000C60892 /* Setting */,
 				C8CFA50129D9929200C60892 /* Location */,
-				C8A21BC829D54AFF00029EAC /* User */,
 				C8A21BC429D54A6B00029EAC /* Photo */,
+				C8A21BC829D54AFF00029EAC /* User */,
+				C8CFA50529D9939000C60892 /* Setting */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -578,6 +590,7 @@
 				AD45810D29CC88E400B8D8A6 /* APIKeys.swift in Sources */,
 				AD17E4B929D7BE7B009E1E22 /* SignInViewModel.swift in Sources */,
 				AD45811B29D051ED00B8D8A6 /* SettingCell.swift in Sources */,
+				ADCF002729DE953C00D465FE /* ResetPasswordViewModel.swift in Sources */,
 				C8A21BCB29D5537D00029EAC /* RealmManager.swift in Sources */,
 				AD45812329D0749300B8D8A6 /* LogoutView.swift in Sources */,
 				AD45813A29D5592F00B8D8A6 /* IQKeyboardManagerObject.swift in Sources */,
@@ -605,6 +618,7 @@
 				AD17E4B729D6A745009E1E22 /* MainViewManager.swift in Sources */,
 				AD17E4B129D679DA009E1E22 /* LoginViewModel.swift in Sources */,
 				C8167D1329D2A583009458DA /* PhotoDetailView.swift in Sources */,
+				ADCF002529DE80FA00D465FE /* ResetPasswordViewController.swift in Sources */,
 				AD4580EA29CC7F2E00B8D8A6 /* LoginViewController.swift in Sources */,
 				AD17E4B529D6A57A009E1E22 /* UserDefaultsUtil.swift in Sources */,
 				AD17E4B329D69E52009E1E22 /* AuthManager.swift in Sources */,
@@ -613,8 +627,10 @@
 				AD45812229D0749300B8D8A6 /* ProfileView.swift in Sources */,
 				63AA9B4629D2C2E300CF7F4B /* LocationManager.swift in Sources */,
 				6365B5A929D6E6D0003A4123 /* FaviorateStudioListViewController.swift in Sources */,
+				ADCF002129DACEEB00D465FE /* UIImageView.swift in Sources */,
 				AD45813C29D5628A00B8D8A6 /* SettingView.swift in Sources */,
 				AD4580D129CC71C600B8D8A6 /* SceneDelegate.swift in Sources */,
+				ADCF002329DE729D00D465FE /* ResetPasswordView.swift in Sources */,
 				AD45812E29D2F75B00B8D8A6 /* Constants.swift in Sources */,
 				AD3FAF9529D99ED400CF197A /* String.swift in Sources */,
 			);

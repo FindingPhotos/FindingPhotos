@@ -11,6 +11,14 @@ class SignInView: UIView {
     
     // MARK: - Properties
     
+    lazy var isAlreadyExistLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .systemRed
+        label.isHidden = false
+        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
+        return label
+    }()
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "FindingPhotos"
@@ -199,15 +207,19 @@ extension SignInView: LayoutProtocol {
     }
     
     func setSubViews() {
-        [titleLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton, openPrivacyPolicyButton]
+        [isAlreadyExistLabel, titleLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton, openPrivacyPolicyButton]
             .forEach { self.addSubview($0) }
     }
 
     func setLayout() {
         
+        isAlreadyExistLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalToSuperview().inset(80)
+        }
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(170)
+            make.top.equalToSuperview().inset(100)
         }
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()

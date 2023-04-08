@@ -23,19 +23,17 @@ final class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setValue()
+        setSubViews()
+        setLayout()
         bindWithoutViewModel()
         bindViewModel()
         bindImagePicker()
     }
-    override func loadView() {
-        view = signInView
-    }
+
     
     // MARK: - helpers
 
-    func setValue() {
-        navigationController?.navigationItem.title = "회원가입"
-    }
+
     
     private func bindWithoutViewModel() {
         signInView.openPrivacyPolicyButton.rx.tap
@@ -82,15 +80,22 @@ final class SignInViewController: UIViewController {
             .bind(to: signInView.signInButton.rx.isEnabled)
             .disposed(by: disposeBag)
     
+        viewModel.output.profileImage
+            .bind(to: signInView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
+        
         // 실패했을 때 알람처리 해줘야 함...
         viewModel.output.isSignInSuccess
-            .subscribe()
+            .bind(to: signInView.isAlreadyExistLabel.rx.isHidden)
             .disposed(by: disposeBag)
-  
         
-        
-            // isSignInSuccess가 true 이면~ 이런식으로 조건절을 넣는건 안되고
-            // 애초에 output의 observable을 Observable<Void> 와 같이 이벤트처럼 처리해서 받아와야 할까?
+        viewModel.output.isAlreadyExistText
+            .bind(to: signInView.isAlreadyExistLabel.rx.text)
+            .disposed(by: disposeBag)
+
+        viewModel.output.resetResultLabel
+            .bind(to: signInView.isAlreadyExistLabel.rx.isHidden)
+            .disposed(by: disposeBag)
         
     }
     
@@ -116,3 +121,20 @@ final class SignInViewController: UIViewController {
     
 }
 
+extension SignInViewController: LayoutProtocol {
+    func setValue() {
+        navigationController?.navigationItem.title = "회원가입"
+        view.backgroundColor = .white
+    }
+    func setSubViews() {
+        view.addSubview(signInView)
+    }
+    
+    func setLayout() {
+        signInView.snp.makeConstraints { make in
+            make.width.equalTo(375)
+            make.height.equalTo(660)
+            make.centerX.centerY.equalToSuperview()
+        }
+    }
+}

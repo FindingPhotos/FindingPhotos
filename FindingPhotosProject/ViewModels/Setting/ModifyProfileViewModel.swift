@@ -14,14 +14,16 @@ import RxCocoa
 final class ModifyProfileViewModel: ViewModelType {
     
     struct Input {
-        let textFieldText = PublishRelay<String>()
-        let selectedImage = PublishRelay<UIImage?>()
+        let textFieldText = BehaviorRelay<String?>(value: nil)
+        let selectedImage = BehaviorRelay<UIImage?>(value: nil)
         let ModifyButtonTapped = PublishRelay<Void>()
     }
     struct Output {
         let changedName: PublishRelay<String>
         let changedImage: PublishRelay<UIImage>
         let userInformation: Observable<UserModel?>
+        let userName: Observable<String>
+        let isModifiyFinished: Observable<Bool>
     }
     var disposeBag = DisposeBag()
 
@@ -33,41 +35,51 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedName = PublishRelay<String>()
         let changedImage = PublishRelay<UIImage>()
         
-        let user = AuthManager.shared.getUserInformation()
+        let user = AuthManager.shared.getUserInformation().share()
+        
+        let userName = user.map { userModel in
+            if userModel == nil {
+                return "익명으로 로그인되었습니다."
+            } else {
+                return userModel!.name
+            }
+        }
         
         input.selectedImage
             .withUnretained(self)
             .subscribe { viewModel, image in
-                guard let image else {
-                    // 선택된 이미지가 없을 떼 -> 아마 이미지피커를 키기만 하고 이미지를 선택하지 않았을 때 일텐데,
-                    // 이 때 기존 유저모델에 이미지가 있다면 다시 그 이미지를, 아니면 아무 이미지도 없도록 만드는 코드 필요할 예정.
-                    return
-                }
+                guard let image else { return }
                 changedImage.accept(image)
             }
             .disposed(by: disposeBag)
-        
-        input.ModifyButtonTapped
+
+        let isModifyFinished = input.ModifyButtonTapped
             .withLatestFrom(Observable.combineLatest(input.textFieldText, input.selectedImage))
-            .flatMap { changedName, changedImage in
-                AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: "")
+            .map { changedName, changedImage -> Bool in
+                if let changedImage, changedName != "" {
+                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
+                        AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
+                        return true
+                    }
+                } else if let changedImage, changedName == "" {
+                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
+                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
+                        return true
+                    }
+                } else {
+                    AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
+                    return true
+                }
+                return false
             }
-            .subscribe()
-            .disposed(by: disposeBag)
+            
+
         
         return Output(changedName: changedName,
                       changedImage: changedImage,
-                      userInformation: user)
+                      userInformation: user,
+                      userName: userName,
+                      isModifiyFinished: isModifyFinished)
         
     }
-    // 이후 기본 유저 모델값을 만들고 기본값으로 넣어주면 될듯
-//    let changedUser: BehaviorRelay<UserModel> = BehaviorRelay(value: UserModel(name: "", profileImage: UIImage(named: "")))
-    
-
-    
-
-    
-    
-    
-    
 }

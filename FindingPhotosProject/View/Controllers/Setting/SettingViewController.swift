@@ -10,7 +10,9 @@ import RxSwift
 import RxCocoa
 import RxRelay
 import RxDataSources
+import RxViewController
 import MessageUI
+import Kingfisher
 
 
 final class SettingViewController: UIViewController {
@@ -33,6 +35,10 @@ final class SettingViewController: UIViewController {
         bindTableView()
         bindViewModel()
     }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        bindViewModel()
+//    }
     
     override func loadView() {
         view = settingView
@@ -44,31 +50,91 @@ final class SettingViewController: UIViewController {
     }
     func bindViewModel() {
         //input
+//        settingView.logoutButton.rx.tap
+//            .bind(to: viewModel.input.logoutButtonTapped)
+//            .disposed(by: disposeBag)
+        
+//        settingView.signoutButton.rx.tap
+//            .bind(to: viewModel.input.signoutButtonTapped)
+//            .disposed(by: disposeBag)
+        
+        self.rx.viewWillAppear
+            .bind(to: viewModel.input.viewWillAppear)
+            .disposed(by: disposeBag)
+        
         settingView.logoutButton.rx.tap
-            .bind(to: viewModel.input.logoutButtonTapped)
+            .flatMap { _ in
+                self.showAlertWithCancelRx("로그아웃 하시겠습니까?", "메인 화면으로 돌아갑니다.")
+            }
+            .flatMap { actionType -> Observable<Bool> in
+                switch actionType {
+                case .ok:
+                    return Observable.create { observer in
+                        observer.onNext(true)
+                        observer.onCompleted()
+                        return Disposables.create()
+                    }
+                case .cancel:
+                    return Observable.empty()
+                }
+            }
+            .bind(to: self.viewModel.input.logoutButtonTapped)
             .disposed(by: disposeBag)
+            
+        
         settingView.signoutButton.rx.tap
-            .bind(to: viewModel.input.signoutButtonTapped)
+            .flatMap { _ in
+                self.showAlertWithCancelRx("회원탈퇴 하시겠습니까?", "삭제된 계정은 복구할 수 없습니다.")
+            }
+            .flatMap { actionType -> Observable<Bool> in
+                switch actionType {
+                case .ok:
+                    return Observable.create { observer in
+                        observer.onNext(true)
+                        observer.onCompleted()
+                        return Disposables.create()
+                    }
+                case .cancel:
+                    return Observable.empty()
+                }
+            }
+            .bind(to: self.viewModel.input.signoutButtonTapped)
             .disposed(by: disposeBag)
-
+        
+        
         // Output
         viewModel.output.didLogOut
             .subscribe()
             .disposed(by: disposeBag)
+        
         viewModel.output.didSignOut
             .subscribe()
             .disposed(by: disposeBag)
-        viewModel.output.userInformation
-            .map { $0?.name }
+        
+        viewModel.output.userName
+//            .debug("userName")
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
-//        viewModel.output.userInformation
-//            .debug("--")
-//            .filter { $0 == nil }
-//            .map { _ in "익명으로 로그인되었습니다." }
-//            .bind(to: settingView.nameLabel.rx.text)
-//            .disposed(by: disposeBag)
-
+        
+        viewModel.output.isUserInformationExist
+            .bind(to: settingView.profileSetButton.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.userInformation
+//            .debug("userInfo")
+            .withUnretained(self)
+            .map {viewController, userModel in
+                if userModel == nil {
+                    guard let image = UIImage(systemName: "person.fill") else { return }
+                    image.withTintColor(.tabButtondarkGrey, renderingMode: .alwaysTemplate)
+                    viewController.settingView.profileImageView.image = image
+                } else {
+                    guard let urlString = userModel?.profileImageUrl else { return }
+                    viewController.settingView.profileImageView.setImage(with: urlString)
+                }
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
     }
     
     func bindTableView() {
@@ -85,7 +151,6 @@ final class SettingViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
-
 }
 
 extension SettingViewController: UITableViewDelegate {

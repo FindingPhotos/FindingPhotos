@@ -20,13 +20,22 @@ enum SettingSection: String {
 final class SettingViewModel: ViewModelType {
     
     struct Input {
-        let logoutButtonTapped = PublishRelay<Void>()
-        let signoutButtonTapped = PublishRelay<Void>()
+        let logoutButtonTapped = PublishRelay<Bool>()
+        let signoutButtonTapped = PublishRelay<Bool>()
+        let viewWillAppear = BehaviorRelay<Bool>(value: false)
     }
     struct Output {
         let didLogOut: Observable<Void>
         let didSignOut: Observable<Void>
         let userInformation: Observable<UserModel?>
+        let userName: Observable<String>
+        let isUserInformationExist: Observable<Bool>
+        // 1️⃣ 수정 후 돌아온 settingVC에서 유저 모델이 업데이트되지 않는 문제
+        // 예상 원인: 옵저버블 타입의 유저 인포메이션이 ViewDidLoad될 때 실행되고 스트림이 끝나기 때문.
+        // 시도: BehaviorRelay 타입으로 바꾸고, AuthManager를 통해 (옵저버 아닌) UserModel을 반환
+        //        transform 메서드 내에서 반환된 userModel을 BehaviorRelay의 기본값으로 지정, 아웃풋으로 반환.
+        // 실패: BehaviorRealy가 두 번 실행되고, 첫 번째 userModel을 nil로 반환.
+        //      nil 값으로 VC에서 bind가 끝난 후, BehaviorRealy가 재실행되어 정상적 userModel 반환. 그러나 VC에 적용 안됨. 
     }
     var disposeBag = DisposeBag()
     
@@ -36,18 +45,54 @@ final class SettingViewModel: ViewModelType {
     func transform(input: Input) -> Output {
 
         let logOut = input.logoutButtonTapped
-            .map { _ in
-                AuthManager.shared.logOut()
+            .map { bool in
+                if bool {
+                    AuthManager.shared.logOut()
+                }
             }
             
         let signOut = input.signoutButtonTapped
-            .map { _ in
-                AuthManager.shared.deleteAccount()
+            .map { bool in
+                if bool {
+                    AuthManager.shared.deleteAccount()
+                }
             }
+//        let signOut = input.signoutButtonTapped
+//            .map { _ in
+//                AuthManager.shared.deleteAccount()
+//            }
+
+        let user = input.viewWillAppear
+            .debug("--------------")
+            .flatMap { _ in
+                AuthManager.shared.getUserInformation()
+            }
+            .share()
+
         
-        let user = AuthManager.shared.getUserInformation()
+//        let user = AuthManager.shared.getUserInformation()
         
-        return Output(didLogOut: logOut, didSignOut: signOut, userInformation: user)
+        let userName = user.map { userModel in
+            if userModel == nil {
+                return "익명으로 로그인되었습니다."
+            } else {
+                return userModel!.name
+            }
+        }
+            
+        let isUserInformationExist = user.map { userModel in
+            if userModel == nil {
+                return true
+            } else {
+                return false
+            }
+        }
+        
+        return Output(didLogOut: logOut,
+                      didSignOut: signOut,
+                      userInformation: user,
+                      userName: userName,
+                      isUserInformationExist: isUserInformationExist)
     }
     
     let settingDatas = BehaviorRelay<[SectionOfDocument]>(value: [
@@ -75,6 +120,4 @@ final class SettingViewModel: ViewModelType {
         
         return dataSource
     }
-    
-    
 }

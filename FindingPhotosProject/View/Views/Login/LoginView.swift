@@ -76,10 +76,6 @@ class LoginView: UIView {
         button.backgroundColor = UIColor.tabButtondarkGrey
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
-//        button.snp.makeConstraints { make in
-//            make.width.equalTo(150)
-//            make.height.equalTo(0)
-//        }
         return button
     }()
     
@@ -92,10 +88,6 @@ class LoginView: UIView {
         button.layer.borderWidth = 1
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
-//        button.snp.makeConstraints { make in
-//            make.width.equalTo(100)
-//            make.height.equalTo(20)
-//        }
         return button
     }()
     
@@ -112,7 +104,6 @@ class LoginView: UIView {
         label.text = "아이디와 비밀번호를 확인해주세요❗️"
         label.textColor = .systemRed
         label.isHidden = true
-//        label.text = "로그인되었습니다✅"
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
     }()
@@ -130,9 +121,9 @@ class LoginView: UIView {
         return button
     }()
     
-    lazy var openPrivacyPolicyButton: UIButton = {
+    lazy var forgotPasswordButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("비밀번호 찾기", for: .normal)
+        button.setTitle("비밀번호 재설정", for: .normal)
         button.setTitleColor(UIColor.tabButtonlightGrey, for: .normal)
         button.backgroundColor = .none
         button.snp.makeConstraints { make in
@@ -143,7 +134,7 @@ class LoginView: UIView {
     }()
     
     private lazy var signInStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [signInButton, openPrivacyPolicyButton])
+        let stackView = UIStackView(arrangedSubviews: [signInButton, forgotPasswordButton])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 50
@@ -184,7 +175,7 @@ extension LoginView: LayoutProtocol {
     func setLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(200)
+            make.top.equalToSuperview().inset(140)
         }
         emailPasswordStackView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(50)

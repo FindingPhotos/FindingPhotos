@@ -9,6 +9,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 import RxSwift
+import RxRelay
 
 final class AuthManager {
     
@@ -30,8 +31,37 @@ final class AuthManager {
         }
     }
     
+    func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<String?>  {
+        return Observable.create { observer in
+            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+                guard error == nil else {
+                    print("debug: \(error!.localizedDescription)")
+                    observer.onNext("이미 가입한 이메일입니다❌")
+                    return
+                }
+                guard let email = authResult?.user.email,
+                      let uid = authResult?.user.uid else { return }
+                if let image {
+                    ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
+                        FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
+                        return true
+                        observer.onNext(nil)
+                    }
+                } else {
+                    let currentUserModel = UserModel(name: name, email: email, uid: uid)
+                    print("DEBUG: currentUserModel:\(currentUserModel)")
+                    FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": ""])
+                    observer.onNext(nil)
+                }
+                print("DEBUG: 회원가입 성공")
+                NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
+            }
+            return Disposables.create()
+        }
+    }
+    
+    /*
     func signIn(email: String, password: String, name: String, image: UIImage?) -> Observable<Bool>  {
-        
         return Observable.create { observer in
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 guard error == nil else {
@@ -43,7 +73,6 @@ final class AuthManager {
                       let uid = authResult?.user.uid else { return }
                 if let image {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
-                        let currentUserModel = UserModel(name: name, email: email, uid: uid, profileImageUrl: imageUrlString)
                         FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
                         observer.onNext(true)
                     }
@@ -59,6 +88,7 @@ final class AuthManager {
             return Disposables.create()
         }
     }
+    */
     
     func signInWithAnonymous() -> Observable<Void> {
         return Observable.create { observer in
@@ -79,9 +109,11 @@ final class AuthManager {
     func getUserInformation() -> Observable<UserModel?> {
         return Observable.create { observer in
             guard let currentUser = Auth.auth().currentUser else { return Disposables.create() }
-//            guard !currentUser.isAnonymous else {
-//                return Disposables.create()
-//            }
+            guard currentUser.isAnonymous == false else {
+                observer.onNext(nil)
+                observer.onCompleted()
+                return Disposables.create()
+            }
             let uid = currentUser.uid
             FirestoreAddress.collectionUsers.document(uid).getDocument { snapshot, error in
                 guard error == nil else { return observer.onError(error!)}
@@ -98,24 +130,18 @@ final class AuthManager {
             return Disposables.create()
         }
     }
-    
-    func updateUserInformation(changedName: String?, changedImageUrl: String?) -> Observable<Void> {
-        return Observable.create { observer in
-            guard let uid = Auth.auth().currentUser?.uid else { return Disposables.create() }
-            if changedName != nil && changedImageUrl != nil {
-                guard let changedName, let changedImageUrl else { return Disposables.create() }
-                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "image": changedImageUrl])
-            } else if let changedName {
-                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
-            } else if let changedImageUrl {
-                FirestoreAddress.collectionUsers.document(uid).updateData(["image": changedImageUrl])
-            }
-            observer.onCompleted()
-            return Disposables.create()
+
+    func updateUserInformation(changedName: String?, changedImageUrl: String?){
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        if changedName != nil && changedImageUrl != nil {
+            guard let changedName, let changedImageUrl else { return }
+            FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "imageUrl": changedImageUrl])
+        } else if let changedName {
+            FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
+        } else if let changedImageUrl {
+            FirestoreAddress.collectionUsers.document(uid).updateData(["imageUrl": changedImageUrl])
         }
     }
-    
-    
     
     func logOut() {
         let firebaseAuth = Auth.auth()
@@ -130,12 +156,45 @@ final class AuthManager {
         let firebaseAuth = Auth.auth()
         guard let uid = firebaseAuth.currentUser?.uid else { return }
         firebaseAuth.currentUser?.delete() { error in
-            guard error != nil else { return print("DEBUG: delete error:\(error)") }
+            guard error == nil else { return print("DEBUG: delete error:\(error)") }
             FirestoreAddress.collectionUsers.document(uid).delete()
         }
     }
+    
+    func sendForgotPasswordEmail(email: String) -> PublishRelay<String?> {
+        let firebaseAuth = Auth.auth()
+        let relay = PublishRelay<String?>()
+        firebaseAuth.sendPasswordReset(withEmail: email) { error in
+            guard error == nil else {
+                print("DEBUG: Password reset error occured :\(error?.localizedDescription)")
+                relay.accept("입력하신 이메일이 존재하지 않습니다❌")
+                return
+            }
+            relay.accept(nil)
+        }
+        return relay
+    }
+    
+    /*
+    func sendForgotPasswordEmail(email: String) -> Observable<String?> {
+        let firebaseAuth = Auth.auth()
+        return Observable.create { observer in
+            firebaseAuth.sendPasswordReset(withEmail: email) { error in
+                guard error == nil else {
+                    print("DEBUG: Password reset error occured :\(error?.localizedDescription)")
+                    observer.onNext("입력하신 이메일이 존재하지 않습니다❌")
+                    return
+                }
+                observer.onNext(nil)
+            }
+            return Disposables.create()
+        }
+    }
+    */
+    // Auth 리스트에 존재하는 이메일인지 확인 불가...
+//    func checkEmailForReset(email : String) {
+//        let firebaseAuth = Auth.auth()
+//
+//
+//    }
 }
-
-
-
-//        Auth.auth().addStateDidChangeListener(<#T##listener: (Auth, User?) -> Void##(Auth, User?) -> Void#>)

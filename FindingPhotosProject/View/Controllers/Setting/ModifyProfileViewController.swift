@@ -32,6 +32,8 @@ final class ModifyProfileViewController: UIViewController {
         view = modifyProfileView
     }
     
+    
+    
     // MARK: - Helpers
     
     func setValue() {
@@ -42,19 +44,18 @@ final class ModifyProfileViewController: UIViewController {
     
     private func bindViewModel() {
         // Input
-        modifyProfileView.modifyButton.rx.tap
-            .withUnretained(self)
-            .debug("---")
-            .subscribe { viewController, event in
-                viewController.viewModel.input.ModifyButtonTapped.accept(event)
-                viewController.navigationController?.popViewController(animated: true)
-            }
-            .disposed(by: disposeBag)
-        
         modifyProfileView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind(to:viewModel.input.textFieldText)
+            .disposed(by: disposeBag)
+        
+        modifyProfileView.modifyButton.rx.tap
+//            .withUnretained(self)
+            .bind(to: viewModel.input.ModifyButtonTapped)
+//            .subscribe { viewController, event in
+//                viewController.viewModel.input.ModifyButtonTapped.accept(event)
+//            }
             .disposed(by: disposeBag)
         
         // Output
@@ -63,9 +64,31 @@ final class ModifyProfileViewController: UIViewController {
             .bind(to: modifyProfileView.nameTextField.rx.text)
             .disposed(by: disposeBag)
         
+        viewModel.output.userInformation
+            .withUnretained(self)
+            .map {viewController, userModel in
+                guard let urlString = userModel?.profileImageUrl else { return }
+                viewController.modifyProfileView.profileImageView.setImage(with: urlString)
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+        
         viewModel.output.changedImage
             .bind(to: modifyProfileView.profileImageView.rx.image)
             .disposed(by: disposeBag)
+        
+        viewModel.output.isModifiyFinished
+            .map { bool in
+                if bool {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+            .subscribe()
+            .disposed(by: disposeBag)
+//            .subscribe { _ in
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//            .disposed(by: disposeBag)
         
     }
     
