@@ -14,9 +14,10 @@ final class ResetPasswordView: UIView {
     private lazy var guideLabel: UILabel = {
         let label = UILabel()
         label.text = "가입하신 이메일을 입력하세요."
+        label.textColor = .tabButtondarkGrey
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -37,6 +38,7 @@ final class ResetPasswordView: UIView {
     lazy var emailTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "email"
+        textField.font = UIFont.systemFont(ofSize: 13)
         textField.layer.borderColor = .none
         return textField
     }()
@@ -46,6 +48,7 @@ final class ResetPasswordView: UIView {
         button.setTitle("비밀번호 리셋하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.tabButtondarkGrey
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
         return button
@@ -89,11 +92,11 @@ extension ResetPasswordView: LayoutProtocol {
     func setLayout() {
         guideLabel.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(50)
-            make.top.equalToSuperview().inset(150)
+            make.top.equalToSuperview().inset(200)
         }
         emailTextFieldView.snp.makeConstraints { make in
             make.left.right.equalToSuperview().inset(50)
-            make.top.equalTo(guideLabel.snp.bottom).offset(60)
+            make.top.equalTo(guideLabel.snp.bottom).offset(30)
             make.height.equalTo(40)
         }
         resultLabel.snp.makeConstraints { make in
