@@ -30,7 +30,7 @@ final class MapViewController: UIViewController, ViewModelBindable {
     private let favoriteListButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("즐겨찾기한 사진관", for: .normal)
+        button.setTitle("즐겨찾기 한 포토부스", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.layer.cornerRadius = 4
@@ -104,7 +104,7 @@ final class MapViewController: UIViewController, ViewModelBindable {
 extension MapViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
-        navigationItem.title = "근처 사진관 찾기"
+        navigationItem.title = "내 근처 포토부스 찾기"
         navigationController?.navigationBar.tintColor = .black
         navigationItem.backButtonTitle = ""
     }

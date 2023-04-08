@@ -17,9 +17,15 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     // MARK: - Properties
     
     private let disposeBag = DisposeBag()
-    private lazy var photoDetailView = PhotoDetailView(frame: self.view.frame)
     private var imagePicker = UIImagePickerController()
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
+    
+    private lazy var photoDetailView: PhotoDetailView = {
+        let view = PhotoDetailView(frame: self.view.frame)
+        self.view.addSubview(view)
+        return view
+    }()
+
     
     private let realmManager = RealmManager()
     var diary: PhotoData?
@@ -32,6 +38,7 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+
     }
     
     // MARK: - Selectors
@@ -98,7 +105,6 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     
     private func setUI() {
         imagePicker.delegate = self
-        self.view = photoDetailView
         configureUI()
         configureNavigation()
         configureButtonActions()
@@ -106,8 +112,7 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     
     private func configureUI() {
         view.backgroundColor = .white
-        self.view = photoDetailView
-        
+    
         if let diary = diary, let imageData = diary.image {
             photoDetailView.photoImageView.image = UIImage(data: imageData)
             photoDetailView.memoTextView.text = diary.memo
