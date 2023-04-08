@@ -1,3 +1,6 @@
+
+
+
 //
 //  PhotoViewController.swift
 //  FindingPhotosProject
@@ -15,13 +18,13 @@ final class PhotoViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = PhotoViewModel()
-//    private let realmManager = RealmManager.shared
-//    private var photos: Results<PhotoData>?
+    var selectedIndexes = [IndexPath]()
+    var realmManager = RealmManager()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0.5
-        layout.minimumInteritemSpacing = 0.5
+        layout.minimumLineSpacing = 1
+        layout.minimumInteritemSpacing = 1
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .white
@@ -31,16 +34,65 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-        
+    
+    lazy var deleteBarButton : UIBarButtonItem = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(named: "deletedButtonGrey")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }()
+    
+    
+    // MARK: - Selected Button
+    
+    enum Mode {
+        case view
+        case select
+    }
+    
+    var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
+    
+    var eMode: Mode = .view {
+        didSet {
+            switch eMode {
+            case .view:
+                for (key, value) in dictionarySelectedIndexPath {
+                    if value {
+                        collectionView.deselectItem(at: key, animated: true)
+                    }
+                }
+                dictionarySelectedIndexPath.removeAll()
+                collectionView.allowsMultipleSelection = false
+                
+                
+            case .select:
+                let selectButton = UIButton(type: .custom)
+                selectButton.setImage(UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                selectButton.addTarget(self, action: #selector(didCanceledButtonClicked), for: .touchUpInside)
+                let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+                
+                let addButton = UIButton(type: .custom)
+                addButton.setImage(UIImage(named: "deletedButtonDisabled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                addButton.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
+                let addBarButtonItem = UIBarButtonItem(customView: addButton)
+                
+                navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
+                collectionView.allowsMultipleSelection = true
+            }
+        }
+    }
+    
+    
+    
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
+        
         collectionView.reloadData()
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,17 +104,78 @@ final class PhotoViewController: UIViewController {
         collectionView.reloadData()
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        
     }
+    
+    
+    
+    
     // MARK: - Selectors
     
     @objc func addButtonTapped(_ sender: Any) {
-//        let detailViewController = PhotoDetailViewController()
-//        let photoDetailVC = PhotoDetailViewController()
+        //        let detailViewController = PhotoDetailViewController()
+        //        let photoDetailVC = PhotoDetailViewController()
         let photoDetailVC = PhotoDetailViewController()
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
     
+    @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
+        if eMode == .select {
+            eMode = .view
+            collectionView.alpha = 1.0
+            if dictionarySelectedIndexPath.isEmpty {
+                deleteBarButton.isEnabled = false
+            }
+        } else {
+            eMode = .select
+            collectionView.alpha = 0.7
+            deleteBarButton.isEnabled = true
+        }
+    }
+    
+    @objc func didCanceledButtonClicked(_ sender: UIBarButtonItem) {
+        updateViewWithButtons()
+    }
+    
+    
+    @objc func didDeleteButtonClicked(_ sender: UIBarButtonItem) {
+        
+        // 선택된 사진이 없으면 실행하지 않음
+        guard !dictionarySelectedIndexPath.isEmpty else {
+            return
+        }
+        
+        let alert = UIAlertController(title: nil, message: "삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [self] _ in
+            
+            var deleteNeededIndexPaths: [IndexPath] = []
+            print(deleteNeededIndexPaths.isEmpty)
+            for (key, value) in self.dictionarySelectedIndexPath {
+                if value {
+                    deleteNeededIndexPaths.append(key)
+                }
+            }
+            // realm 데이터 삭제
+            for indexPath in deleteNeededIndexPaths.sorted(by: { $0.item > $1.item }) {
+                guard let photoData = self.viewModel.photoData(at: indexPath) else { return }
+                self.realmManager.delete(photoData: photoData)
+            }
+            // colletionViewCell 삭제
+            self.collectionView.deleteItems(at: deleteNeededIndexPaths)
+            self.dictionarySelectedIndexPath.removeAll()
+            self.collectionView.reloadData()
+            
+            // 선택 모드 해제
+            updateViewWithButtons()
+            
+        }
+        alert.addAction(deleteAction)
+        present(alert, animated: true, completion: nil)
+        
+    }
     
     
     // MARK: - Helpers
@@ -72,20 +185,52 @@ final class PhotoViewController: UIViewController {
         navigationController?.navigationBar.tintColor = .tabButtondarkGrey
     }
     
+    
     private func configureNavigation() {
-        navigationItem.title = "나의 앨범"
         
-        let addButton = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
-                                         style: .plain,
-                                         target: self,
-                                         action: #selector(addButtonTapped))
-        navigationItem.rightBarButtonItem = addButton
+        let imageView = UIImageView(image: UIImage(named: "titleImage"))
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
+        
+        let addButton = UIButton(type: .custom)
+        addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        let addBarButtonItem = UIBarButtonItem(customView: addButton)
+        
+        let selectButton = UIButton(type: .custom)
+        selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
+        let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+        
+        navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
+        let spacing = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spacing.width = -10 // 원하는 간격 설정
+        navigationItem.rightBarButtonItems?.append(spacing)
+        
     }
-
+    
+    private func updateViewWithButtons() {
+        eMode = .view
+        let addButton = UIButton(type: .custom)
+        addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        let addBarButtonItem = UIBarButtonItem(customView: addButton)
+        
+        let selectButton = UIButton(type: .custom)
+        selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
+        let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        space.width = 10
+        
+        navigationItem.rightBarButtonItems = [addBarButtonItem, space, selectBarButtonItem]
+        
+        collectionView.alpha = 1.0
+        collectionView.reloadData()
+        
+    }
 }
-
-
-
 
 // MARK: - CollectionView
 
@@ -113,14 +258,19 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
 //        let photoDetailVC = PhotoDetailViewController()
 //        photoDetailVC.diary = photo
         
-        guard let photoData = viewModel.photoData(at: indexPath) else { return }
-        let photoDetailVC = PhotoDetailViewController()
-        photoDetailVC.diary = photoData
-        
-        navigationController?.pushViewController(photoDetailVC, animated: true)
+        switch eMode {
+        case .view:
+            guard let photoData = viewModel.photoData(at: indexPath) else { return }
+            let photoDetailVC = PhotoDetailViewController()
+            photoDetailVC.diary = photoData
+            navigationController?.pushViewController(photoDetailVC, animated: true)
+            
+        case .select:
+            dictionarySelectedIndexPath[indexPath] = true
+        }
     }
-    
 }
+
     // MARK: - FlowLayout
 
     extension PhotoViewController: UICollectionViewDelegateFlowLayout {
@@ -132,9 +282,7 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
     }
 
-
-
-// MARK: - Layout Extension 
+// MARK: - Layout Extension
 
 extension PhotoViewController: LayoutProtocol {
     func setSubViews() {
@@ -150,5 +298,5 @@ extension PhotoViewController: LayoutProtocol {
         }
     }
     
-    
 }
+

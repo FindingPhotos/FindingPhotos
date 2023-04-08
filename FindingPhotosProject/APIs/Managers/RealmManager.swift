@@ -8,7 +8,7 @@
 import RealmSwift
 
 
-class RealmManager {
+final class RealmManager {
     
     let realm = try! Realm()
     
@@ -23,7 +23,7 @@ class RealmManager {
         newData.id = UUID().uuidString
         newData.date = photoData.date
         newData.memo = photoData.memo
-        newData.image = image.pngData()
+        newData.image = image.jpegData(compressionQuality: 0.5)
         
         // Realm 데이터베이스에 데이터 저장
         try! realm.write {
@@ -41,7 +41,7 @@ class RealmManager {
     // MARK: - Read
     
     func fetchAll() -> Results<PhotoData> {
-        let results = realm.objects(PhotoData.self)
+        let results = realm.objects(PhotoData.self).sorted(byKeyPath: "dateAdded", ascending: false)
         return results
     }
     
@@ -63,7 +63,7 @@ class RealmManager {
             try realm.write {
                 existingData.date = photoData.date
                 existingData.memo = photoData.memo
-                existingData.image = image.pngData()
+                existingData.image = image.jpegData(compressionQuality: 0.5)
             }
         } catch {
             print("????")
@@ -73,30 +73,17 @@ class RealmManager {
     
     // MARK: - Delete
     
-    func delete(photoData: PhotoData, image: UIImage) {
+    func delete(photoData: PhotoData) {
         do {
             try realm.write {
-                photoData.image = image.pngData()
                 realm.delete(photoData)
             }
         } catch {
             print("Error deleting photoData: \(error)")
-
+            
         }
     }
     
-    // MARK: - Sort
     
-    func sortedPhotos() -> [PhotoData] {
-        let photos = realm.objects(PhotoData.self).sorted(byKeyPath: "date", ascending: true)
-        return photos.toArray()
-    }
 
-}
-
-extension Results {
-    func toArray<T>(ofType: T.Type = T.self) -> [T] {
-        return compactMap { $0 as? T }
-    }
-    
 }

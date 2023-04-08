@@ -12,7 +12,7 @@ import PhotosUI
 import RealmSwift
 
 
-class PhotoDetailViewController: UIViewController, UINavigationControllerDelegate {
+final class PhotoDetailViewController: UIViewController, UINavigationControllerDelegate {
     
     // MARK: - Properties
     
@@ -21,10 +21,10 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
     private var imagePicker = UIImagePickerController()
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
     
-    let realmManager = RealmManager()
+    private let realmManager = RealmManager()
     var diary: PhotoData?
     
-    var defaultImage = UIImage(systemName: "addphoto")
+    private var defaultImage = UIImage(systemName: "addphoto")
 
     
     // MARK: - LifeCycle
@@ -84,7 +84,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
         
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
             let image = self.photoDetailView.photoImageView.image ?? UIImage()
-            self.realmManager.delete(photoData: photoData, image: image)
+            self.realmManager.delete(photoData: photoData)
             self.popViewController()
         }
         alert.addAction(deleteAction)
@@ -116,24 +116,28 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 
     
     private func configureNavigation() {
-        let deleteButton = UIBarButtonItem(image: UIImage(named: "deleteButton")?.withRenderingMode(.alwaysOriginal),
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(deleteButtonTapped))
-        
-        let saveButton = UIBarButtonItem(image: UIImage(named: "saveButton")?.withRenderingMode(.alwaysOriginal),
-                                          style: .plain,
-                                          target: self,
-                                          action: #selector(saveButtonTapped))
-        
-        navigationItem.rightBarButtonItems = [saveButton, deleteButton]
+        let deleteButton = UIButton(type: .custom)
+        deleteButton.setImage(UIImage(named: "deleteButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        let deleteBarButtonItem = UIBarButtonItem(customView: deleteButton)
+
+        let saveButton = UIButton(type: .custom)
+        saveButton.setImage(UIImage(named: "saveButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        let saveBarButtonItem = UIBarButtonItem(customView: saveButton)
+
+        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        space.width = 10
+
+        navigationItem.rightBarButtonItems = [saveBarButtonItem, space, deleteBarButtonItem]
+
     }
 
 
     
     
 //    // ⚠️ 여기 수정
-    func configureButtonActions() {
+    private func configureButtonActions() {
         photoDetailView.addPhotoButton.rx.tap
             .withUnretained(self)
             .subscribe(onNext: { photoDetailViewController, _ in
@@ -181,7 +185,7 @@ class PhotoDetailViewController: UIViewController, UINavigationControllerDelegat
 //}
 
 extension PhotoDetailViewController: UIImagePickerControllerDelegate {
-    func openImagePicker() {
+    private func openImagePicker() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = false

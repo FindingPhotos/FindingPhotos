@@ -8,10 +8,11 @@
 import Foundation
 import RealmSwift
 
-class PhotoData: Object {
+final class PhotoData: Object {
     
     @objc dynamic var id = "" // 기본키
     @objc dynamic var date = ""
+    @objc dynamic var dateAdded = Date() // 새로 추가한 속성
     @objc dynamic var image: Data? = nil
     @objc dynamic var memo = ""
     
@@ -19,3 +20,4 @@ class PhotoData: Object {
         return "id"
     }
 }
+
