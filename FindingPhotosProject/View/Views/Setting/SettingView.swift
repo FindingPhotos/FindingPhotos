@@ -21,6 +21,7 @@ class SettingView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.backgroundColor = UIColor.tabButtondarkGrey
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
@@ -39,7 +40,8 @@ class SettingView: UIView {
     lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("로그아웃", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.tabButtondarkGrey, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.backgroundColor = .none
         return button
     }()
@@ -47,7 +49,9 @@ class SettingView: UIView {
     lazy var signoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("회원탈퇴", for: .normal)
-        button.setTitleColor(.systemRed, for: .normal)
+        button.setTitleColor(.darkRed, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+
         button.backgroundColor = .none
         return button
     }()
@@ -120,12 +124,12 @@ extension SettingView: LayoutProtocol {
         }
         
         logoutButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(20)
+            make.left.equalToSuperview().inset(30)
             make.centerY.equalToSuperview()
         }
         
         signoutButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(20)
+            make.right.equalToSuperview().inset(30)
             make.centerY.equalToSuperview()
         }
         
@@ -136,15 +140,15 @@ extension SettingView: LayoutProtocol {
             make.height.equalTo(50)
         }
         underBarView.snp.makeConstraints { make in
-            make.top.equalTo(profileView.snp.bottom)
+            make.top.equalTo(profileView.snp.bottom).offset(5)
             make.left.equalToSuperview().inset(20)
             make.right.equalToSuperview().inset(20)
             make.height.equalTo(1)
         }
         tableView.snp.makeConstraints { make in
             make.top.equalTo(underBarView.snp.bottom).offset(20)
-            make.left.equalToSuperview().inset(20)
-            make.right.equalToSuperview().inset(20)
+            make.left.equalToSuperview().inset(40)
+            make.right.equalToSuperview().inset(40)
             make.height.lessThanOrEqualTo(300)
         }
         logoutView.snp.makeConstraints { make in

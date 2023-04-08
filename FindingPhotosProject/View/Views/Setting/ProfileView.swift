@@ -14,7 +14,8 @@ final class ProfileView: UIView {
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.text = "익명으로 로그인되었습니다."
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.textColor = .tabButtondarkGrey
         return label
     }()
     
@@ -23,6 +24,7 @@ final class ProfileView: UIView {
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.tabButtondarkGrey
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         return button
@@ -68,7 +70,7 @@ extension ProfileView: LayoutProtocol {
         }
         
         nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(profileImageView.snp.right).offset(20)
+            make.left.equalTo(profileImageView.snp.right).offset(30)
             make.centerY.equalToSuperview()
 
         }

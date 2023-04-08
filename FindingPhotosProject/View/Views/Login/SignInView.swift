@@ -18,30 +18,22 @@ class SignInView: UIView {
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label
     }()
-    
-    private lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "FindingPhotos"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        return label
-    }()
-    
+
     lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .systemGray3
+        imageView.backgroundColor = .superLightGrey
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 75
         return imageView
     }()
-    
+
     private lazy var plusIconImageView: UIImageView = {
-        let image = UIImage(systemName: SystemIconName.plusCircleFill)
+        let image = UIImage(named: "addButton")
         let imageView = UIImageView(image: image)
         imageView.tintColor = .tabButtondarkGrey
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .none
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 15
         return imageView
     }()
     
@@ -62,7 +54,7 @@ class SignInView: UIView {
     private lazy var emailTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(emailTextField)
@@ -97,7 +89,7 @@ class SignInView: UIView {
     private lazy var passwordTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(passwordTextField)
@@ -132,7 +124,7 @@ class SignInView: UIView {
     private lazy var nameTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.addSubview(nameTextField)
@@ -168,6 +160,7 @@ class SignInView: UIView {
         button.backgroundColor = .tabButtondarkGrey
         button.setTitle("가입하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.cornerRadius = 18
         button.clipsToBounds = true
         return button
@@ -177,6 +170,7 @@ class SignInView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("개인정보 처리방침", for: .normal)
         button.setTitleColor(UIColor.systemGray3, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 11)
         button.backgroundColor = .none
         return button
     }()
@@ -207,7 +201,7 @@ extension SignInView: LayoutProtocol {
     }
     
     func setSubViews() {
-        [isAlreadyExistLabel, titleLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton, openPrivacyPolicyButton]
+        [isAlreadyExistLabel, profileImageView, plusIconImageView, imagePickerButton, allTextFieldStackView, signInButton, openPrivacyPolicyButton]
             .forEach { self.addSubview($0) }
     }
 
@@ -217,13 +211,10 @@ extension SignInView: LayoutProtocol {
             make.centerX.equalToSuperview()
             make.top.equalToSuperview().inset(80)
         }
-        titleLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(100)
-        }
+
         profileImageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.top.equalTo(isAlreadyExistLabel.snp.bottom).offset(30)
             make.width.height.equalTo(150)
         }
         plusIconImageView.snp.makeConstraints { make in
@@ -232,6 +223,8 @@ extension SignInView: LayoutProtocol {
             make.top.equalTo(profileImageView.snp.top).inset(113)
             make.width.height.equalTo(30)
         }
+
+        
         imagePickerButton.snp.makeConstraints { make in
             make.center.equalTo(profileImageView.snp.center)
             make.width.height.equalTo(130)
@@ -268,7 +261,7 @@ extension SignInView: LayoutProtocol {
         }
         openPrivacyPolicyButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(signInButton.snp.bottom).offset(20)
+            make.top.equalTo(signInButton.snp.bottom).offset(8)
             make.width.equalTo(120)
             make.height.equalTo(20)
         }

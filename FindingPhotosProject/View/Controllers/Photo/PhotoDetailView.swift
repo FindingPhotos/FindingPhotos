@@ -120,8 +120,9 @@ extension PhotoDetailView: LayoutProtocol {
         self.addSubview(photoImageView)
         self.addSubview(addPhotoButton)
         self.addSubview(memoLabel)
-        self.addSubview(memoImageView)
         self.addSubview(memoTextView)
+        self.addSubview(memoImageView)
+        
     }
     
     func setLayout() {

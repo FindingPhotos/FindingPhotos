@@ -20,13 +20,12 @@ final class ModifyProfileView: UIView {
     }()
     
     private lazy var plusIconImageView: UIImageView = {
-        let image = UIImage(systemName: SystemIconName.plusCircleFill)
+        let image = UIImage(named: "addButton")
         let imageView = UIImageView(image: image)
         imageView.tintColor = .tabButtondarkGrey
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = .none
         imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 15
         return imageView
     }()
     
@@ -39,6 +38,7 @@ final class ModifyProfileView: UIView {
     private lazy var nameTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "닉네임"
+        label.font = UIFont.systemFont(ofSize: 13)
         label.textColor = .tabButtondarkGrey
         return label
     }()
@@ -46,7 +46,7 @@ final class ModifyProfileView: UIView {
     private lazy var nameTextFieldView: UIView = {
         let view = UIView()
         view.layer.borderColor = UIColor.tabButtonlightGrey.cgColor
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 1
         view.layer.cornerRadius = 15
         view.clipsToBounds = true
         return view
@@ -56,6 +56,7 @@ final class ModifyProfileView: UIView {
         let textField = UITextField()
 //        textField.text = "바꿀 닉네임 입력"
         textField.layer.borderColor = .none
+        textField.font = UIFont.systemFont(ofSize: 13)
         return textField
     }()
     
@@ -64,6 +65,7 @@ final class ModifyProfileView: UIView {
         button.backgroundColor = .tabButtondarkGrey
         button.setTitle("수정하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.cornerRadius = 18
         button.clipsToBounds = true
         return button

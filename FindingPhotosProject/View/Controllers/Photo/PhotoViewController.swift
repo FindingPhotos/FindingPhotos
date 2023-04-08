@@ -1,6 +1,3 @@
-
-
-
 //
 //  PhotoViewController.swift
 //  FindingPhotosProject

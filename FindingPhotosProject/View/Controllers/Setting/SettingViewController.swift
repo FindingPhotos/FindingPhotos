@@ -47,6 +47,7 @@ final class SettingViewController: UIViewController {
     
     func setValue() {
         navigationItem.title = "프로필"
+        navigationItem.titleView?.tintColor = .tabButtondarkGrey
     }
     func bindViewModel() {
         //input

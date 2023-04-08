@@ -14,7 +14,8 @@ final class LogoutView: UIView {
     private lazy var logoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("로그아웃", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+        button.setTitleColor(.tabButtondarkGrey, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.backgroundColor = .none
         return button
     }()
@@ -22,7 +23,7 @@ final class LogoutView: UIView {
     private lazy var signoutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("회원탈퇴", for: .normal)
-        button.setTitleColor(.systemRed, for: .normal)
+        button.setTitleColor(.darkRed, for: .normal)
         button.backgroundColor = .none
         return button
     }()
@@ -51,12 +52,12 @@ extension LogoutView: LayoutProtocol {
     
     func setLayout() {
         logoutButton.snp.makeConstraints { make in
-            make.left.equalToSuperview().inset(20)
+            make.left.equalToSuperview().inset(30)
             make.centerY.equalToSuperview()
         }
         
         signoutButton.snp.makeConstraints { make in
-            make.right.equalToSuperview().inset(20)
+            make.right.equalToSuperview().inset(30)
             make.centerY.equalToSuperview()
         }
     }
