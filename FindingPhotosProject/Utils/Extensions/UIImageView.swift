@@ -18,11 +18,13 @@ extension UIImageView {
                 } else {
                     guard let url = URL(string: urlString) else { return }
                     let resource = ImageResource(downloadURL: url, cacheKey: urlString)
-                    self?.kf.setImage(with: resource)
+                    let processor = DownsamplingImageProcessor(size: CGSize(width: 150, height: 150))
+                    self?.kf.setImage(with: resource, options: [.processor(processor)] )
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                print("debug: error \(error.localizedDescription)")
             }
         }
     }
+    
 }
