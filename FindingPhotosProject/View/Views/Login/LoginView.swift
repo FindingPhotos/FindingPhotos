@@ -185,7 +185,7 @@ extension LoginView: LayoutProtocol {
             make.top.equalToSuperview().inset(120)
         }
         emailPasswordStackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(50)
+            make.left.right.equalToSuperview().inset(70)
             make.top.equalTo(appLogo.snp.bottom).offset(40)
             make.height.equalTo(80)
         }
@@ -194,7 +194,7 @@ extension LoginView: LayoutProtocol {
             make.top.equalTo(emailPasswordStackView.snp.bottom).offset(10)
         }
         loginButtonStackView.snp.makeConstraints { make in
-            make.left.right.equalToSuperview().inset(100)
+            make.left.right.equalToSuperview().inset(120)
             make.top.equalTo(loginCheckedLabel.snp.bottom).offset(10)
             make.height.equalTo(80)
         }
