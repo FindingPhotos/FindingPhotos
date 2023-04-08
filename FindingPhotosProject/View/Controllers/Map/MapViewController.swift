@@ -31,8 +31,8 @@ final class MapViewController: UIViewController, ViewModelBindable {
         let button = UIButton()
         button.backgroundColor = .white
         button.setTitle("즐겨찾기 한 포토부스", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.setTitleColor(.tabButtondarkGrey, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.layer.cornerRadius = 4
         button.layer.shadowColor = UIColor.gray.cgColor
         button.layer.masksToBounds = false
@@ -105,7 +105,7 @@ extension MapViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
         navigationItem.title = "내 근처 포토부스 찾기"
-        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.tintColor = .tabButtondarkGrey
         navigationItem.backButtonTitle = ""
     }
     func setSubViews() {
