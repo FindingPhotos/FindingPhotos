@@ -17,9 +17,10 @@ final class FaviorateStudioListViewModel: ViewModelType {
     
     struct Input {
         let viewWillAppear = PublishRelay<Bool>()
+        let likeButtonTapped = PublishRelay<Int>()
     }
     struct Output {
-        let photoStudios: Observable<[PhotoStudio]>
+        let photoStudios: BehaviorRelay<[PhotoStudio]>
     }
     let input = Input()
     lazy var output = transform(input: input)
@@ -28,7 +29,20 @@ final class FaviorateStudioListViewModel: ViewModelType {
     func transform(input: Input) -> Output {
         let realm = try! Realm()
         let savedData = realm.objects(PhotoStudio.self)
-        let photoStudios = Observable.array(from: savedData)
+        
+        let photoStudios = BehaviorRelay<[PhotoStudio]>(value: savedData.toArray())
+        
+        input.likeButtonTapped
+            .flatMap { row in
+                try! realm.write {
+                    realm.delete(savedData[row])
+                }
+                return Observable.array(from: savedData)
+            }
+            .bind(to: photoStudios)
+            .disposed(by: disposeBag)
+            
+            
         return Output(photoStudios: photoStudios)
     }
 }

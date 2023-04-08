@@ -63,12 +63,18 @@ final class StudioInformationView: UIView {
         studioNameLabel.text = item.title.htmlEscaped
         studioAddressLabel.text = item.address.htmlEscaped
         distanceLabel.text = String(round(distance / 100) * 100 / 1000) + "km"
+        Observable.just(item.title.htmlEscaped)
+            .bind(to: viewModel.input.studioNameLabelText)
+            .disposed(by: disposeBag)
         likeButton.rx.tap
             .withUnretained(self)
             .map { studioInformationView, _ in
                 return (studioInformationView.studioNameLabel.text, studioInformationView.studioAddressLabel.text)
             }
             .bind(to: viewModel.input.faviorateButtonTapped)
+            .disposed(by: disposeBag)
+        viewModel.output.faviorateButtonImage
+            .bind(to: likeButton.rx.image())
             .disposed(by: disposeBag)
     }
 }

@@ -21,11 +21,13 @@ final class MapViewModel: ViewModelType {
     struct Input {
         let viewWillAppear = BehaviorRelay<Bool>(value: false)
         let faviorateButtonTapped = PublishRelay<StudioInformation>()
+        let studioNameLabelText = PublishRelay<String>()
     }
     struct Output {
         let marker: Observable<NMFMarker>
         let deinied: Observable<CLLocationManager>
         let didError: ControlEvent<CLErrorEvent>
+        let faviorateButtonImage: BehaviorRelay<UIImage?>
     }
     
     var disposeBag = DisposeBag()
@@ -81,6 +83,19 @@ final class MapViewModel: ViewModelType {
                 marker.userInfo["currentPosition"] = photoStudioLocation
                 return marker
             }
+        
+        let buttonImage = BehaviorRelay<UIImage?>(value: nil)
+        
+        input.studioNameLabelText
+            .map { studioName in
+                RealmManager.shared.realm.objects(PhotoStudio.self).filter { return $0.title == studioName }.isEmpty
+            }
+            .map { result in
+                guard result else { return UIImage(named: "likeButton")}
+                return UIImage(named: "initialButton")
+            }
+            .bind(to: buttonImage)
+            .disposed(by: disposeBag)
         input.faviorateButtonTapped
             .subscribe(onNext: { studioName, studioAddress in
                 let realm = try! Realm()
@@ -89,16 +104,21 @@ final class MapViewModel: ViewModelType {
                     let savedData = realm.objects(PhotoStudio.self).filter { return $0.title == studio.title }
                     if savedData.isEmpty {
                         realm.add(studio)
+                        buttonImage.accept(UIImage(named: "likeButton"))
                     } else {
                         realm.delete(savedData)
+                        buttonImage.accept(UIImage(named: "initialButton"))
                     }
                 })
             })
             .disposed(by: disposeBag)
         
+        
+        
         return Output(marker: marker,
                       deinied: denied,
-                      didError: didError)
+                      didError: didError,
+                      faviorateButtonImage: buttonImage)
     }
     func presentLocationPermissionAlertController() -> UIAlertController {
         let alert = UIAlertController(title: "위치 정보 이용", message: "위치 서비스를 사용할 수 없습니다.\n디바이스의 '설정 > 개인정보 보호'에서 위치 서비스를 켜주세요.", preferredStyle: .alert)

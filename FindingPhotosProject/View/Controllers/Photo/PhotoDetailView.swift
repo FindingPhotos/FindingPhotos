@@ -142,7 +142,6 @@ extension PhotoDetailView: LayoutProtocol {
         }
         memoImageView.layer.zPosition = CGFloat(-1)
     }
-    
 }
 
 

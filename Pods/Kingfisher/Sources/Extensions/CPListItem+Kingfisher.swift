@@ -224,6 +224,7 @@ private var taskIdentifierKey: Void?
 private var imageTaskKey: Void?
 
 // MARK: Properties
+@available(iOS 12.0, *)
 extension KingfisherWrapper where Base: CPListItem {
 
     public private(set) var taskIdentifier: Source.Identifier.Value? {
