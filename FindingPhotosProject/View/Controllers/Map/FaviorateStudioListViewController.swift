@@ -43,6 +43,7 @@ extension FaviorateStudioListViewController: LayoutProtocol {
     func setValue() {
         view.backgroundColor = .white
         navigationItem.title = "즐겨찾는 사진관"
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     func setSubViews() {
         view.addSubview(faviorateStudioListTableView)

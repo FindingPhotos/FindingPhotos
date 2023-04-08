@@ -63,6 +63,7 @@ final class MapViewController: UIViewController, ViewModelBindable {
                 mapViewController.mapView.locationOverlay.hidden = false
                 mapViewController.mapView.moveCamera(cameraUpdate)
                 mapViewController.mapView.locationOverlay.location = position
+                mapViewController.navigationController?.topViewController?.navigationController?.popViewController(animated: false)
             }
             .disposed(by: disposeBag)
         viewModel.output.marker
@@ -117,6 +118,8 @@ extension MapViewController: LayoutProtocol {
         navigationItem.title = "근처 사진관 찾기"
         navigationController?.navigationBar.tintColor = .black
         navigationItem.backButtonTitle = ""
+        let indicatorViewController = IndicatorViewController()
+        navigationController?.pushViewController(indicatorViewController, animated: false)
     }
     func setSubViews() {
         view.addSubview(mapView)
