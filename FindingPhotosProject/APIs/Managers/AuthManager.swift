@@ -141,7 +141,7 @@ final class AuthManager {
             FirestoreAddress.collectionUsers.document(uid).updateData(["imageUrl": changedImageUrl])
         }
     }
-    
+    /*
     func updateUserInformationRx(changedName: String?, changedImageUrl: String?) -> Observable<Void>{
         return Observable.create { observer in
             guard let uid = Auth.auth().currentUser?.uid else { return Disposables.create()}
@@ -159,7 +159,7 @@ final class AuthManager {
             return Disposables.create()
         }
     }
-    
+    */
     func logOut() {
         let firebaseAuth = Auth.auth()
         do {
@@ -207,11 +207,4 @@ final class AuthManager {
             return Disposables.create()
         }
     }
-    */
-    // Auth 리스트에 존재하는 이메일인지 확인 불가...
-//    func checkEmailForReset(email : String) {
-//        let firebaseAuth = Auth.auth()
-//
-//
-//    }
 }

@@ -51,11 +51,7 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         modifyProfileView.modifyButton.rx.tap
-//            .withUnretained(self)
             .bind(to: viewModel.input.ModifyButtonTapped)
-//            .subscribe { viewController, event in
-//                viewController.viewModel.input.ModifyButtonTapped.accept(event)
-//            }
             .disposed(by: disposeBag)
         
         // Output

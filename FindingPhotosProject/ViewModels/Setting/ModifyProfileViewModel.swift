@@ -90,32 +90,6 @@ final class ModifyProfileViewModel: ViewModelType {
                 }
             }
             
-        
-        
-        
-    
-        
-
-            
-        
-//            .map { changedName, changedImage in
-//                if let changedImage, changedName != "" {
-//                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
-//                        AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
-//                    }
-//                } else if let changedImage, changedName == "" {
-//                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
-//                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
-//                    }
-//                } else {
-//                    AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
-//                }
-//            }
-            
-            
-            
-
-        
         return Output(changedName: changedName,
                       changedImage: changedImage,
                       userInformation: user,
