@@ -15,6 +15,7 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "PhotoCollectionViewCell"
     var imageView = UIImageView()
+    let photoViewController = PhotoViewController()
     
     lazy var highlightIndicator: UIView = {
        let view = UIView()

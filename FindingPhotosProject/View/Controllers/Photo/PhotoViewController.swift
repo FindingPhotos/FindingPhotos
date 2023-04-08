@@ -34,58 +34,6 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-//
-//    lazy var addButton: UIBarButtonItem = {
-//        let button = UIBarButtonItem(image: UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal),
-//                                      style: .plain,
-//                                      target: self,
-//                                      action: #selector(addButtonTapped))
-//        return button
-//    }()
-//
-//    lazy var selectBarButton: UIBarButtonItem = {
-//        let button = UIBarButtonItem(image: UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal),
-//                                     style: .plain,
-//                                     target: self,
-//                                     action: #selector(didSelectButtonClicked))
-//        return button
-//    }()
-//
-//    lazy var canceledBarButton: UIBarButtonItem = {
-//        let button = UIBarButtonItem(image: UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal),
-//                                     style: .plain,
-//                                     target: self,
-//                                     action: #selector(didDeleteButtonClicked))
-//        return button
-//    }()
-//
-//    lazy var deleteBarButton : UIBarButtonItem = {
-//        let button = UIBarButtonItem(image: UIImage(named: "deletedButtonGrey")?.withRenderingMode(.alwaysOriginal),
-//                                     style: .plain,
-//                                     target: self,
-//                                     action: #selector(didDeleteButtonClicked))
-//        return button
-//    }()
-    lazy var addButton: UIBarButtonItem = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-        return UIBarButtonItem(customView: button)
-    }()
-
-    lazy var selectBarButton: UIBarButtonItem = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
-        return UIBarButtonItem(customView: button)
-    }()
-
-    lazy var canceledBarButton: UIBarButtonItem = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(didCanceledButtonClicked), for: .touchUpInside)
-        return UIBarButtonItem(customView: button)
-    }()
 
     lazy var deleteBarButton : UIBarButtonItem = {
         let button = UIButton(type: .system)
@@ -94,7 +42,7 @@ final class PhotoViewController: UIViewController {
         return UIBarButtonItem(customView: button)
     }()
 
-    
+
     // MARK: - Selected Button
     
     enum Mode {
@@ -114,30 +62,22 @@ final class PhotoViewController: UIViewController {
                         }
                     }
                     dictionarySelectedIndexPath.removeAll()
-                    
                     collectionView.allowsMultipleSelection = false
+     
                     
                 case .select:
-//                    selectBarButton.image = UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal)
-//                    selectBarButton.action = #selector(didCanceledButtonClicked)
-//
-//                    addButton.image = UIImage(named: "deleteButtonGrey")?.withRenderingMode(.alwaysOriginal)
-//                    addButton.action = #selector(didDeleteButtonClicked)
-//                    collectionView.allowsMultipleSelection = true
-                    
                     let selectButton = UIButton(type: .custom)
                     selectButton.setImage(UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
                     selectButton.addTarget(self, action: #selector(didCanceledButtonClicked), for: .touchUpInside)
                     let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
 
                     let addButton = UIButton(type: .custom)
-                    addButton.setImage(UIImage(named: "deleteButtonGrey")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                    addButton.setImage(UIImage(named: "deletedButtonDisabled")?.withRenderingMode(.alwaysOriginal), for: .normal)
                     addButton.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
                     let addBarButtonItem = UIBarButtonItem(customView: addButton)
 
                     navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
                     collectionView.allowsMultipleSelection = true
-
                 }
             }
         }
@@ -150,6 +90,7 @@ final class PhotoViewController: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
+    
         collectionView.reloadData()
     }
     
@@ -164,6 +105,9 @@ final class PhotoViewController: UIViewController {
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
+    
+
+    
     
     // MARK: - Selectors
     
@@ -189,9 +133,7 @@ final class PhotoViewController: UIViewController {
         }
     
     @objc func didCanceledButtonClicked(_ sender: UIBarButtonItem) {
-        print("선택 취소")
         eMode = .view
-        
         let addButton = UIButton(type: .custom)
         addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
         addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
@@ -211,14 +153,20 @@ final class PhotoViewController: UIViewController {
         collectionView.reloadData()
     }
     
+    
     @objc func didDeleteButtonClicked(_ sender: UIBarButtonItem) {
+        
+        // 선택된 사진이 없으면 실행하지 않음
+        guard !dictionarySelectedIndexPath.isEmpty else {
+            return
+        }
         
         let alert = UIAlertController(title: nil, message: "삭제하시겠습니까?", preferredStyle: .alert)
         
         let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
         
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [self] _ in
             
             var deleteNeededIndexPaths: [IndexPath] = []
             print(deleteNeededIndexPaths.isEmpty)
@@ -236,14 +184,33 @@ final class PhotoViewController: UIViewController {
             self.collectionView.deleteItems(at: deleteNeededIndexPaths)
             self.dictionarySelectedIndexPath.removeAll()
             self.collectionView.reloadData()
-
+            
+            // 선택 모드 해제
+            self.eMode = .view
+            let addButton = UIButton(type: .custom)
+            addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+            let addBarButtonItem = UIBarButtonItem(customView: addButton)
+            
+            let selectButton = UIButton(type: .custom)
+            selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+            selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
+            let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+            
+            let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+            space.width = 10
+            
+            navigationItem.rightBarButtonItems = [addBarButtonItem, space, selectBarButtonItem]
+            
+            collectionView.alpha = 1.0
+            collectionView.reloadData()
+            
         }
         alert.addAction(deleteAction)
-        
         present(alert, animated: true, completion: nil)
 
-        
     }
+    
     
     // MARK: - Helpers
     
@@ -254,7 +221,10 @@ final class PhotoViewController: UIViewController {
 
     
     private func configureNavigation() {
-        navigationItem.title = "📷"
+        
+        let imageView = UIImageView(image: UIImage(named: "titleImage"))
+        imageView.contentMode = .scaleAspectFit
+        navigationItem.titleView = imageView
         
         let addButton = UIButton(type: .custom)
         addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -272,6 +242,7 @@ final class PhotoViewController: UIViewController {
         navigationItem.rightBarButtonItems?.append(spacing)
 
     }
+    
     
 }
 
