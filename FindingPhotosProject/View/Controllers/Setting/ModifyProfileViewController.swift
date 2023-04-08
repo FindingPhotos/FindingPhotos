@@ -78,11 +78,18 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isModifiyFinished
-            .debug("isModifiyFinished in VC")
-            .subscribe { _ in
-                self.navigationController?.popViewController(animated: true)
+            .map { bool in
+                if bool {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
+            .subscribe()
             .disposed(by: disposeBag)
+//            .subscribe { _ in
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//            .disposed(by: disposeBag)
+        
     }
     
     private func bindImagePicker() {
