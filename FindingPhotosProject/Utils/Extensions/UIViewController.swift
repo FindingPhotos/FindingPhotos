@@ -35,11 +35,11 @@ extension UIViewController {
      }
      
     // rx버전 alert : Observable을 반환해 실행한다.
-    func showAlertRx(_ title: String, _ message: String) -> Observable<ActionType> {
+    func showAlertRx(_ title: String, _ message: String) -> Observable<Void> {
         return Observable.create { [weak self] observer in
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "확인", style: .default) { _ in
-                observer.onNext(.ok)
+                observer.onNext(())
                 observer.onCompleted()
             }
             alertVC.addAction(okAction)
@@ -51,7 +51,7 @@ extension UIViewController {
         }
     }
     
-    func showAlertWithCancel(_ title: String, _ message: String) -> Observable<ActionType> {
+    func showAlertWithCancelRx(_ title: String, _ message: String) -> Observable<ActionType> {
         return Observable.create { [weak self] observer in
             let alertVC = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let okAction = UIAlertAction(title: "확인", style: .default) { _ in
@@ -91,7 +91,6 @@ extension UIViewController {
                compseVC.mailComposeDelegate = (self as! any MFMailComposeViewControllerDelegate)
                compseVC.setToRecipients(["leehyungju20@gmail.com"])
                compseVC.setSubject("'FindingPhotos' 문의")
-//               compseVC.setMessageBody("문의계정: \(userEmail)\n문의하실 내용을 입력하세요.", isHTML: false)
                compseVC.setMessageBody("문의하실 내용을 입력하세요.", isHTML: false)
                self.present(compseVC, animated: true, completion: nil)
                completion()

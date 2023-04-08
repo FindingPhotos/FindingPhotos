@@ -8,6 +8,7 @@
 import SnapKit
 import RxSwift
 import RxCocoa
+import RxViewController
 
 final class ResetPasswordViewController: UIViewController {
     
@@ -42,7 +43,7 @@ final class ResetPasswordViewController: UIViewController {
         viewModel.output.resetResultLabel
             .bind(to: resetPasswordView.resultLabel.rx.isHidden)
             .disposed(by: disposeBag)
-        
+
         /*
         viewModel.output.resetFailureText
             .bind(to: resetPasswordView.resultLabel.rx.text)
@@ -52,26 +53,51 @@ final class ResetPasswordViewController: UIViewController {
             .bind(to: resetPasswordView.resultLabel.rx.isHidden)
             .disposed(by: disposeBag)
         */
-         
+        
         viewModel.output.resetFailureText
-            .withUnretained(self)
-            .subscribe { viewController, string in
-                if string != nil {
-                    viewController.resetPasswordView.resultLabel.isHidden = false
-                    viewController.resetPasswordView.resultLabel.text = string
+            .drive(resetPasswordView.resultLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isErrorOccured
+            .bind(to: resetPasswordView.resultLabel.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        viewModel.output.isErrorOccured
+            .flatMap { bool in
+                if bool {
+                    return self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
                 } else {
-                    viewController.resetPasswordView.resultLabel.isHidden = true
+                    return Observable<Void>.empty()
                 }
+            }
+            .subscribe { _ in
+                self.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
 
+        
+// self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
+// self.dismiss(animated: true)
+        
+//        viewModel.output.isErrorOccured
+//            .flatMap { bool in
+//                if !bool {
+//                    self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
+//                        .subscribe { _ in
+//                            self.dismiss(animated: true)
+//                        }
+//                        .disposed(by: disposeBag)
+//                }
+//            }
+            
+
+            
         
         viewModel.output.isEmailValid
             .map { $0 ? 1 : 0.3}
             .bind(to: resetPasswordView.resetButton.rx.alpha)
             .disposed(by: disposeBag)
     }
-    
 }
 
 extension ResetPasswordViewController: LayoutProtocol {

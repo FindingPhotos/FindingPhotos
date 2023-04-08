@@ -22,9 +22,9 @@ class ResetPasswordViewModel: ViewModelType {
     }
     struct Output {
         let isEmailValid: Observable<Bool>
-        let isErrorOccured: Observable<Bool>
-        let resetFailureText: Observable<String?>
         let resetResultLabel: Observable<Bool>
+        let resetFailureText: Driver<String?>
+        let isErrorOccured:  Observable<Bool>
     }
     
     func transform(input: Input) -> Output {
@@ -40,6 +40,7 @@ class ResetPasswordViewModel: ViewModelType {
             .flatMap { email in
                 AuthManager.shared.sendForgotPasswordEmail(email: email)
             }
+            .asDriver(onErrorJustReturn: "")
             .debug("resetFailureText")
     
         let isErrorOccured = resetFailureText.map { error in
@@ -49,9 +50,10 @@ class ResetPasswordViewModel: ViewModelType {
                 return false
             }
         }
+            .asObservable()
         
         
-        return Output(isEmailValid: isEmailValid, isErrorOccured: isErrorOccured, resetFailureText: resetFailureText, resetResultLabel: resetResultLabel)
+        return Output(isEmailValid: isEmailValid, resetResultLabel: resetResultLabel, resetFailureText: resetFailureText, isErrorOccured: isErrorOccured)
     }
     
 }

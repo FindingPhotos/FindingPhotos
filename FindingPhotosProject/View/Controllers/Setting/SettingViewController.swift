@@ -64,7 +64,7 @@ final class SettingViewController: UIViewController {
         
         settingView.logoutButton.rx.tap
             .flatMap { _ in
-                self.showAlertWithCancel("로그아웃 하시겠습니까?", "메인 화면으로 돌아갑니다.")
+                self.showAlertWithCancelRx("로그아웃 하시겠습니까?", "메인 화면으로 돌아갑니다.")
             }
             .flatMap { actionType -> Observable<Bool> in
                 switch actionType {
@@ -84,7 +84,7 @@ final class SettingViewController: UIViewController {
         
         settingView.signoutButton.rx.tap
             .flatMap { _ in
-                self.showAlertWithCancel("회원탈퇴 하시겠습니까?", "삭제된 계정은 복구할 수 없습니다.")
+                self.showAlertWithCancelRx("회원탈퇴 하시겠습니까?", "삭제된 계정은 복구할 수 없습니다.")
             }
             .flatMap { actionType -> Observable<Bool> in
                 switch actionType {
