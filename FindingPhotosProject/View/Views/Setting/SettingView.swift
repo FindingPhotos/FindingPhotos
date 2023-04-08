@@ -21,6 +21,7 @@ class SettingView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.backgroundColor = UIColor.tabButtondarkGrey
         button.layer.cornerRadius = 15
         button.clipsToBounds = true

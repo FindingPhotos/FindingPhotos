@@ -24,6 +24,7 @@ final class ProfileView: UIView {
         button.setTitle("프로필 수정", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = UIColor.tabButtondarkGrey
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         button.layer.cornerRadius = 15
         button.clipsToBounds = true
         return button
