@@ -16,8 +16,6 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
     private lazy var faviorateStudioListTableView: UITableView = {
         let listTableView = UITableView()
         listTableView.register(FaviorateStudioListTableViewCell.self, forCellReuseIdentifier: FaviorateStudioListTableViewCell.cellIdentifier)
-        listTableView.separatorStyle = .singleLine
-        listTableView.separatorColor = .black
         listTableView.rowHeight = self.view.frame.height * 0.1
         return listTableView
     }()
@@ -33,8 +31,9 @@ final class FaviorateStudioListViewController: UIViewController, ViewModelBindab
             .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         viewModel.output.photoStudios
-            .bind(to: faviorateStudioListTableView.rx.items(cellIdentifier: FaviorateStudioListTableViewCell.cellIdentifier, cellType: FaviorateStudioListTableViewCell.self)) { row, photoStudio, cell in
-                cell.bind(photoStudio: photoStudio)
+            .bind(to: faviorateStudioListTableView.rx.items(cellIdentifier: FaviorateStudioListTableViewCell.cellIdentifier, cellType: FaviorateStudioListTableViewCell.self)) { [weak self] row, photoStudio, cell in
+                guard let faviorateStudioListViewController = self else { return }
+                cell.bind(photoStudio: photoStudio, viewModel: faviorateStudioListViewController.viewModel, row: row)
             }
             .disposed(by: disposeBag)
     }

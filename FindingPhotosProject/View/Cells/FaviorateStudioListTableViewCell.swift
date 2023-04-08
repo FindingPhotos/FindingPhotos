@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import RxSwift
+
 
 final class FaviorateStudioListTableViewCell: UITableViewCell {
     // MARK: - Properties
+    var disposeBag = DisposeBag()
     static let cellIdentifier = "FaviorateStudioListTableViewCell"
     private let studioNameLabel: UILabel = {
         let studioNameLabel = UILabel()
@@ -30,16 +33,27 @@ final class FaviorateStudioListTableViewCell: UITableViewCell {
     }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "initialButton"), for: .normal)
+        likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
         return likeButton
     }()
     override func layoutSubviews() {
         setSubViews()
         setLayout()
     }
-    func bind(photoStudio: PhotoStudio) {
+    func bind(photoStudio: PhotoStudio, viewModel: FaviorateStudioListViewModel, row: Int) {
         studioNameLabel.text = photoStudio.title
         studioAddressLabel.text = photoStudio.roadAddress
+        
+        likeButton.rx.tap
+            .withUnretained(self)
+            .map {  cell, _ in
+                return row
+            }
+            .bind(to: viewModel.input.likeButtonTapped)
+            .disposed(by: disposeBag)
+    }
+    override func prepareForReuse() {
+        self.disposeBag = DisposeBag()
     }
 }
 // MARK: - LayoutProtocol
