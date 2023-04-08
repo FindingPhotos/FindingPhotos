@@ -34,63 +34,63 @@ final class PhotoViewController: UIViewController {
         
         return collectionView
     }()
-
+    
     lazy var deleteBarButton : UIBarButtonItem = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(named: "deletedButtonGrey")?.withRenderingMode(.alwaysOriginal), for: .normal)
         button.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }()
-
-
+    
+    
     // MARK: - Selected Button
     
     enum Mode {
         case view
         case select
     }
-
+    
     var dictionarySelectedIndexPath: [IndexPath : Bool] = [:]
-
+    
     var eMode: Mode = .view {
-            didSet {
-                switch eMode {
-                case .view:
-                    for (key, value) in dictionarySelectedIndexPath {
-                        if value {
-                            collectionView.deselectItem(at: key, animated: true)
-                        }
+        didSet {
+            switch eMode {
+            case .view:
+                for (key, value) in dictionarySelectedIndexPath {
+                    if value {
+                        collectionView.deselectItem(at: key, animated: true)
                     }
-                    dictionarySelectedIndexPath.removeAll()
-                    collectionView.allowsMultipleSelection = false
-     
-                    
-                case .select:
-                    let selectButton = UIButton(type: .custom)
-                    selectButton.setImage(UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-                    selectButton.addTarget(self, action: #selector(didCanceledButtonClicked), for: .touchUpInside)
-                    let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
-
-                    let addButton = UIButton(type: .custom)
-                    addButton.setImage(UIImage(named: "deletedButtonDisabled")?.withRenderingMode(.alwaysOriginal), for: .normal)
-                    addButton.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
-                    let addBarButtonItem = UIBarButtonItem(customView: addButton)
-
-                    navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
-                    collectionView.allowsMultipleSelection = true
                 }
+                dictionarySelectedIndexPath.removeAll()
+                collectionView.allowsMultipleSelection = false
+                
+                
+            case .select:
+                let selectButton = UIButton(type: .custom)
+                selectButton.setImage(UIImage(named: "canceledButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                selectButton.addTarget(self, action: #selector(didCanceledButtonClicked), for: .touchUpInside)
+                let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+                
+                let addButton = UIButton(type: .custom)
+                addButton.setImage(UIImage(named: "deletedButtonDisabled")?.withRenderingMode(.alwaysOriginal), for: .normal)
+                addButton.addTarget(self, action: #selector(didDeleteButtonClicked), for: .touchUpInside)
+                let addBarButtonItem = UIBarButtonItem(customView: addButton)
+                
+                navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
+                collectionView.allowsMultipleSelection = true
             }
         }
+    }
     
     
-        
+    
     // MARK: - Lifecycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.barStyle = .default
-    
+        
         collectionView.reloadData()
     }
     
@@ -106,51 +106,34 @@ final class PhotoViewController: UIViewController {
         print(Realm.Configuration.defaultConfiguration.fileURL!)
     }
     
-
+    
     
     
     // MARK: - Selectors
     
     @objc func addButtonTapped(_ sender: Any) {
-//        let detailViewController = PhotoDetailViewController()
-//        let photoDetailVC = PhotoDetailViewController()
+        //        let detailViewController = PhotoDetailViewController()
+        //        let photoDetailVC = PhotoDetailViewController()
         let photoDetailVC = PhotoDetailViewController()
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
     
     @objc func didSelectButtonClicked(_ sender: UIBarButtonItem) {
-            if eMode == .select {
-                eMode = .view
-                collectionView.alpha = 1.0
-                if dictionarySelectedIndexPath.isEmpty {
-                    deleteBarButton.isEnabled = false
-                }
-            } else {
-                eMode = .select
-                collectionView.alpha = 0.7
-                deleteBarButton.isEnabled = true
+        if eMode == .select {
+            eMode = .view
+            collectionView.alpha = 1.0
+            if dictionarySelectedIndexPath.isEmpty {
+                deleteBarButton.isEnabled = false
             }
+        } else {
+            eMode = .select
+            collectionView.alpha = 0.7
+            deleteBarButton.isEnabled = true
         }
+    }
     
     @objc func didCanceledButtonClicked(_ sender: UIBarButtonItem) {
-        eMode = .view
-        let addButton = UIButton(type: .custom)
-        addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-        let addBarButtonItem = UIBarButtonItem(customView: addButton)
-
-        let selectButton = UIButton(type: .custom)
-        selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
-        let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
-
-        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-        space.width = 10
-
-        navigationItem.rightBarButtonItems = [addBarButtonItem, space, selectBarButtonItem]
-
-        collectionView.alpha = 1.0
-        collectionView.reloadData()
+        updateViewWithButtons()
     }
     
     
@@ -186,29 +169,12 @@ final class PhotoViewController: UIViewController {
             self.collectionView.reloadData()
             
             // 선택 모드 해제
-            self.eMode = .view
-            let addButton = UIButton(type: .custom)
-            addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-            addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-            let addBarButtonItem = UIBarButtonItem(customView: addButton)
-            
-            let selectButton = UIButton(type: .custom)
-            selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
-            selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
-            let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
-            
-            let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
-            space.width = 10
-            
-            navigationItem.rightBarButtonItems = [addBarButtonItem, space, selectBarButtonItem]
-            
-            collectionView.alpha = 1.0
-            collectionView.reloadData()
+            updateViewWithButtons()
             
         }
         alert.addAction(deleteAction)
         present(alert, animated: true, completion: nil)
-
+        
     }
     
     
@@ -218,7 +184,7 @@ final class PhotoViewController: UIViewController {
         view.backgroundColor = .white
         navigationController?.navigationBar.tintColor = .tabButtondarkGrey
     }
-
+    
     
     private func configureNavigation() {
         
@@ -235,15 +201,35 @@ final class PhotoViewController: UIViewController {
         selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
         selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
         let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
-
+        
         navigationItem.rightBarButtonItems = [addBarButtonItem, selectBarButtonItem]
         let spacing = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
         spacing.width = -10 // 원하는 간격 설정
         navigationItem.rightBarButtonItems?.append(spacing)
-
+        
     }
     
-    
+    private func updateViewWithButtons() {
+        eMode = .view
+        let addButton = UIButton(type: .custom)
+        addButton.setImage(UIImage(named: "addButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        addButton.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
+        let addBarButtonItem = UIBarButtonItem(customView: addButton)
+        
+        let selectButton = UIButton(type: .custom)
+        selectButton.setImage(UIImage(named: "selectedButton")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        selectButton.addTarget(self, action: #selector(didSelectButtonClicked), for: .touchUpInside)
+        let selectBarButtonItem = UIBarButtonItem(customView: selectButton)
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        space.width = 10
+        
+        navigationItem.rightBarButtonItems = [addBarButtonItem, space, selectBarButtonItem]
+        
+        collectionView.alpha = 1.0
+        collectionView.reloadData()
+        
+    }
 }
 
 // MARK: - CollectionView
