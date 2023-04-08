@@ -23,6 +23,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedImage: PublishRelay<UIImage>
         let userInformation: Observable<UserModel?>
         let userName: Observable<String>
+        let isModifiyFinished: Observable<Bool>
     }
     var disposeBag = DisposeBag()
 
@@ -34,7 +35,7 @@ final class ModifyProfileViewModel: ViewModelType {
         let changedName = PublishRelay<String>()
         let changedImage = PublishRelay<UIImage>()
         
-        let user = AuthManager.shared.getUserInformation()
+        let user = AuthManager.shared.getUserInformation().share()
         
         let userName = user.map { userModel in
             if userModel == nil {
@@ -52,26 +53,33 @@ final class ModifyProfileViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
-        input.ModifyButtonTapped
+        let isModifyFinished = input.ModifyButtonTapped
             .withLatestFrom(Observable.combineLatest(input.textFieldText, input.selectedImage))
-            .map { changedName, changedImage in
-                if let changedImage {
+            .map { changedName, changedImage -> Bool in
+                if let changedImage, changedName != "" {
                     ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
                         AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
+                        return true
+                    }
+                } else if let changedImage, changedName == "" {
+                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
+                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
+                        return true
                     }
                 } else {
                     AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
-                    
+                    return true
                 }
+                return false
             }
-            .asObservable()
-            .subscribe()
-            .disposed(by: disposeBag)
+            
+
         
         return Output(changedName: changedName,
                       changedImage: changedImage,
                       userInformation: user,
-                      userName: userName)
+                      userName: userName,
+                      isModifiyFinished: isModifyFinished)
         
     }
 }

@@ -61,16 +61,16 @@ final class SettingViewModel: ViewModelType {
 //            .map { _ in
 //                AuthManager.shared.deleteAccount()
 //            }
-        /*
+
         let user = input.viewWillAppear
             .debug("--------------")
             .flatMap { _ in
                 AuthManager.shared.getUserInformation()
             }
             .share()
-         */
+
         
-        let user = AuthManager.shared.getUserInformation()
+//        let user = AuthManager.shared.getUserInformation()
         
         let userName = user.map { userModel in
             if userModel == nil {

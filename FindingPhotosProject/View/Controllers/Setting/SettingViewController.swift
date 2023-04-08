@@ -58,9 +58,9 @@ final class SettingViewController: UIViewController {
 //            .bind(to: viewModel.input.signoutButtonTapped)
 //            .disposed(by: disposeBag)
         
-//        self.rx.viewWillAppear
-//            .bind(to: viewModel.input.viewWillAppear)
-//            .disposed(by: disposeBag)
+        self.rx.viewWillAppear
+            .bind(to: viewModel.input.viewWillAppear)
+            .disposed(by: disposeBag)
         
         settingView.logoutButton.rx.tap
             .flatMap { _ in
@@ -112,7 +112,7 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.userName
-            .debug("userName")
+//            .debug("userName")
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -121,7 +121,7 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.userInformation
-            .debug("userInfo")
+//            .debug("userInfo")
             .withUnretained(self)
             .map {viewController, userModel in
                 if userModel == nil {

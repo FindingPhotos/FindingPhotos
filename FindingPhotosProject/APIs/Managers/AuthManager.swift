@@ -44,6 +44,7 @@ final class AuthManager {
                 if let image {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
                         FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
+                        return true
                         observer.onNext(nil)
                     }
                 } else {
@@ -129,8 +130,8 @@ final class AuthManager {
             return Disposables.create()
         }
     }
-    
-    func updateUserInformation(changedName: String?, changedImageUrl: String?) {
+
+    func updateUserInformation(changedName: String?, changedImageUrl: String?){
         guard let uid = Auth.auth().currentUser?.uid else { return }
         if changedName != nil && changedImageUrl != nil {
             guard let changedName, let changedImageUrl else { return }
