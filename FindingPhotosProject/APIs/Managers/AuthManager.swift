@@ -22,10 +22,12 @@ final class AuthManager {
                     print(error!.localizedDescription)
                     print("DEBUG: 로그인 실패")
                     observer.onNext(false)
+                    observer.onCompleted()
                     return
                 }
                 NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
                 observer.onNext(true)
+                observer.onCompleted()
             }
             return Disposables.create()
         }
@@ -37,6 +39,7 @@ final class AuthManager {
                 guard error == nil else {
                     print("debug: \(error!.localizedDescription)")
                     observer.onNext("이미 가입한 이메일입니다❌")
+                    observer.onCompleted()
                     return
                 }
                 guard let email = authResult?.user.email,
@@ -45,12 +48,14 @@ final class AuthManager {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
                         FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
                         observer.onNext(nil)
+                        observer.onCompleted()
                     }
                 } else {
                     let currentUserModel = UserModel(name: name, email: email, uid: uid)
                     print("DEBUG: currentUserModel:\(currentUserModel)")
                     FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": ""])
                     observer.onNext(nil)
+                    observer.onCompleted()
                 }
                 print("DEBUG: 회원가입 성공")
                 NotificationCenter.default.post(name: .AuthStateDidChange, object: nil)
@@ -149,12 +154,15 @@ final class AuthManager {
                 guard let changedName, let changedImageUrl else { return Disposables.create()}
                 FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "imageUrl": changedImageUrl])
                 observer.onNext(())
+                observer.onCompleted()
             } else if let changedName {
                 FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
                 observer.onNext(())
+                observer.onCompleted()
             } else if let changedImageUrl {
                 FirestoreAddress.collectionUsers.document(uid).updateData(["imageUrl": changedImageUrl])
                 observer.onNext(())
+                observer.onCompleted()
             }
             return Disposables.create()
         }

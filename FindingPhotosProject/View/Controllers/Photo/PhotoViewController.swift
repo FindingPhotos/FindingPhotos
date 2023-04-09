@@ -227,10 +227,6 @@ final class PhotoViewController: UIViewController {
         collectionView.reloadData()
         
     }
-    
-    deinit {
-        print("PhotoViewController deinit")
-    }
 }
 
 // MARK: - CollectionView

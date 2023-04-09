@@ -170,11 +170,6 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
         navigationController?.popViewController(animated: true)
     }
     
-    deinit {
-        print("PhotoDetailViewController deinit")
-    }
-    
-    
 }
 
 // MARK: - 이미지 할당

@@ -16,7 +16,6 @@ final class ModifyProfileViewController: UIViewController {
     private let modifyProfileView = ModifyProfileView()
     
     private var viewModel = ModifyProfileViewModel()
-    
     private let disposeBag = DisposeBag()
     
     // MARK: - Lifecycles
@@ -31,9 +30,7 @@ final class ModifyProfileViewController: UIViewController {
     override func loadView() {
         view = modifyProfileView
     }
-    
-    
-    
+
     // MARK: - Helpers
     
     func setValue() {
@@ -74,9 +71,8 @@ final class ModifyProfileViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isModifiyFinished
-            .debug("isModifiyFinished in VC")
-            .subscribe { _ in
-                self.navigationController?.popViewController(animated: true)
+            .subscribe { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
     }

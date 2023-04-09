@@ -43,11 +43,8 @@ final class SignInViewController: UIViewController {
         bindImagePicker()
     }
 
-    
     // MARK: - helpers
 
-
-    
     private func bindWithoutViewModel() {
         signInView.openPrivacyPolicyButton.rx.tap
             .withUnretained(self)
@@ -58,7 +55,7 @@ final class SignInViewController: UIViewController {
     }
     
     private func bindViewModel() {
-        // input
+        // Input
         signInView.signInButton.rx.tap
             .bind(to: viewModel.input.signInButtonTapped)
             .disposed(by: disposeBag)
@@ -72,18 +69,20 @@ final class SignInViewController: UIViewController {
             .distinctUntilChanged()
             .bind(to: viewModel.input.emailTextFieldText)
             .disposed(by: disposeBag)
+        
         signInView.passwordTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind(to: viewModel.input.passwordTextFieldText)
             .disposed(by: disposeBag)
+        
         signInView.nameTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
             .bind(to: viewModel.input.nameTextFieldText)
             .disposed(by: disposeBag)
         
-        // output
+        // Output
         viewModel.output.isValid
             .map { $0 ? 1 : 0.3 }
             .bind(to: signInView.signInButton.rx.alpha)
@@ -97,7 +96,6 @@ final class SignInViewController: UIViewController {
             .bind(to: signInView.profileImageView.rx.image)
             .disposed(by: disposeBag)
         
-        // 실패했을 때 알람처리 해줘야 함...
         viewModel.output.isSignInSuccess
             .bind(to: signInView.isAlreadyExistLabel.rx.isHidden)
             .disposed(by: disposeBag)

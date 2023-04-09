@@ -45,6 +45,7 @@ final class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
     }
     private func bindViewModel() {
+        // Input
         loginView.emailTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
@@ -57,6 +58,15 @@ final class LoginViewController: UIViewController {
             .bind(to: viewModel.input.passwordTextFieldText)
             .disposed(by: disposeBag)
         
+        loginView.loginButton.rx.tap
+            .bind(to: viewModel.input.logInButtonTapped)
+            .disposed(by: disposeBag)
+        
+        loginView.signWithAnonymousButton.rx.tap
+            .bind(to: viewModel.input.logInAnonymouslyButtonTapped)
+            .disposed(by: disposeBag)
+        
+        // Output
         viewModel.output.isValid
             .map { $0 ? 1 : 0.3 }
             .bind(to: loginView.loginButton.rx.alpha)
@@ -67,28 +77,18 @@ final class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isLoginSuccess
-//            .withUnretained(self)
             .map { $0 ? "로그인되었습니다✅" : "아이디와 비밀번호를 확인해주세요❗️"}
             .bind(to: loginView.loginCheckedLabel.rx.text)
             .disposed(by: disposeBag)
         
         viewModel.output.resetResultLabel
             .bind(to: loginView.loginCheckedLabel.rx.isHidden)
+            .disposed(by: disposeBag)
         
         viewModel.output.isLoginSuccess
             .bind(to: loginView.loginCheckedLabel.rx.isHidden)
             .disposed(by: disposeBag)
-        
-        loginView.loginButton.rx.tap
-            .bind(to: viewModel.input.logInButtonTapped)
-            .disposed(by: disposeBag)
-        
-        loginView.signWithAnonymousButton.rx.tap
-            .bind(to: viewModel.input.logInAnonymouslyButtonTapped)
-            .disposed(by: disposeBag)
     }
-    
-    
 }
 
 extension LoginViewController: LayoutProtocol {

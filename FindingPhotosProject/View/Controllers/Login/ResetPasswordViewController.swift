@@ -30,6 +30,7 @@ final class ResetPasswordViewController: UIViewController {
     // MARK: - Helpers
     
     func bindViewModel() {
+        // Input
         resetPasswordView.emailTextField.rx.text
             .orEmpty
             .distinctUntilChanged()
@@ -40,19 +41,10 @@ final class ResetPasswordViewController: UIViewController {
             .bind(to: viewModel.input.resetButtonTapped)
             .disposed(by: disposeBag)
         
+        // Output
         viewModel.output.resetResultLabel
             .bind(to: resetPasswordView.resultLabel.rx.isHidden)
             .disposed(by: disposeBag)
-
-        /*
-        viewModel.output.resetFailureText
-            .bind(to: resetPasswordView.resultLabel.rx.text)
-            .disposed(by: disposeBag)
-        
-        viewModel.output.isErrorOccured
-            .bind(to: resetPasswordView.resultLabel.rx.isHidden)
-            .disposed(by: disposeBag)
-        */
         
         viewModel.output.resetFailureText
             .drive(resetPasswordView.resultLabel.rx.text)
@@ -63,36 +55,19 @@ final class ResetPasswordViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.isErrorOccured
-            .flatMap { bool in
+            .withUnretained(self)
+            .flatMap { viewContoller, bool in
                 if bool {
-                    return self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
+                    return viewContoller.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
                 } else {
                     return Observable<Void>.empty()
                 }
             }
-            .subscribe { _ in
-                self.navigationController?.popViewController(animated: true)
+            .subscribe { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
             }
             .disposed(by: disposeBag)
 
-        
-// self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
-// self.dismiss(animated: true)
-        
-//        viewModel.output.isErrorOccured
-//            .flatMap { bool in
-//                if !bool {
-//                    self.showAlertRx("비밀번호 재설정 성공", "메일함을 확인해주세요.")
-//                        .subscribe { _ in
-//                            self.dismiss(animated: true)
-//                        }
-//                        .disposed(by: disposeBag)
-//                }
-//            }
-            
-
-            
-        
         viewModel.output.isEmailValid
             .map { $0 ? 1 : 0.3}
             .bind(to: resetPasswordView.resetButton.rx.alpha)

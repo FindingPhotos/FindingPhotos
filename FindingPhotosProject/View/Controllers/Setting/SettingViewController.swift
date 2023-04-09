@@ -35,14 +35,11 @@ final class SettingViewController: UIViewController {
         bindTableView()
         bindViewModel()
     }
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        bindViewModel()
-//    }
     
     override func loadView() {
         view = settingView
     }
+
     // MARK: - helpers
     
     func setValue() {
@@ -50,20 +47,13 @@ final class SettingViewController: UIViewController {
         navigationItem.titleView?.tintColor = .tabButtondarkGrey
     }
     func bindViewModel() {
-        //input
-//        settingView.logoutButton.rx.tap
-//            .bind(to: viewModel.input.logoutButtonTapped)
-//            .disposed(by: disposeBag)
-        
-//        settingView.signoutButton.rx.tap
-//            .bind(to: viewModel.input.signoutButtonTapped)
-//            .disposed(by: disposeBag)
-        
+        //Input
         self.rx.viewWillAppear
             .bind(to: viewModel.input.viewWillAppear)
             .disposed(by: disposeBag)
         
         settingView.logoutButton.rx.tap
+            .withUnretained(self)
             .flatMap { _ in
                 self.showAlertWithCancelRx("로그아웃 하시겠습니까?", "메인 화면으로 돌아갑니다.")
             }
@@ -84,6 +74,7 @@ final class SettingViewController: UIViewController {
             
         
         settingView.signoutButton.rx.tap
+            .withUnretained(self)
             .flatMap { _ in
                 self.showAlertWithCancelRx("회원탈퇴 하시겠습니까?", "삭제된 계정은 복구할 수 없습니다.")
             }
@@ -102,7 +93,6 @@ final class SettingViewController: UIViewController {
             .bind(to: self.viewModel.input.signoutButtonTapped)
             .disposed(by: disposeBag)
         
-        
         // Output
         viewModel.output.didLogOut
             .subscribe()
@@ -113,7 +103,6 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.userName
-//            .debug("userName")
             .bind(to: settingView.nameLabel.rx.text)
             .disposed(by: disposeBag)
         
@@ -122,7 +111,6 @@ final class SettingViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.output.userInformation
-//            .debug("userInfo")
             .withUnretained(self)
             .map {viewController, userModel in
                 if userModel == nil {

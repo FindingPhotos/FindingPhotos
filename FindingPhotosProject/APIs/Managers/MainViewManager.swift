@@ -46,7 +46,7 @@ class MainViewManager {
         
     @objc private func checkLoginIn() {
         
-        if let user = Auth.auth().currentUser {
+        if let _ = Auth.auth().currentUser {
             setTapBarController()
         } else {
             setLoginViewController()
@@ -67,7 +67,7 @@ class MainViewManager {
         tabBarVC.setViewControllers([vc1, vc2, vc3], animated: false)
         tabBarVC.modalPresentationStyle = .fullScreen
         tabBarVC.tabBar.backgroundColor = .white
-        tabBarVC.tabBar.tintColor = UIColor.tabButtonlightGrey
+        tabBarVC.tabBar.tintColor = UIColor.tabButtondarkGrey
         
         guard let items = tabBarVC.tabBar.items else { return }
         
@@ -78,6 +78,7 @@ class MainViewManager {
         items[2].image = UIImage(systemName: "person.circle.fill")
         items[2].selectedImage = UIImage(systemName: "person.circle.fill")
         
+        tabBarVC.selectedIndex = 1
         rootViewController = tabBarVC
     }
     

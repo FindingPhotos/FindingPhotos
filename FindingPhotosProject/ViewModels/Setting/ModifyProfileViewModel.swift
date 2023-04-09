@@ -71,18 +71,15 @@ final class ModifyProfileViewModel: ViewModelType {
             }
  */
         let uploadedImageUrl = input.ModifyButtonTapped
-            .debug("isModifyFinished in VM")
             .withLatestFrom(input.selectedImage)
             .flatMap({ image in
                 ImageUploaderToFirestorage.uploadImageRx(image: image)
             })
             
-            
         let isModifyFinishedRx = Observable.combineLatest(input.textFieldText, uploadedImageUrl)
             .map { changedName, changedImage in
                 if let changedImage, changedName != "" {
                         AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: changedImage)
-                    
                 } else if let changedImage, changedName == "" {
                         AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: changedImage)
                 } else {
