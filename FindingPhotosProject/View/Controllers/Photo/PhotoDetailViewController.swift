@@ -171,7 +171,7 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     }
     
     deinit {
-        print("deinit!!!")
+        print("PhotoDetailViewController deinit")
     }
     
     
@@ -194,6 +194,7 @@ extension PhotoDetailViewController: UIImagePickerControllerDelegate {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             imagePicker.sourceType = .photoLibrary
             imagePicker.allowsEditing = false
+            imagePicker.view.tintColor = .tabButtondarkGrey
             present(imagePicker, animated: true, completion: nil)
         }
     }
