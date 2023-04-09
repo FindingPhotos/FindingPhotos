@@ -44,7 +44,6 @@ final class AuthManager {
                 if let image {
                     ImageUploaderToFirestorage.uploadImage(image: image) { imageUrlString in
                         FirestoreAddress.collectionUsers.document(uid).setData(["name": name, "email": email, "uid": uid, "imageUrl": imageUrlString])
-                        return true
                         observer.onNext(nil)
                     }
                 } else {
@@ -143,6 +142,24 @@ final class AuthManager {
         }
     }
     
+    func updateUserInformationRx(changedName: String?, changedImageUrl: String?) -> Observable<Void>{
+        return Observable.create { observer in
+            guard let uid = Auth.auth().currentUser?.uid else { return Disposables.create()}
+            if changedName != nil && changedImageUrl != nil {
+                guard let changedName, let changedImageUrl else { return Disposables.create()}
+                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName, "imageUrl": changedImageUrl])
+                observer.onNext(())
+            } else if let changedName {
+                FirestoreAddress.collectionUsers.document(uid).updateData(["name": changedName])
+                observer.onNext(())
+            } else if let changedImageUrl {
+                FirestoreAddress.collectionUsers.document(uid).updateData(["imageUrl": changedImageUrl])
+                observer.onNext(())
+            }
+            return Disposables.create()
+        }
+    }
+    
     func logOut() {
         let firebaseAuth = Auth.auth()
         do {
@@ -191,10 +208,5 @@ final class AuthManager {
         }
     }
     */
-    // Auth 리스트에 존재하는 이메일인지 확인 불가...
-//    func checkEmailForReset(email : String) {
-//        let firebaseAuth = Auth.auth()
-//
-//
-//    }
+
 }

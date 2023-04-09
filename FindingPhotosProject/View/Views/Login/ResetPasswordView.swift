@@ -82,7 +82,7 @@ final class ResetPasswordView: UIView {
 
 extension ResetPasswordView: LayoutProtocol {
     func setValue() {
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
     }
     
     func setSubViews() {

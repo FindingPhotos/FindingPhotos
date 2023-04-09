@@ -23,6 +23,7 @@ final class LoginViewController: UIViewController {
         super.viewDidLoad()
         bindWithoutViewModel()
         bindViewModel()
+        setValue()
         setSubViews()
         setLayout()
     }
@@ -91,8 +92,13 @@ final class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: LayoutProtocol {
+    
+    func setValue() {
+        view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .black
+    }
     func setSubViews() {
-        self.view.addSubview(loginView)
+        view.addSubview(loginView)
     }
     
     func setLayout() {

@@ -197,7 +197,7 @@ class SignInView: UIView {
 extension SignInView: LayoutProtocol {
     
     func setValue() {
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
     }
     
     func setSubViews() {

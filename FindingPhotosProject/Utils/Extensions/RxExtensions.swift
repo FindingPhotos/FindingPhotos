@@ -7,9 +7,10 @@
 
 import Foundation
 import CoreLocation
-
+import SnapKit
 import RxSwift
 import RxCocoa
+
 
 // MARK: - CLLocationManager Rx Extension
 typealias CLLocationsEvent = (manager: CLLocationManager, locations: [CLLocation])
@@ -78,10 +79,12 @@ extension Reactive where Base: UIImagePickerController {
             let imagePicker = UIImagePickerController()
             let dismissDisposable = imagePicker.rx
                 .didCancel
-                .subscribe { [weak imagePicker] in
+                .debug("dismissDisposable")
+                .subscribe(onNext: { [weak imagePicker] in
                     guard let imagePicker else { return }
                     dismissViewController(imagePicker, animated: animated)
-                }
+                })
+            
             do {
                 try configureImagePicker(imagePicker)
             }
@@ -90,13 +93,11 @@ extension Reactive where Base: UIImagePickerController {
                 return Disposables.create()
             }
             guard let parent else {
-                observer.on(.completed)
+                observer.onCompleted()
                 return Disposables.create()
             }
             parent.present(imagePicker, animated: animated)
-//            parent.show(imagePicker, sender: self)
             observer.on(.next(imagePicker))
-            
             return Disposables.create(dismissDisposable, Disposables.create {
                 dismissViewController(imagePicker, animated: animated)
             })

@@ -171,7 +171,7 @@ class LoginView: UIView {
 extension LoginView: LayoutProtocol {
     
     func setValue() {
-        self.backgroundColor = .white
+//        self.backgroundColor = .white
     }
     
     func setSubViews() {
