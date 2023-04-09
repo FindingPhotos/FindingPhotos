@@ -96,7 +96,7 @@ final class MapViewModel: ViewModelType {
             }
             .map { result in
                 guard result else { return UIImage(named: "likeButton")}
-                return UIImage(named: "initialButton")
+                return UIImage(named: "favoriteGrey")
             }
             .bind(to: buttonImage)
             .disposed(by: disposeBag)
@@ -108,10 +108,10 @@ final class MapViewModel: ViewModelType {
                     let savedData = realm.objects(PhotoStudio.self).filter { return $0.title == studio.title }
                     if savedData.isEmpty {
                         realm.add(studio)
-                        buttonImage.accept(UIImage(named: "likeButton"))
+                        buttonImage.accept(UIImage(named: "favorite"))
                     } else {
                         realm.delete(savedData)
-                        buttonImage.accept(UIImage(named: "initialButton"))
+                        buttonImage.accept(UIImage(named: "favoriteGrey"))
                     }
                 })
             })

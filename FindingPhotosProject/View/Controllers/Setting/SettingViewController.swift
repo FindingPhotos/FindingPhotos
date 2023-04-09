@@ -114,7 +114,7 @@ final class SettingViewController: UIViewController {
             .withUnretained(self)
             .map {viewController, userModel in
                 if userModel == nil {
-                    guard let image = UIImage(systemName: "person.fill") else { return }
+                    guard let image = UIImage(named: "anonymous") else { return }
                     image.withTintColor(.tabButtondarkGrey, renderingMode: .alwaysTemplate)
                     viewController.settingView.profileImageView.image = image
                 } else {

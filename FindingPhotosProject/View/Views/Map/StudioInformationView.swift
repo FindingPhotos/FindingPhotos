@@ -40,7 +40,7 @@ final class StudioInformationView: UIView {
     }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "initialButton"), for: .normal)
+        likeButton.setImage(UIImage(named: "favoriteGrey"), for: .normal)
         return likeButton
     }()
     // MARK: - Lifecycle
