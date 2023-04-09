@@ -33,7 +33,7 @@ final class FaviorateStudioListTableViewCell: UITableViewCell {
     }()
     private let likeButton: UIButton = {
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "likeButton"), for: .normal)
+        likeButton.setImage(UIImage(named: "favorite"), for: .normal)
         return likeButton
     }()
     override func layoutSubviews() {
