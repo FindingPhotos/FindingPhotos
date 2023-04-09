@@ -260,6 +260,7 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
             guard let photoData = viewModel.photoData(at: indexPath) else { return }
             let photoDetailVC = PhotoDetailViewController()
             photoDetailVC.diary = photoData
+            updateViewWithButtons()
             navigationController?.pushViewController(photoDetailVC, animated: true)
             
         case .select:

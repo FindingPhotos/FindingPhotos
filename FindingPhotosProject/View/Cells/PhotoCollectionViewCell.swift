@@ -49,13 +49,15 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
             highlightIndicator.isHidden = !isHighlighted
         }
     }
-    
+
     override var isSelected: Bool {
         didSet {
             highlightIndicator.isHidden = !isSelected
             selectIndicator.isHidden = !isSelected
         }
     }
+    
+
     
     // MARK: - Helpers
 
