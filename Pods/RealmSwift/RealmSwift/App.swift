@@ -182,7 +182,8 @@ public extension App {
      - parameter credentials: The credentials identifying the user.
      - parameter completion: A callback invoked after completion. Will return `Result.success(User)` or `Result.failure(Error)`.
      */
-    func login(credentials: Credentials, _ completion: @escaping (Result<User, Error>) -> Void) {
+    @preconcurrency
+    func login(credentials: Credentials, _ completion: @Sendable @escaping (Result<User, Error>) -> Void) {
         self.__login(withCredential: ObjectiveCSupport.convert(object: credentials)) { user, error in
             if let user = user {
                 completion(.success(user))
@@ -198,7 +199,7 @@ public extension App {
     /// @returns A publisher that eventually return `User` or `Error`.
     @available(macOS 10.15, watchOS 6.0, iOS 13.0, tvOS 13.0, *)
     func login(credentials: Credentials) -> Future<User, Error> {
-        return Future { self.login(credentials: credentials, $0) }
+        return future { self.login(credentials: credentials, $0) }
     }
 #endif
 
@@ -245,17 +246,14 @@ extension App {
 /// :nodoc:
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 @frozen public struct AppSubscription: Subscription {
-    private let app: App
     private let token: RLMAppSubscriptionToken
-
-    internal init(app: App, token: RLMAppSubscriptionToken) {
-        self.app = app
+    internal init(token: RLMAppSubscriptionToken) {
         self.token = token
     }
 
     /// A unique identifier for identifying publisher streams.
     public var combineIdentifier: CombineIdentifier {
-        return CombineIdentifier(NSNumber(value: token.value))
+        return CombineIdentifier(token)
     }
 
     /// This function is not implemented.
@@ -266,7 +264,7 @@ extension App {
 
     /// Stop emitting values on this subscription.
     public func cancel() {
-        app.unsubscribe(token)
+        token.unsubscribe()
     }
 }
 
@@ -279,31 +277,48 @@ public struct AppPublisher: Publisher, @unchecked Sendable { // DispatchQueue
     public typealias Output = App
 
     private let app: App
-    private let callbackQueue: DispatchQueue
 
-    internal init(_ app: App, callbackQueue: DispatchQueue = .main) {
+#if swift(>=5.7)
+    private let scheduler: any Scheduler
+
+    internal init<S: Scheduler>(_ app: App, scheduler: S) {
         self.app = app
-        self.callbackQueue = callbackQueue
+        self.scheduler = scheduler
     }
 
     /// :nodoc:
     public func receive<S: Sendable>(subscriber: S) where S: Subscriber, S.Failure == Never, Output == S.Input {
-        let token = app.subscribe { _ in
-            self.callbackQueue.async {
-                _ = subscriber.receive(self.app)
+        let token = app.subscribe { app in
+            self.scheduler.schedule {
+                _ = subscriber.receive(app)
             }
         }
 
-        subscriber.receive(subscription: AppSubscription(app: app, token: token))
+        subscriber.receive(subscription: AppSubscription(token: token))
+    }
+#else
+    private let scheduler: (@escaping () -> Void) -> Void
+
+    internal init<S: Scheduler>(_ app: App, scheduler: S) {
+        self.app = app
+        self.scheduler = scheduler.schedule
     }
 
     /// :nodoc:
-    public func receive<S: Scheduler>(on scheduler: S) -> Self {
-        guard let queue = scheduler as? DispatchQueue else {
-            fatalError("Cannot subscribe on scheduler \(scheduler): only serial dispatch queues are currently implemented.")
+    public func receive<S: Sendable>(subscriber: S) where S: Subscriber, S.Failure == Never, Output == S.Input {
+        let token = app.subscribe { app in
+            self.scheduler {
+                _ = subscriber.receive(app)
+            }
         }
 
-        return Self(app, callbackQueue: queue)
+        subscriber.receive(subscription: AppSubscription(token: token))
+    }
+#endif
+
+    /// :nodoc:
+    public func receive<S: Scheduler>(on scheduler: S) -> Self {
+        return Self(app, scheduler: scheduler)
     }
 }
 
@@ -313,12 +328,12 @@ extension App: ObservableObject {
     ///
     /// Despite the name, this actually emits *after* the app has changed.
     public var objectWillChange: AppPublisher {
-        return AppPublisher(self)
+        return AppPublisher(self, scheduler: DispatchQueue.main)
     }
 }
 
 @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
-private func promisify(_ fn: @escaping (@escaping @Sendable (Error?) -> Void) -> Void) -> Future<Void, Error> {
+internal func promisify(_ fn: @escaping (@escaping @Sendable (Error?) -> Void) -> Void) -> Future<Void, Error> {
     return future { promise in
         fn { error in
             if let error = error {

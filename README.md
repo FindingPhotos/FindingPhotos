@@ -1,8 +1,13 @@
 # FindingPhotos
-팀 프로젝트: 주변 즉석사진점을 검색하고 사진을 저장하는 iOS 앱 개발
-노션정리 : https://jesskoh.notion.site/FindingPhotos-8550cf67ce934538a998e61919b24a87
+주변 즉석사진점을 검색하고 사진을 저장하는 iOS 앱 개발  
+노션 : https://jesskoh.notion.site/FindingPhotos-8550cf67ce934538a998e61919b24a87
 
-- 프로젝트 이름 : 인생네컷찾기(가제)
+## 개발 기간
+2023.03.23 ~ 2023.04.08
+
+
+## 구현 기능
+- 최초 앱 출시는 각 기능 1차구현 완료시 출시. 2차 구현은 차후 업데이트 예정.
     - 계획
         - 탭 3개
             - 지도api를 이용해 근처 모든 종류의 인생네컷 검색
@@ -10,15 +15,14 @@
             - 개인정보/설정
         - 추후 구현 가능: 로그인 / 친구와 앨범 공유 / 테이블뷰-컬렉션뷰 전환
     
-- 3/23일자 회의 내용
-    - 지도: Kyle
+    - 지도
         - 1차 구현
             - 지도 api : 카카오 (즉석사진 카테고리로 제한된 검색 용이) 로드
             - ModalPresent를 이용한 장소 정보 구현
         - 2차 구현
             - 장소 검색기능
             - 즐겨찾기 설정 및 목록
-    - 앨범 : Jess
+    - 앨범
         - 1차 구현
             - NavigationController/collectionView를 이용한 중첩된 폴더 형식의 UI 구현
             - NSCache를 이용한 데이터 캐시처리
@@ -26,7 +30,7 @@
             - TableView로 폴더 구현
             - Firestore 및 Firebase storage를 이용해 앨범
             - 계정기능 구현 후 친구와 공유 가능
-    - 계정 : John
+    - 계정
         - 1차 구현
             - 설정 방식 : 로컬 이메일 / 익명로그인
             - 연동 방식 : firebaseAuth
@@ -35,23 +39,36 @@
             - user 탭에 사용자 정보 나타내기
         - 2차 구현
             - 애플로그인 / 네이버 소셜로그인 구현
-    
-- 각 영역 담당 지정
-- 디자인패턴 지정 : MVVM 구현 방식 / Rx 구현 여부 및 방식
-    - RxSwift로 진행하는 이유? : 협업을 위한 형식의 통일.
-    - RxSwift로 바로 진행하기…
-- 사용할 라이브러리
-    - RxSwift
-    - SnapKit
-    - Firestore : 사진저장
-    - FirebaseAuth : 계정 저장
-    - 로컬 데이터베이스 : CoreData
-    - 
-- UI : codebase / Snapkit
-- 데이터베이스
-    - 로컬 데이터베이스 :  CoreData
-    - 네트워크 데이터베이스 : Firestore
-    - 이미지 데이터베이스 : Firebase Storage
-- 계정 로그인 방식 : 로컬로그인 / 익명로그인 with FirebaseAuth // 차후 : 애플로그인 / 네이버로그인
-- 지도 api : 카카오맵
-- 데이터 캐시처리 : NSCache
+
+## 팀 구성원
+- Kyle(강창혁) : 지도 관련 기능 구현
+- John(이형주): 계정 관련 기능 구현
+- Jess(고주영): 앨범 관련 기능 구현
+
+
+## 기술 스택
+
+### Swift
+- Swift 5
+- UIKit
+
+### 뷰 드로잉
+- Code: SnapKit
+
+### 백엔드
+- Local DB: Realm
+- FireBase FireStore
+
+### 네트워킹
+- URLSession
+
+### 반응형 프로그래밍
+- RxSwift, RxCocoa, Rxgesture, RxViewController, RxRealm, RxDataSources
+
+### 개발 아키텍처 및 디자인 패턴
+- MVVM(일부분 MVC 패턴 구현)
+
+### 이외에 사용한 오픈소스
+- Kingfisher
+- NMaps(네이버 맵 api)
+- IQKeyboardManagerSwift
