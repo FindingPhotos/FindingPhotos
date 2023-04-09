@@ -18,6 +18,19 @@ final class SignInViewController: UIViewController {
     private let viewModel = SignInViewModel()
     private let disposeBag = DisposeBag()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicatorView = UIActivityIndicatorView()
+        indicatorView.style = .large
+        indicatorView.frame = view.frame
+        indicatorView.color = .tabButtondarkGrey
+        signInView.addSubview(indicatorView)
+        indicatorView.snp.makeConstraints { make in
+            make.center.equalTo(signInView.imagePickerButton.snp.center)
+        }
+        indicatorView.hidesWhenStopped = true
+        return indicatorView
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -98,33 +111,46 @@ final class SignInViewController: UIViewController {
             .disposed(by: disposeBag)
         
     }
-    
+
     private func bindImagePicker() {
+        
+        let isLoading = BehaviorRelay<Bool>(value: false)
+        isLoading.asObservable()
+            .debug("isLoading")
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
+        
         signInView.imagePickerButton.rx.tap
             .flatMapLatest({ [weak self] _ in
+//                isLoading.accept(true)
                 return UIImagePickerController.rx.createWithParent(self) { picker in
                     picker.sourceType = .photoLibrary
                     picker.allowsEditing = true
                     picker.view.tintColor = .black
                 }
+//                .do(onDispose: {
+//                    isLoading.accept(false)
+//                })
                 .flatMap {
                     $0.rx.didFinishPickingMediaWithInfo
                 }
                 .take(1)
             })
             .map { info in
+                isLoading.accept(false)
                 return info[.editedImage] as? UIImage
             }
             .bind(to: viewModel.input.selectedImage)
             .disposed(by: disposeBag)
+            
     }
-    
 }
 
 extension SignInViewController: LayoutProtocol {
     func setValue() {
-        navigationController?.navigationItem.title = "회원가입"
         view.backgroundColor = .white
+        navigationItem.title = "회원가입"
+
     }
     func setSubViews() {
         view.addSubview(signInView)
