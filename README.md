@@ -46,9 +46,11 @@
 ## ⚙️ 기술 스택
 |Swift|뷰 드로잉|백엔드|네트워킹|
 |---|---|---|---|
-|- Swift5 <br> - UIKit|- Code: SnapKit|- Local DB: Realm <br> - FireBase FireStore|- URLSession|
+|<img src="https://img.shields.io/badge/Swift5-494949?style=flat-square&logo=Swift&#F05138=white"> <img src="https://img.shields.io/badge/UIKit-494949?style=flat-square&logo=UIKit&logoColor=white">|<img src="https://img.shields.io/badge/SnapKit-494949?style=flat-square&logo=SnapKit&logoColor=white">|<img src="https://img.shields.io/badge/Realm-494949?style=flat-square&logo=Realm&logoColor=white"> <img src="https://img.shields.io/badge/FireBase-494949?style=flat-square&logo=FireBase&logoColor=white">|<img src="https://img.shields.io/badge/URLSession-494949?style=flat-square&logo=URLSession&logoColor=white">|
 
 |반응형 프로그래밍|개발 아키텍처 및 디자인 패턴|오픈소스|
 |---|---|---|
 |- RxSwift <br> - RxCocoa <br> - Rxgesture <br> - RxViewController <br> - RxRealm <br> - RxDataSources | - MVVM(일부분 MVC 패턴 구현)|- Kingfisher <br> - NMaps(네이버 맵 api) <br> - IQKeyboardManagerSwift|
+
+
 
