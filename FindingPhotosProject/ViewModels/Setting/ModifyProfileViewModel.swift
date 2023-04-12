@@ -52,24 +52,7 @@ final class ModifyProfileViewModel: ViewModelType {
                 changedImage.accept(image)
             }
             .disposed(by: disposeBag)
-/*
-        let isModifyFinished = input.ModifyButtonTapped
-            .debug("isModifyFinished in VM")
-            .withLatestFrom(Observable.combineLatest(input.textFieldText, input.selectedImage))
-            .map { changedName, changedImage in
-                if let changedImage, changedName != "" {
-                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
-                        AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: imageUrl)
-                    }
-                } else if let changedImage, changedName == "" {
-                    ImageUploaderToFirestorage.uploadImage(image: changedImage) { imageUrl in
-                        AuthManager.shared.updateUserInformation(changedName: nil, changedImageUrl: imageUrl)
-                    }
-                } else {
-                    AuthManager.shared.updateUserInformation(changedName: changedName, changedImageUrl: nil)
-                }
-            }
- */
+ 
         let uploadedImageUrl = input.ModifyButtonTapped
             .withLatestFrom(input.selectedImage)
             .flatMap({ image in

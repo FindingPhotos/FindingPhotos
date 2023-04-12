@@ -117,6 +117,7 @@
 		AD45813D29D59A4900B8D8A6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AD45813F29D5B07600B8D8A6 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		AD45814129D5B0E900B8D8A6 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		ADC4B8DF29E3B8CC00CE8AD9 /* FindingPhotosProjectRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FindingPhotosProjectRelease.entitlements; sourceTree = "<group>"; };
 		ADCF002029DACEEB00D465FE /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		ADCF002229DE729D00D465FE /* ResetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordView.swift; sourceTree = "<group>"; };
 		ADCF002429DE80FA00D465FE /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -225,6 +226,7 @@
 		AD4580CD29CC71C600B8D8A6 /* FindingPhotosProject */ = {
 			isa = PBXGroup;
 			children = (
+				ADC4B8DF29E3B8CC00CE8AD9 /* FindingPhotosProjectRelease.entitlements */,
 				AD4580CE29CC71C600B8D8A6 /* AppDelegate.swift */,
 				AD4580D029CC71C600B8D8A6 /* SceneDelegate.swift */,
 				AD4580E729CC784000B8D8A6 /* GoogleService-Info.plist */,
@@ -779,6 +781,7 @@
 				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Nemo 네모";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -807,11 +810,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = FindingPhotosProject/FindingPhotosProjectRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68YVCN8TF9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Nemo 네모";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

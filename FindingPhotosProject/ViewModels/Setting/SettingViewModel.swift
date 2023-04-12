@@ -52,7 +52,6 @@ final class SettingViewModel: ViewModelType {
                 }
             }
 
-
         let user = input.viewWillAppear
             .flatMap { _ in
                 AuthManager.shared.getUserInformation()
