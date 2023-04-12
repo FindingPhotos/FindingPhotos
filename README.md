@@ -24,3 +24,13 @@
 |제목|제목|제목|제목|
 |---|---|---|---|
 |이미지|이미지|이미지|이미지|
+
+## 기술 스택
+|Swift|뷰 드로잉|백엔드|네트워킹|
+|---|---|---|---|
+|- Swift5 <br> - UIKit|- Code: SnapKit|- Local DB: Realm <br> - FireBase FireStore|- URLSession|
+
+|반응형 프로그래밍|개발 아키텍처 및 디자인 패턴|오픈소스|
+|---|---|---|
+|- RxSwift <br> - RxCocoa <br> - Rxgesture <br> - RxViewController <br> - RxRealm <br> - RxDataSources | - MVVM(일부분 MVC 패턴 구현)|- Kingfisher <br> - NMaps(네이버 맵 api) <br> - IQKeyboardManagerSwift|
+
