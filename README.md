@@ -57,6 +57,6 @@
 
 |반응형 프로그래밍|개발 아키텍처 및 디자인 패턴|오픈소스|
 |---|---|---|
-|- RxSwift <br> - RxCocoa <br> - Rxgesture <br> - RxViewController <br> - RxRealm <br> - RxDataSources | - MVVM(일부분 MVC 패턴 구현)|<img src="https://img.shields.io/badge/Kingfisher-494949?style=flat-square&logo=Kingfisher&logoColor=white"> <img src="https://img.shields.io/badge/IQKeyboardManagerSwift-494949?style=flat-square&logo=IQKeyboardManagerSwift&logoColor=white">|
+|• RxSwift <br> • RxCocoa <br> • Rxgesture <br> • RxViewController <br> • RxRealm <br> • RxDataSources | • MVVM(일부분 MVC 패턴 구현)|<img src="https://img.shields.io/badge/Kingfisher-494949?style=flat-square&logo=Kingfisher&logoColor=white"> <img src="https://img.shields.io/badge/IQKeyboardManagerSwift-494949?style=flat-square&logo=IQKeyboardManagerSwift&logoColor=white">|
 
 
