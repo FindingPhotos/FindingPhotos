@@ -2,15 +2,19 @@
 
 ## Nemo : 네모
 📸 나의 네 컷 사진 모아보기  
-> 개발기간 2023.03.23 ~ 2023.04.08 (1차)
+ - 내 주변 가장 가까이 위치한 포토부스를 한눈에 볼 수 있습니다.
+ - 포토부스를 즐겨찾기에 저장하고, 확인할 수 있습니다.
+ - 간단한 메모와 함께 네 컷 사진을 저장 할 수 있습니다.
+ - 로그인하여 나만의 프로필사진과 닉네임을 설정할 수 있습니다.
+> 개발기간 2023.03.26 ~ 2023.04.08
 
-## 팀 구성원
+## 👥 팀 구성원
 |[강창혁(Kyle)](https://github.com/KangChangHyeok)|[이형주(John)](https://github.com/HJLEE-22)|[고주영(Jess)](https://github.com/jessicakohh)|
 |---|---|---|
 |<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363321-97ab6aa7-afcb-4649-acb9-9532e57e9949.jpeg"></p>|<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363267-33b6aa65-03a7-4f4b-806b-54a071ff589e.png"></p>|<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231362961-11907fbe-1c29-4862-bf73-0bfb490b9746.png"></p>|
 |지도 관련 기능 구현|계정 관련 기능 구현|앨범 관련 기능 구현|
 
-## 개발 목표
+## 💡 개발 목표
 - 세 명의 iOS 개발자가 **협업 능력**을 기르고 **RxSwift/MVVM**의 실력을 향상시키기 위해 기획하였습니다.
     - **`RxSwift`** : 협업을 위해 `비동기 방식`을 통일하고, 개선된 `MVVM 패턴` 구현을 위해 차용하였습니다.
     - **`git`** : 각각의 `branch`로 작업하고 `merge`/`pull`하는 과정에서 발생하는 문제들을 해결하였습니다.
@@ -21,7 +25,7 @@
 |<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231385658-af8bf6fb-71ba-4332-befa-cbbf2b7a7584.png"></p>|<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231373044-be7e1d8a-74f4-46ae-97b4-5ef28aa91181.png"></p>|
     
 
-## 구현기능
+## ✨ 구현기능
 ### 📍 지도
 |포토부스 찾기|포토부스 즐겨찾기|
 |---|---|
