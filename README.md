@@ -1,74 +1,49 @@
-# FindingPhotos
-주변 즉석사진점을 검색하고 사진을 저장하는 iOS 앱 개발  
-노션 : https://jesskoh.notion.site/FindingPhotos-8550cf67ce934538a998e61919b24a87
+<img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231352131-34d4e272-f916-4d69-ba9f-2520ee5da458.png"> 
 
-## 개발 기간
-2023.03.23 ~ 2023.04.08
-
-
-## 구현 기능
-- 최초 앱 출시는 각 기능 1차구현 완료시 출시. 2차 구현은 차후 업데이트 예정.
-    - 계획
-        - 탭 3개
-            - 지도api를 이용해 근처 모든 종류의 인생네컷 검색
-            - 개인 사진 업로드 앨범 / 폴더로 구현(테이블뷰-컬렉션뷰 중첩)
-            - 개인정보/설정
-        - 추후 구현 가능: 로그인 / 친구와 앨범 공유 / 테이블뷰-컬렉션뷰 전환
-    
-    - 지도
-        - 1차 구현
-            - 지도 api : 카카오 (즉석사진 카테고리로 제한된 검색 용이) 로드
-            - ModalPresent를 이용한 장소 정보 구현
-        - 2차 구현
-            - 장소 검색기능
-            - 즐겨찾기 설정 및 목록
-    - 앨범
-        - 1차 구현
-            - NavigationController/collectionView를 이용한 중첩된 폴더 형식의 UI 구현
-            - NSCache를 이용한 데이터 캐시처리
-        - 2차 구현
-            - TableView로 폴더 구현
-            - Firestore 및 Firebase storage를 이용해 앨범
-            - 계정기능 구현 후 친구와 공유 가능
-    - 계정
-        - 1차 구현
-            - 설정 방식 : 로컬 이메일 / 익명로그인
-            - 연동 방식 : firebaseAuth
-            - 계정에 필요한 값 : 이메일, 닉네임, uid, 친구목록(팔로우)
-            - 로그인화면 및 회원가입화면 UI 구현
-            - user 탭에 사용자 정보 나타내기
-        - 2차 구현
-            - 애플로그인 / 네이버 소셜로그인 구현
+## Nemo : 네모
+나의 네 컷 사진 모아보기  
+> 개발기간 2023.03.23 ~ 2023.04.08 (1차)
 
 ## 팀 구성원
-- Kyle(강창혁) : 지도 관련 기능 구현
-- John(이형주): 계정 관련 기능 구현
-- Jess(고주영): 앨범 관련 기능 구현
+|[강창혁(Kyle)](https://github.com/KangChangHyeok)|[이형주(John)](https://github.com/HJLEE-22)|[고주영(Jess)](https://github.com/jessicakohh)|
+|---|---|---|
+|지도 관련 기능 구현|계정 관련 기능 구현|앨범 관련 기능 구현|
+
+## 구현기능
+### 지도
+|제목|제목|제목|제목|
+|---|---|---|---|
+|이미지|이미지|이미지|이미지|
+ - 내 주변 가장 가까이 위치한 포토부스를 한눈에 볼 수 있습니다.
+ - 포토부스를 즐겨찾기에 저장하고, 확인할 수 있습니다.
+
+### 앨범
+|제목|제목|제목|제목|
+|---|---|---|---|
+|이미지|이미지|이미지|이미지|
+ - 간단한 메모와 함께 네 컷 사진을 저장 할 수 있습니다.
+
+### 로그인
+|제목|제목|제목|제목|
+|---|---|---|---|
+|이미지|이미지|이미지|이미지|
+ - 로그인하여 나만의 프로필사진과 닉네임을 설정할 수 있습니다.
+
+### 차후 업데이트 예정
+|분류|기능|
+|---|---|
+|지도| - 장소 검색기능|
+|앨범| - TableView로 폴더 구현|
+|로그인| - 애플로그인 / 네이버 소셜 로그인 구현|
+
 
 
 ## 기술 스택
+|Swift|뷰 드로잉|백엔드|네트워킹|
+|---|---|---|---|
+|- Swift5 <br> - UIKit|- Code: SnapKit|- Local DB: Realm <br> - FireBase FireStore|- URLSession|
 
-### Swift
-- Swift 5
-- UIKit
+|반응형 프로그래밍|개발 아키텍처 및 디자인 패턴|오픈소스|
+|---|---|---|
+|- RxSwift <br> - RxCocoa <br> - Rxgesture <br> - RxViewController <br> - RxRealm <br> - RxDataSources | - MVVM(일부분 MVC 패턴 구현)|- Kingfisher <br> - NMaps(네이버 맵 api) <br> - IQKeyboardManagerSwift|
 
-### 뷰 드로잉
-- Code: SnapKit
-
-### 백엔드
-- Local DB: Realm
-- FireBase FireStore
-
-### 네트워킹
-- URLSession
-
-### 반응형 프로그래밍
-- RxSwift, RxCocoa, Rxgesture, RxViewController, RxRealm, RxDataSources
-
-### 개발 아키텍처 및 디자인 패턴
-- MVVM(일부분 MVC 패턴 구현)
-
-### 이외에 사용한 오픈소스
-- Kingfisher
-- NMaps(네이버 맵 api)
-- IQKeyboardManagerSwift
