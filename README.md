@@ -16,9 +16,9 @@
     - **`git`** : 각각의 `branch`로 작업하고 `merge`/`pull`하는 과정에서 발생하는 문제들을 해결하였습니다.
     - **`AppStore`** :  앱 출시를 위한 데드라인을 만들고, `개발 일정`을 관리하며 프로젝트를 진행하였습니다.
 
-|제목|제목|
+|백로그|branch 현황|
 |---|---|
-|이미지|<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231373044-be7e1d8a-74f4-46ae-97b4-5ef28aa91181.png"></p>|
+|<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231385658-af8bf6fb-71ba-4332-befa-cbbf2b7a7584.png"></p>|<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231373044-be7e1d8a-74f4-46ae-97b4-5ef28aa91181.png"></p>|
     
 
 ## 구현기능
