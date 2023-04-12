@@ -7,7 +7,7 @@
 ## 팀 구성원
 |[강창혁(Kyle)](https://github.com/KangChangHyeok)|[이형주(John)](https://github.com/HJLEE-22)|[고주영(Jess)](https://github.com/jessicakohh)|
 |---|---|---|
-|<img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363321-97ab6aa7-afcb-4649-acb9-9532e57e9949.jpeg">|<img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363267-33b6aa65-03a7-4f4b-806b-54a071ff589e.png">|<img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231362961-11907fbe-1c29-4862-bf73-0bfb490b9746.png"> |
+|<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363321-97ab6aa7-afcb-4649-acb9-9532e57e9949.jpeg"></p>|<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231363267-33b6aa65-03a7-4f4b-806b-54a071ff589e.png"></p>|<p align="center"><img width="100" alt="1" src="https://user-images.githubusercontent.com/108605997/231362961-11907fbe-1c29-4862-bf73-0bfb490b9746.png"></p>|
 |지도 관련 기능 구현|계정 관련 기능 구현|앨범 관련 기능 구현|
 
 ## 구현기능
