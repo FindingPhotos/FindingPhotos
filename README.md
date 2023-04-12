@@ -18,7 +18,7 @@
 
 |제목|제목|
 |---|---|
-|이미지|이미지|
+|이미지|<p align="center"><img width="600" alt="1" src="https://user-images.githubusercontent.com/108605997/231373044-be7e1d8a-74f4-46ae-97b4-5ef28aa91181.png"></p>|
     
 
 ## 구현기능
