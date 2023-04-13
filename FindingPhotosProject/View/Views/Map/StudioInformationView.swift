@@ -25,6 +25,8 @@ final class StudioInformationView: UIView {
         let studioAddressLabel = UILabel()
         studioAddressLabel.font = UIFont.boldSystemFont(ofSize: 13)
         studioAddressLabel.textColor = .tabButtonlightGrey
+        studioAddressLabel.lineBreakMode = .byTruncatingTail
+        studioAddressLabel.numberOfLines = 1
         return studioAddressLabel
     }()
     private lazy var studioInformationStackView: UIStackView = {
@@ -81,7 +83,7 @@ final class StudioInformationView: UIView {
 // MARK: - LayoutProtocol
 extension StudioInformationView: LayoutProtocol {
     func setValue() {
-        backgroundColor = .white
+        backgroundColor = .superLightGrey
     }
     func setSubViews() {
         addSubview(studioInformationStackView)

@@ -776,7 +776,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
@@ -809,7 +809,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "가까운 사진관의 위치를 표시하기 위해 사용자의 위치를 가져옵니다.";
