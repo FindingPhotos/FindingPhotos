@@ -30,7 +30,7 @@ final class MapViewController: UIViewController, ViewModelBindable {
     private let favoriteListButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .white
-        button.setTitle("즐겨찾기 한 포토부스", for: .normal)
+        button.setTitle("⭐️ 즐겨찾기", for: .normal)
         button.setTitleColor(.tabButtondarkGrey, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
         button.layer.cornerRadius = 4

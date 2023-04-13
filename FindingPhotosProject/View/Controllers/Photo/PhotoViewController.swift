@@ -15,9 +15,9 @@ final class PhotoViewController: UIViewController {
     // MARK: - Properties
     
     private let viewModel = PhotoViewModel()
-    var selectedIndexes = [IndexPath]()
     var realmManager = RealmManager()
-    
+    var selectedIndexes = [IndexPath]()
+        
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 1
@@ -149,7 +149,7 @@ final class PhotoViewController: UIViewController {
         let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { [self] _ in
             
             var deleteNeededIndexPaths: [IndexPath] = []
-            print(deleteNeededIndexPaths.isEmpty)
+
             for (key, value) in self.dictionarySelectedIndexPath {
                 if value {
                     deleteNeededIndexPaths.append(key)
@@ -160,6 +160,8 @@ final class PhotoViewController: UIViewController {
                 guard let photoData = self.viewModel.photoData(at: indexPath) else { return }
                 self.realmManager.delete(photoData: photoData)
             }
+            
+
             // colletionViewCell 삭제
             self.collectionView.deleteItems(at: deleteNeededIndexPaths)
             self.dictionarySelectedIndexPath.removeAll()
@@ -266,6 +268,10 @@ extension PhotoViewController: UICollectionViewDelegate, UICollectionViewDataSou
         case .select:
             dictionarySelectedIndexPath[indexPath] = true
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        self.dictionarySelectedIndexPath[indexPath] = false // 선택을 해제한 셀의 IndexPath를 딕셔너리에서 제거
     }
 }
 

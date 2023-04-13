@@ -778,7 +778,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nemo 네모";
@@ -813,7 +813,7 @@
 				CODE_SIGN_ENTITLEMENTS = FindingPhotosProject/FindingPhotosProjectRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 68YVCN8TF9;
+				DEVELOPMENT_TEAM = C52UTF3KCV;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FindingPhotosProject/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nemo 네모";
