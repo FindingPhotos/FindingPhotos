@@ -48,6 +48,10 @@ final class MapViewController: UIViewController, ViewModelBindable {
         setSubViews()
         setLayout()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        studioInformationView.isHidden = true
+    }
     // MARK: - helpers
     func bindViewModel() {
         // MARK: - ViewModel Input

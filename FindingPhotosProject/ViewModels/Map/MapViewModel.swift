@@ -95,7 +95,7 @@ final class MapViewModel: ViewModelType {
                 RealmManager.shared.realm.objects(PhotoStudio.self).filter { return $0.title == studioName }.isEmpty
             }
             .map { result in
-                guard result else { return UIImage(named: "likeButton")}
+                guard result else { return UIImage(named: "favorite")}
                 return UIImage(named: "favoriteGrey")
             }
             .bind(to: buttonImage)
