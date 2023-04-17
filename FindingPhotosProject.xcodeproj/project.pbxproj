@@ -65,6 +65,7 @@
 		C8A21BC729D54A8400029EAC /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A21BC629D54A8400029EAC /* PhotoData.swift */; };
 		C8A21BCB29D5537D00029EAC /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A21BCA29D5537D00029EAC /* RealmManager.swift */; };
 		C8CFA50329D992AA00C60892 /* PhotoStudios.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8CFA50229D992AA00C60892 /* PhotoStudios.swift */; };
+		C8E51A4F29ED1E8E00AB2576 /* PhotoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E51A4E29ED1E8E00AB2576 /* PhotoDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -129,6 +130,7 @@
 		C8A21BCA29D5537D00029EAC /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		C8CFA4FF29D9901700C60892 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C8CFA50229D992AA00C60892 /* PhotoStudios.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoStudios.swift; path = FindingPhotosProject/Resources/Models/Location/PhotoStudios.swift; sourceTree = SOURCE_ROOT; };
+		C8E51A4E29ED1E8E00AB2576 /* PhotoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailViewModel.swift; sourceTree = "<group>"; };
 		DA25624C2C1F1C3604E9F966 /* Pods-FindingPhotosProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FindingPhotosProject.debug.xcconfig"; path = "Target Support Files/Pods-FindingPhotosProject/Pods-FindingPhotosProject.debug.xcconfig"; sourceTree = "<group>"; };
 		DFF784C2DB431630DD27CBD3 /* Pods_FindingPhotosProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FindingPhotosProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -406,6 +408,7 @@
 			isa = PBXGroup;
 			children = (
 				C8783C4F29D312030047C3D1 /* PhotoViewModel.swift */,
+				C8E51A4E29ED1E8E00AB2576 /* PhotoDetailViewModel.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				C89DBFE329D5604400E369D5 /* PhotoCollectionViewCell.swift in Sources */,
 				C8CFA50329D992AA00C60892 /* PhotoStudios.swift in Sources */,
 				632977BF29D047F1004FDD85 /* Protocols.swift in Sources */,
+				C8E51A4F29ED1E8E00AB2576 /* PhotoDetailViewModel.swift in Sources */,
 				AD3FAF8729D9744200CF197A /* SettingModel.swift in Sources */,
 				AD4580CF29CC71C600B8D8A6 /* AppDelegate.swift in Sources */,
 				C8783C5029D312030047C3D1 /* PhotoViewModel.swift in Sources */,

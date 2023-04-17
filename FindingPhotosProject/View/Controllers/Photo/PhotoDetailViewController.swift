@@ -16,6 +16,8 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     
     // MARK: - Properties
     
+    private let viewModel = PhotoDetailViewModel()
+    
     private let disposeBag = DisposeBag()
     private var imagePicker = UIImagePickerController()
     private let photoAuthorizationStatus = PHPhotoLibrary.authorizationStatus()
@@ -44,60 +46,36 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     // MARK: - Selectors
     
     @objc func saveButtonTapped() {
-        // 저장할 데이터 객체 생성
         guard let date = photoDetailView.dateLabel.text else { return }
-        
-        let newData = PhotoData()
-        newData.date = date
-        newData.memo = photoDetailView.memoTextView.text
-        
-        if diary != nil {
-            newData.id = diary!.id
-            let image = photoDetailView.photoImageView.image ?? UIImage()
-            realmManager.update(photoData: newData, image: image)
-        } else {
-            // 객체가 존재하지 않으면 새로운 객체로 저장
-            newData.id = UUID().uuidString
-            
-            if let image = photoDetailView.photoImageView.image, image != UIImage(named: "addphoto") {
-                     realmManager.save(photoData: newData, image: image)
-                     popViewController()
-                 } else {
-                     let alert = UIAlertController(title: "📸", message: "사진을 추가하세요.", preferredStyle: .alert)
-                     let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
-                     alert.addAction(okAction)
-                     present(alert, animated: true, completion: nil)
-                 }
-
-        }
-
+        viewModel.savePhotoData(date: date, memo: photoDetailView.memoTextView.text, image: photoDetailView.photoImageView.image)
         popViewController()
     }
 
-
     @objc func deleteButtonTapped() {
-        
-        guard let photoData = diary else {
-            let alert = UIAlertController(title: "🚫", message: "삭제할 항목이 없습니다.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
-            return
-        }
-        
-        let alert = UIAlertController(title: "🗑", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
-        alert.addAction(cancelAction)
-        
-        let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            let image = self.photoDetailView.photoImageView.image ?? UIImage()
-            self.realmManager.delete(photoData: photoData)
-            self.popViewController()
-        }
-        alert.addAction(deleteAction)
-        
-        present(alert, animated: true, completion: nil)
+        // 삭제할 항목이 있는지 검사
+          guard let photoData = diary else {
+              let alert = UIAlertController(title: "🚫", message: "삭제할 항목이 없습니다.", preferredStyle: .alert)
+              alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+              present(alert, animated: true, completion: nil)
+              return
+          }
+          
+        // 다이어리 값이 nil이 아닐 때
+          let alert = UIAlertController(title: "🗑", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
+          
+          let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+          alert.addAction(cancelAction)
+          
+          let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+              let image = self.photoDetailView.photoImageView.image ?? UIImage()
+              self.viewModel.deletePhotoData(photoData)
+              self.popViewController()
+          }
+          alert.addAction(deleteAction)
+          
+          present(alert, animated: true, completion: nil)
     }
+
 
     
 

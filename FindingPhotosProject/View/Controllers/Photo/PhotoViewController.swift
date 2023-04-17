@@ -109,8 +109,6 @@ final class PhotoViewController: UIViewController {
     // MARK: - Selectors
     
     @objc func addButtonTapped(_ sender: Any) {
-        //        let detailViewController = PhotoDetailViewController()
-        //        let photoDetailVC = PhotoDetailViewController()
         let photoDetailVC = PhotoDetailViewController()
         navigationController?.pushViewController(photoDetailVC, animated: true)
     }
