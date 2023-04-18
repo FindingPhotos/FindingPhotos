@@ -91,7 +91,7 @@ final class PhotoDetailViewController: UIViewController, UINavigationControllerD
     private func configureUI() {
         view.backgroundColor = .white
     
-        if let diary = diary, let imageData = diary.image {
+        if let diary = viewModel.getPhotoData(), let imageData = diary.image {
             photoDetailView.photoImageView.image = UIImage(data: imageData)
             photoDetailView.memoTextView.text = diary.memo
         }

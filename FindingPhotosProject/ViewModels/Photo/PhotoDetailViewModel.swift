@@ -13,10 +13,6 @@ final class PhotoDetailViewModel {
     
     private var realmManager = RealmManager()
     private var photoData: PhotoData?
-
-//    init(realmManager: RealmManager) {
-//        self.realmManager = realmManager
-//    }
     
     // MARK: - Helpers
     
